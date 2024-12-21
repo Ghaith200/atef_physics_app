@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:quick_chat/core/constants/app_text_styles.dart';
-import 'package:quick_chat/core/utils/app_colors.dart';
+import 'package:atef_physics/core/constants/app_text_styles.dart';
+import 'package:atef_physics/core/utils/app_colors.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 

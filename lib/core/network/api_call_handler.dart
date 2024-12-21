@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'package:dio/dio.dart';
-import 'package:quick_chat/core/network/api_error_handler.dart';
-import 'package:quick_chat/core/network/api_result.dart';
+import 'package:atef_physics/core/network/api_error_handler.dart';
+import 'package:atef_physics/core/network/api_result.dart';
 
 /// A utility class for handling API calls with error management and response parsing.
 ///

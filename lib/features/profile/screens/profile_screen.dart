@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:quick_chat/core/constants/app_text_styles.dart';
-import 'package:quick_chat/features/profile/widgets/custom_list_tile.dart';
-import 'package:quick_chat/features/profile/widgets/dark_mode_list_tile.dart';
-import 'package:quick_chat/features/profile/widgets/profile_frame.dart';
-import 'package:quick_chat/features/profile/widgets/profile_picture.dart';
-import 'package:quick_chat/gen/assets.gen.dart';
+import 'package:atef_physics/core/constants/app_text_styles.dart';
+import 'package:atef_physics/features/profile/widgets/custom_list_tile.dart';
+import 'package:atef_physics/features/profile/widgets/dark_mode_list_tile.dart';
+import 'package:atef_physics/features/profile/widgets/profile_frame.dart';
+import 'package:atef_physics/features/profile/widgets/profile_picture.dart';
+import 'package:atef_physics/gen/assets.gen.dart';
 
 class ProfileScreen extends StatelessWidget {
   static const id = '/ProfileScreen';

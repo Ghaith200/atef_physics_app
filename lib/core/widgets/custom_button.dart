@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:quick_chat/core/constants/app_text_styles.dart';
-import 'package:quick_chat/core/utils/app_colors.dart';
+import 'package:atef_physics/core/constants/app_text_styles.dart';
+import 'package:atef_physics/core/utils/app_colors.dart';
 
 class CustomButton extends StatelessWidget {
   const CustomButton({

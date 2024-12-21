@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDGxqv2R0JKa6s2nr3Fvyx7DFtWg-O42Uw',
-    appId: '1:315121293172:android:020b3c3e429d1b04943e21',
+    appId: '1:315121293172:android:89ac6ff9bfad3a29943e21',
     messagingSenderId: '315121293172',
     projectId: 'nokhba-ac',
     databaseURL: 'https://nokhba-ac-default-rtdb.firebaseio.com',
@@ -60,11 +60,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyDyUdlOCszvSZpQD07HgavITSXZjz4aG7M',
-    appId: '1:315121293172:ios:89e1cf6b801d1d2f943e21',
+    appId: '1:315121293172:ios:43b207da3eda5733943e21',
     messagingSenderId: '315121293172',
     projectId: 'nokhba-ac',
     databaseURL: 'https://nokhba-ac-default-rtdb.firebaseio.com',
     storageBucket: 'nokhba-ac.appspot.com',
-    iosBundleId: 'com.example.quickChat',
+    iosBundleId: 'com.nokhba.acadmy',
   );
 }

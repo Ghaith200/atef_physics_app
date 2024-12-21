@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:quick_chat/core/constants/app_text_styles.dart';
-import 'package:quick_chat/core/utils/app_colors.dart';
+import 'package:atef_physics/core/constants/app_text_styles.dart';
+import 'package:atef_physics/core/utils/app_colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:quick_chat/core/utils/app_snack_bar.dart';
-import 'package:quick_chat/core/utils/app_utils.dart';
-import 'package:quick_chat/core/widgets/custom_button.dart';
-import 'package:quick_chat/core/widgets/custom_textfield.dart';
-import 'package:quick_chat/features/Auth/presentation/cubit/auth_cubit.dart';
-import 'package:quick_chat/features/home/home_screen.dart';
-import 'package:quick_chat/features/Auth/presentation/screens/login_screen.dart';
-import 'package:quick_chat/gen/assets.gen.dart';
-import 'package:quick_chat/core/utils/validator_utils.dart';
+import 'package:atef_physics/core/utils/app_snack_bar.dart';
+import 'package:atef_physics/core/utils/app_utils.dart';
+import 'package:atef_physics/core/widgets/custom_button.dart';
+import 'package:atef_physics/core/widgets/custom_textfield.dart';
+import 'package:atef_physics/features/Auth/presentation/cubit/auth_cubit.dart';
+import 'package:atef_physics/features/home/home_screen.dart';
+import 'package:atef_physics/features/Auth/presentation/screens/login_screen.dart';
+import 'package:atef_physics/gen/assets.gen.dart';
+import 'package:atef_physics/core/utils/validator_utils.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SignUpScreen extends StatelessWidget {

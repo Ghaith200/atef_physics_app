@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:quick_chat/gen/assets.gen.dart';
+import 'package:atef_physics/gen/assets.gen.dart';
 
 class UserNameListTile extends StatelessWidget {
   const UserNameListTile({super.key});

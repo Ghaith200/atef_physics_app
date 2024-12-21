@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:quick_chat/core/utils/app_colors.dart';
+import 'package:atef_physics/core/utils/app_colors.dart';
 import '../../gen/assets.gen.dart';
 import '../constants/app_text_styles.dart';
 import '../utils/app_utils.dart';
@@ -128,7 +128,6 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
             controller: widget.textEditingController,
             style: AppTextStyles.alexandria20WhitekW100,
             cursorColor: AppColors.whiteBlack,
-
             keyboardType: widget.keyboardType,
             decoration: InputDecoration(
               filled: true,

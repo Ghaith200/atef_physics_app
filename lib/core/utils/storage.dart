@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:quick_chat/features/Auth/data/model/user_model.dart';
+import 'package:atef_physics/features/Auth/data/model/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:quick_chat/core/constants/storage_keys.dart';
+import 'package:atef_physics/core/constants/storage_keys.dart';
 
 class Storage {
   static final Storage _instance = Storage._();

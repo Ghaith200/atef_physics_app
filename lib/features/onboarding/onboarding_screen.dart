@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:quick_chat/core/constants/app_text_styles.dart';
-import 'package:quick_chat/core/utils/storage.dart';
-import 'package:quick_chat/core/widgets/custom_button.dart';
-import 'package:quick_chat/features/Auth/presentation/screens/login_screen.dart';
-import 'package:quick_chat/gen/assets.gen.dart';
+import 'package:atef_physics/core/constants/app_text_styles.dart';
+import 'package:atef_physics/core/utils/storage.dart';
+import 'package:atef_physics/core/widgets/custom_button.dart';
+import 'package:atef_physics/features/Auth/presentation/screens/login_screen.dart';
+import 'package:atef_physics/gen/assets.gen.dart';
 import 'package:go_router/go_router.dart';
 
 class OnboardingScreen extends StatelessWidget {
@@ -31,7 +31,7 @@ class OnboardingScreen extends StatelessWidget {
             ),
             const SizedBox(height: 25),
             Text(
-              'Welcome to Quick Chat',
+              'Welcome to Atef Physics',
               style: AppTextStyles.poppins24WBlackhiteW900,
             ),
             const Spacer(),

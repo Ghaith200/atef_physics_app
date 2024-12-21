@@ -4,15 +4,15 @@ import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:quick_chat/core/routes/app_router.dart';
-import 'package:quick_chat/core/utils/app_utils.dart';
-import 'package:quick_chat/features/backdoor/Back_door_services.dart';
-import 'package:quick_chat/features/notification/firebase_api.dart';
-import 'package:quick_chat/gen/fonts.gen.dart';
-import 'package:quick_chat/core/utils/storage.dart';
-import 'package:quick_chat/core/utils/app_colors.dart';
+import 'package:atef_physics/core/routes/app_router.dart';
+import 'package:atef_physics/core/utils/app_utils.dart';
+import 'package:atef_physics/features/backdoor/Back_door_services.dart';
+import 'package:atef_physics/features/notification/firebase_api.dart';
+import 'package:atef_physics/gen/fonts.gen.dart';
+import 'package:atef_physics/core/utils/storage.dart';
+import 'package:atef_physics/core/utils/app_colors.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:quick_chat/firebase_options.dart';
+import 'package:atef_physics/firebase_options.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();

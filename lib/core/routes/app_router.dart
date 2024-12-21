@@ -1,15 +1,15 @@
 import 'package:go_router/go_router.dart';
-import 'package:quick_chat/core/utils/storage.dart';
-import 'package:quick_chat/features/backdoor/Back_door_services.dart';
+import 'package:atef_physics/core/utils/storage.dart';
+import 'package:atef_physics/features/backdoor/Back_door_services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 //Screens
-import 'package:quick_chat/features/Auth/presentation/screens/login_screen.dart';
-import 'package:quick_chat/features/onboarding/onboarding_screen.dart';
-import 'package:quick_chat/features/profile/screens/profile_screen.dart';
-import 'package:quick_chat/features/Auth/presentation/screens/sign_up_screen.dart';
-import 'package:quick_chat/features/home/home_screen.dart';
+import 'package:atef_physics/features/Auth/presentation/screens/login_screen.dart';
+import 'package:atef_physics/features/onboarding/onboarding_screen.dart';
+import 'package:atef_physics/features/profile/screens/profile_screen.dart';
+import 'package:atef_physics/features/Auth/presentation/screens/sign_up_screen.dart';
+import 'package:atef_physics/features/home/home_screen.dart';
 //cubits
-import 'package:quick_chat/features/Auth/presentation/cubit/auth_cubit.dart';
+import 'package:atef_physics/features/Auth/presentation/cubit/auth_cubit.dart';
 
 abstract class AppRouter {
   static String get intialRoute {

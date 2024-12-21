@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:quick_chat/core/constants/api_endpoints.dart';
+import 'package:atef_physics/core/constants/api_endpoints.dart';
 
 /// A configuration helper class for setting up a Dio client with caching, logging, and timeout functionality.
 ///

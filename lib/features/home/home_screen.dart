@@ -3,11 +3,11 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:quick_chat/core/widgets/custom_appbar.dart';
-import 'package:quick_chat/core/widgets/custom_textfield.dart';
-import 'package:quick_chat/features/home/widgets/custom_chat_widget.dart';
-import 'package:quick_chat/features/home/widgets/status_list_view_widget.dart';
-import 'package:quick_chat/gen/assets.gen.dart';
+import 'package:atef_physics/core/widgets/custom_appbar.dart';
+import 'package:atef_physics/core/widgets/custom_textfield.dart';
+import 'package:atef_physics/features/home/widgets/custom_chat_widget.dart';
+import 'package:atef_physics/features/home/widgets/status_list_view_widget.dart';
+import 'package:atef_physics/gen/assets.gen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:quick_chat/core/utils/app_colors.dart';
-import 'package:quick_chat/gen/assets.gen.dart';
+import 'package:atef_physics/core/utils/app_colors.dart';
+import 'package:atef_physics/gen/assets.gen.dart';
 
 class GetStartedButton extends StatelessWidget {
   const GetStartedButton({super.key});

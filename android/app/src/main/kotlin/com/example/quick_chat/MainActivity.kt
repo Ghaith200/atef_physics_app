@@ -1,4 +1,4 @@
-package com.example.quickchat
+package com.nokhba.acadmy
 
 import io.flutter.embedding.android.FlutterActivity
 

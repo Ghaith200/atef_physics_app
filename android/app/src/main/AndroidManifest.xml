@@ -1,6 +1,6 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.example.quickchat">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.nokhba.acadmy">
     <application
-        android:label="Quick Chat"
+        android:label="Atef Physics"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity

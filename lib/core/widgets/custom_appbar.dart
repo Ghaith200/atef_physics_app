@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:quick_chat/core/constants/app_text_styles.dart';
+import 'package:atef_physics/core/constants/app_text_styles.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:quick_chat/core/utils/app_utils.dart';
-import 'package:quick_chat/features/profile/screens/profile_screen.dart';
-import 'package:quick_chat/gen/assets.gen.dart';
+import 'package:atef_physics/core/utils/app_utils.dart';
+import 'package:atef_physics/features/profile/screens/profile_screen.dart';
+import 'package:atef_physics/gen/assets.gen.dart';
 import "package:go_router/go_router.dart";
 
 class CustomAppBars extends StatelessWidget implements PreferredSizeWidget {
@@ -63,7 +63,7 @@ class CustomAppBars extends StatelessWidget implements PreferredSizeWidget {
             text,
             style: AppTextStyles.alexandria25WhiteBlackW900,
           ),
-        const  Spacer(),
+          const Spacer(),
           if (actions != null)
             Row(
               mainAxisSize: MainAxisSize.min,

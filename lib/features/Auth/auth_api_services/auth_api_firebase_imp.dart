@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:quick_chat/core/constants/firebase_strings.dart';
-import 'package:quick_chat/core/network/api_error_handler.dart';
-import 'package:quick_chat/core/network/api_result.dart';
-import 'package:quick_chat/core/utils/user_type_enum.dart';
-import 'package:quick_chat/features/Auth/auth_api_services/auth_api_services.dart';
-import 'package:quick_chat/features/Auth/data/model/user_model.dart';
+import 'package:atef_physics/core/constants/firebase_strings.dart';
+import 'package:atef_physics/core/network/api_error_handler.dart';
+import 'package:atef_physics/core/network/api_result.dart';
+import 'package:atef_physics/core/utils/user_type_enum.dart';
+import 'package:atef_physics/features/Auth/auth_api_services/auth_api_services.dart';
+import 'package:atef_physics/features/Auth/data/model/user_model.dart';
 
 class AuthApiFirebaseImp implements AuthApiServices {
   @override
@@ -91,80 +91,83 @@ class AuthApiFirebaseImp implements AuthApiServices {
     ));
   }
 
-@override
-Future<ApiResult<UserModel>> update({
-  String? mail,
-  String? pass,
-  String? name,
-  String? phoneNumber,
-  String? fcmToken,
-}) async {
-  try {
-    final user = FirebaseAuth.instance.currentUser;
-    
-    if (user == null) {
-      ApiErrorHandler error = ApiErrorHandler(
-          statusCode: 401, statusMessage: "User not logged in", success: false);
-      return ApiResult.failure(error);
-    }
+  @override
+  Future<ApiResult<UserModel>> update({
+    String? mail,
+    String? pass,
+    String? name,
+    String? phoneNumber,
+    String? fcmToken,
+  }) async {
+    try {
+      final user = FirebaseAuth.instance.currentUser;
 
-    // Update email if provided
-    if (mail != null && mail.isNotEmpty && mail != user.email) {
-      await user.updateEmail(mail.trim());
-    }
+      if (user == null) {
+        ApiErrorHandler error = ApiErrorHandler(
+            statusCode: 401,
+            statusMessage: "User not logged in",
+            success: false);
+        return ApiResult.failure(error);
+      }
 
-    // Update password if provided
-    if (pass != null && pass.isNotEmpty) {
-      await user.updatePassword(pass.trim());
-    }
+      // Update email if provided
+      if (mail != null && mail.isNotEmpty && mail != user.email) {
+        await user.updateEmail(mail.trim());
+      }
 
-    // Prepare data to update in Firestore
-    Map<String, dynamic> updateData = {};
+      // Update password if provided
+      if (pass != null && pass.isNotEmpty) {
+        await user.updatePassword(pass.trim());
+      }
 
-    if (name != null && name.isNotEmpty) {
-      updateData[FirebaseStrings.name] = name;
-    }
-    if (phoneNumber != null && phoneNumber.isNotEmpty) {
-      updateData[FirebaseStrings.phoneNumber] = phoneNumber;
-    }
-    if (fcmToken != null && fcmToken.isNotEmpty) {
-      updateData[FirebaseStrings.fcmToken] = fcmToken;
-    }
+      // Prepare data to update in Firestore
+      Map<String, dynamic> updateData = {};
 
-    // Update Firestore document
-    if (updateData.isNotEmpty) {
-      await FirebaseFirestore.instance
+      if (name != null && name.isNotEmpty) {
+        updateData[FirebaseStrings.name] = name;
+      }
+      if (phoneNumber != null && phoneNumber.isNotEmpty) {
+        updateData[FirebaseStrings.phoneNumber] = phoneNumber;
+      }
+      if (fcmToken != null && fcmToken.isNotEmpty) {
+        updateData[FirebaseStrings.fcmToken] = fcmToken;
+      }
+
+      // Update Firestore document
+      if (updateData.isNotEmpty) {
+        await FirebaseFirestore.instance
+            .collection(FirebaseStrings.userCollection)
+            .doc(user.uid)
+            .update(updateData);
+      }
+
+      // Fetch updated user data
+      final updatedDoc = await FirebaseFirestore.instance
           .collection(FirebaseStrings.userCollection)
           .doc(user.uid)
-          .update(updateData);
-    }
+          .get();
 
-    // Fetch updated user data
-    final updatedDoc = await FirebaseFirestore.instance
-        .collection(FirebaseStrings.userCollection)
-        .doc(user.uid)
-        .get();
+      if (!updatedDoc.exists) {
+        ApiErrorHandler error = ApiErrorHandler(
+            statusCode: 404,
+            statusMessage: "User data not found",
+            success: false);
+        return ApiResult.failure(error);
+      }
 
-    if (!updatedDoc.exists) {
+      // Return updated user model
+      return ApiResult.success(UserModel(
+        uid: user.uid,
+        name: updatedDoc[FirebaseStrings.name],
+        phoneNumber: updatedDoc[FirebaseStrings.phoneNumber],
+        email: mail ?? user.email!,
+        fcmToken: updatedDoc[FirebaseStrings.fcmToken],
+        userType: UserTypeEnum.user, // Assuming userType remains the same
+      ));
+    } catch (e) {
       ApiErrorHandler error = ApiErrorHandler(
-          statusCode: 404, statusMessage: "User data not found", success: false);
+          statusCode: 500, statusMessage: e.toString(), success: false);
       return ApiResult.failure(error);
     }
-
-    // Return updated user model
-    return ApiResult.success(UserModel(
-      uid: user.uid,
-      name: updatedDoc[FirebaseStrings.name],
-      phoneNumber: updatedDoc[FirebaseStrings.phoneNumber],
-      email: mail ?? user.email!,
-      fcmToken: updatedDoc[FirebaseStrings.fcmToken],
-      userType: UserTypeEnum.user, // Assuming userType remains the same
-    ));
-  } catch (e) {
-    ApiErrorHandler error = ApiErrorHandler(
-        statusCode: 500, statusMessage: e.toString(), success: false);
-    return ApiResult.failure(error);
   }
-}
-
 }

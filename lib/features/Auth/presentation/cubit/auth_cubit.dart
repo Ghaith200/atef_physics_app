@@ -2,14 +2,14 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:quick_chat/core/network/api_error_handler.dart';
-import 'package:quick_chat/core/network/api_result.dart';
-import 'package:quick_chat/core/utils/storage.dart';
-import 'package:quick_chat/core/utils/user_type_enum.dart';
-import 'package:quick_chat/features/Auth/auth_api_services/auth_api_firebase_imp.dart';
-import 'package:quick_chat/features/Auth/auth_api_services/auth_api_services.dart';
-import 'package:quick_chat/features/Auth/data/model/user_model.dart';
-import 'package:quick_chat/features/notification/firebase_api.dart';
+import 'package:atef_physics/core/network/api_error_handler.dart';
+import 'package:atef_physics/core/network/api_result.dart';
+import 'package:atef_physics/core/utils/storage.dart';
+import 'package:atef_physics/core/utils/user_type_enum.dart';
+import 'package:atef_physics/features/Auth/auth_api_services/auth_api_firebase_imp.dart';
+import 'package:atef_physics/features/Auth/auth_api_services/auth_api_services.dart';
+import 'package:atef_physics/features/Auth/data/model/user_model.dart';
+import 'package:atef_physics/features/notification/firebase_api.dart';
 
 part 'auth_state.dart';
 part 'auth_cubit.freezed.dart';

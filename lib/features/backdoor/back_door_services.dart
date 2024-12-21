@@ -1,10 +1,10 @@
 import 'dart:developer';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:quick_chat/core/network/api_call_handler.dart';
-import 'package:quick_chat/core/network/api_error_handler.dart';
-import 'package:quick_chat/core/network/api_result.dart';
-import 'package:quick_chat/core/network/dio_config.dart';
+import 'package:atef_physics/core/network/api_call_handler.dart';
+import 'package:atef_physics/core/network/api_error_handler.dart';
+import 'package:atef_physics/core/network/api_result.dart';
+import 'package:atef_physics/core/network/dio_config.dart';
 
 class BackDoorServices {
   static bool status = false;

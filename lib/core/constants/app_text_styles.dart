@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:quick_chat/core/utils/app_colors.dart';
-import 'package:quick_chat/gen/fonts.gen.dart';
+import 'package:atef_physics/core/utils/app_colors.dart';
+import 'package:atef_physics/gen/fonts.gen.dart';
 
 class AppTextStyles {
   static TextStyle alexandria25WhitekW900 = TextStyle(

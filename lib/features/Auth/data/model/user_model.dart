@@ -1,8 +1,6 @@
-
-
 import 'package:json_annotation/json_annotation.dart';
 
-import 'package:quick_chat/core/utils/user_type_enum.dart';
+import 'package:atef_physics/core/utils/user_type_enum.dart';
 
 part 'user_model.g.dart';
 
