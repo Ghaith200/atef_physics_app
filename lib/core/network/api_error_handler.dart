@@ -28,7 +28,7 @@ class ApiErrorHandler {
                 BoxShadow(color: Colors.grey.shade200.withOpacity(0.5))
               ],
               icon: const SizedBox(),
-              textStyle: AppTextStyles.alexandria14greykW500,
+              textStyle: AppTextStyles.hevoLight14greykW500,
               message: statusMessage,
             ),
           );

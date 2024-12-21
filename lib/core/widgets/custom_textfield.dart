@@ -126,7 +126,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
             obscuringCharacter: "*",
             enableSuggestions: true,
             controller: widget.textEditingController,
-            style: AppTextStyles.alexandria20WhitekW100,
+            style: AppTextStyles.hevoLight20WhitekW100,
             cursorColor: AppColors.whiteBlack,
             keyboardType: widget.keyboardType,
             decoration: InputDecoration(
@@ -149,15 +149,15 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
               ),
               labelText: _focusNode.hasFocus ? widget.label : widget.hintText,
               labelStyle: _focusNode.hasFocus
-                  ? AppTextStyles.alexandria15WhiteBlackW500
-                  : AppTextStyles.alexandria15WhiteBlackW500,
+                  ? AppTextStyles.hevoLight15WhiteBlackW500
+                  : AppTextStyles.hevoLight15WhiteBlackW500,
               hintText: widget.hintText,
               prefixIcon: Padding(
                 padding: EdgeInsets.all(10.0.sp),
                 child: widget.prefixIcon,
               ),
               hintStyle: widget.hintTextStyle ??
-                  AppTextStyles.alexandria15WhiteBlackW500,
+                  AppTextStyles.hevoLight15WhiteBlackW500,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(6),
                 borderSide: BorderSide(
@@ -197,7 +197,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
             padding: EdgeInsets.only(top: 4.h),
             child: Text(
               _errorMessage!,
-              style: AppTextStyles.alexandria11redw400,
+              style: AppTextStyles.hevoLight11redw400,
             ),
           ),
       ],

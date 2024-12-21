@@ -39,7 +39,7 @@ class ProfileScreen extends StatelessWidget {
                     child: Center(
                       child: Text(
                         'Abdullah Ghaith',
-                        style: AppTextStyles.alexandria20WhitekW100,
+                        style: AppTextStyles.hevoLight20WhitekW100,
                       ),
                     ),
                   ),

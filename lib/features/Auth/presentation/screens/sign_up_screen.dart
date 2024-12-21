@@ -208,10 +208,10 @@ class _SignUpBodyState extends State<SignUpBody> {
             child: Text.rich(TextSpan(children: [
               TextSpan(
                   text: "Already have an account ?  ",
-                  style: AppTextStyles.alexandria15WhiteBlackW500),
+                  style: AppTextStyles.hevoLight15WhiteBlackW500),
               TextSpan(
                 text: "login",
-                style: AppTextStyles.alexandria15WhiteBlackW500.copyWith(
+                style: AppTextStyles.hevoLight15WhiteBlackW500.copyWith(
                   decoration: TextDecoration.underline,
                   decorationColor: AppColors.whiteBlack,
                 ),

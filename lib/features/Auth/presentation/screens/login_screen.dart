@@ -59,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 20),
               Text(
                 'Welcome Back',
-                style: AppTextStyles.alexandria25WhiteBlackW900,
+                style: AppTextStyles.hevoLight25WhiteBlackW900,
               ),
               SizedBox(height: 50.sp),
 
@@ -142,10 +142,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Text.rich(TextSpan(children: [
                   TextSpan(
                       text: "Don't have an account ?  ",
-                      style: AppTextStyles.alexandria15WhiteBlackW500),
+                      style: AppTextStyles.hevoLight15WhiteBlackW500),
                   TextSpan(
                     text: "Sign Up",
-                    style: AppTextStyles.alexandria15WhiteBlackW500.copyWith(
+                    style: AppTextStyles.hevoLight15WhiteBlackW500.copyWith(
                       decoration: TextDecoration.underline,
                       decorationColor: AppColors.whiteBlack,
                     ),

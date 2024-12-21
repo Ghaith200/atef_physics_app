@@ -21,4 +21,7 @@ class FontFamily {
 
   /// Font family: alexandria
   static const String alexandria = 'alexandria';
+
+  /// Font family: hevo_light
+  static const String hevoLight = 'hevo_light';
 }
