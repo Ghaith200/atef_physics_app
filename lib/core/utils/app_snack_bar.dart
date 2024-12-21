@@ -25,7 +25,7 @@ class AppSnackBar {
           BoxShadow(color: Theme.of(context).cardColor.withOpacity(.5))
         ],
         icon: const SizedBox(),
-        textStyle: AppTextStyles.alexandria20WhiteBlackW400,
+        textStyle: AppTextStyles.hevoLight20WhiteBlackW400,
         message: msg,
       ),
     );

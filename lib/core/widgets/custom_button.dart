@@ -61,8 +61,8 @@ class CustomButton extends StatelessWidget {
                 title ?? "",
                 style: titleTextStyle ??
                     (filled
-                        ? AppTextStyles.alexandria25WhitekW900
-                        : AppTextStyles.alexandria25BlackWhiteW900),
+                        ? AppTextStyles.hevoLight25WhitekW900
+                        : AppTextStyles.hevoLight25BlackWhiteW900),
               ),
             ),
       ),

@@ -43,13 +43,17 @@ class $AssetsFontsGen {
   /// File path: assets/fonts/Poppins-Regular.ttf
   String get poppinsRegular => 'assets/fonts/Poppins-Regular.ttf';
 
+  /// File path: assets/fonts/hevo_light.ttf
+  String get hevoLight => 'assets/fonts/hevo_light.ttf';
+
   /// List of all assets
   List<String> get values => [
         alexBrushRegular,
         alexandriaLight,
         alexandria,
         poppinsBold,
-        poppinsRegular
+        poppinsRegular,
+        hevoLight
       ];
 }
 

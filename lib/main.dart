@@ -59,6 +59,7 @@ class MyApp extends StatelessWidget {
           supportedLocales: context.supportedLocales,
           locale: context.locale,
           debugShowCheckedModeBanner: false,
+
           theme: ThemeData(
             appBarTheme: AppBarTheme(
               iconTheme: IconThemeData(
@@ -72,7 +73,7 @@ class MyApp extends StatelessWidget {
               selectionColor: AppColors.blue.withOpacity(0.5),
               selectionHandleColor: AppColors.blue,
             ),
-            fontFamily: FontFamily.alexandria,
+            fontFamily: FontFamily.hevoLight,
             useMaterial3: true,
             scaffoldBackgroundColor: AppColors.blackWhite,
           ),

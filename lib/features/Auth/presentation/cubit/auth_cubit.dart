@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,11 +25,13 @@ class AuthCubit extends Cubit<AuthState> {
 
   static AuthCubit get(BuildContext context) =>
       BlocProvider.of<AuthCubit>(context);
-
+  final loading = const AuthState.loading();
   Future<void> login({required String email, required String pass}) async {
+    emit(loading);
     final ApiResult<UserModel> user = await api.login(mail: email, pass: pass);
     user.when(success: (UserModel user) {
       Storage.instance.user = user;
+      Storage.instance.isAuth;
       emit(AuthState.success(user));
     }, failure: (ApiErrorHandler error) {
       emit(AuthState.error(error));
@@ -40,6 +44,7 @@ class AuthCubit extends Cubit<AuthState> {
     required String name,
     required String phoneNumber,
   }) async {
+    emit(loading);
     final ApiResult<UserModel> user = await api.regester(
       mail: mail,
       pass: pass,
@@ -49,6 +54,8 @@ class AuthCubit extends Cubit<AuthState> {
     );
     user.when(success: (UserModel user) {
       Storage.instance.user = user;
+            Storage.instance.isAuth;
+
       emit(AuthState.success(user));
     }, failure: (ApiErrorHandler error) {
       emit(AuthState.error(error));
