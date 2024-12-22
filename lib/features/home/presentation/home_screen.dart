@@ -23,6 +23,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late CourseCubit cubit;
   late List<CourseModel> courses;
+  @override
   initState() {
     super.initState();
     cubit = BlocProvider.of<CourseCubit>(context);

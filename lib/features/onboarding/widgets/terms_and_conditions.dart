@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class TermsAndConditionsPage extends StatelessWidget {
   static const id = '/terms-and-conditions';
-  const TermsAndConditionsPage({Key? key}) : super(key: key);
+  const TermsAndConditionsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -10,8 +10,8 @@ class TermsAndConditionsPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Terms and Conditions'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+      body: const Padding(
+        padding: EdgeInsets.all(16.0),
         child: Column(
           children: [
             Expanded(
@@ -41,11 +41,11 @@ By continue using this app You here by agree to the terms and conditions of the 
 
 Thank you for using our services!
                   ''',
-                  style: const TextStyle(fontSize: 16.0, height: 1.5),
+                  style: TextStyle(fontSize: 16.0, height: 1.5),
                 ),
               ),
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 20),
           ],
         ),
       ),

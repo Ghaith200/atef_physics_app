@@ -59,7 +59,7 @@ abstract class AppRouter {
         name: HomeScreen.id,
         builder: (context, state) => BlocProvider(
           create: (context) => CourseCubit(),
-          child: HomeScreen(),
+          child: const HomeScreen(),
         ),
       ),
       GoRoute(
@@ -76,7 +76,7 @@ abstract class AppRouter {
           name: AddCourseScreen.id,
           builder: (context, state) => BlocProvider(
                 create: (context) => CourseCubit(),
-                child: AddCourseScreen(),
+                child: const AddCourseScreen(),
               )),
     ],
   );

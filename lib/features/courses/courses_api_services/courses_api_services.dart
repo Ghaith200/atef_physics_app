@@ -8,10 +8,8 @@ abstract class CoursesApiServices {
   Future<ApiResult<CourseModel>> course(String id);
   Future<ApiResult<CourseModel>> addCourse(
       {required String title, required String photo, required int price});
-
   Future<ApiResult<CourseModel>> updateCourse(
       {required CourseModel model, String? title, String? photo, int? price});
-
   Future<ApiResult<void>> addUser(CourseModel model, String userId);
   Future<ApiResult<void>> removeUser(CourseModel model, String id);
   Future<ApiResult<List<UserModel>>> courseUsers(CourseModel model);
