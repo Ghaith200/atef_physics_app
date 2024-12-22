@@ -10,6 +10,8 @@ class FirebaseStrings {
   static const String video = "video";
 
   static const String photo = "photo";
+    static const String coursesPhoto = "coursesPhoto";
+
   static const String lessons = "lessons";
   static const String users = "users";
 }
