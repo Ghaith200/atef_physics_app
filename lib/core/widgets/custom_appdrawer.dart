@@ -3,7 +3,7 @@ import 'package:atef_physics/core/routes/app_router.dart';
 import 'package:atef_physics/core/utils/storage.dart';
 import 'package:atef_physics/core/models/user_model.dart';
 import 'package:atef_physics/gen/assets.gen.dart';
-import 'package:atef_physics/features/Auth/data/model/user_model.dart';
+
 import 'package:atef_physics/features/Auth/presentation/screens/login_screen.dart';
 import 'package:atef_physics/features/profile/screens/profile_screen.dart';
 import 'package:atef_physics/gen/assets.gen.dart';
