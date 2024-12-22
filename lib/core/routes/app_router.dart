@@ -55,7 +55,7 @@ abstract class AppRouter {
       GoRoute(
         path: HomeScreen.id,
         name: HomeScreen.id,
-        builder: (context, state) => const HomeScreen(),
+        builder: (context, state) => HomeScreen(),
       ),
       GoRoute(
         path: ProfileScreen.id,

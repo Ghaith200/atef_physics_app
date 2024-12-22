@@ -29,54 +29,56 @@ class CustomAppBars extends StatelessWidget implements PreferredSizeWidget {
         left: 5.w,
         right: 5.w,
       ),
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          if (backbutton)
-            Padding(
-              padding: EdgeInsetsDirectional.only(end: 1.w),
-              child: IconButton(
+      child: Container(
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            if (backbutton)
+              Padding(
+                padding: EdgeInsetsDirectional.only(end: 1.w),
+                child: IconButton(
+                  onPressed: () {
+                    //check first if the context can pop or not
+                    if (context.canPop()) {
+                      context.pop();
+                    }
+                  },
+                  icon: Icon(
+                    Icons.arrow_back_ios_rounded,
+                    color: Theme.of(context).primaryColor,
+                    size: 24.sp,
+                  ),
+                ),
+              ),
+            if (!backbutton)
+              IconButton(
                 onPressed: () {
                   //check first if the context can pop or not
-                  if (context.canPop()) {
-                    context.pop();
-                  }
+
+                  Scaffold.of(context).openDrawer();
+                  log(Storage.instance.prefs.getString(StorageKeys.user) ??
+                      "dawd");
                 },
                 icon: Icon(
-                  Icons.arrow_back_ios_rounded,
+                  Icons.menu,
                   color: Theme.of(context).primaryColor,
                   size: 24.sp,
                 ),
               ),
+            SizedBox(width: 10.w),
+            Text(
+              text,
+              style: AppTextStyles.hevoLight25WhiteBlackW900,
             ),
-          if (!backbutton)
-            IconButton(
-              onPressed: () {
-                //check first if the context can pop or not
-                
-                Scaffold.of(context).openDrawer();
-                log(Storage.instance.prefs.getString(StorageKeys.user) ??
-                    "dawd");
-              },
-              icon: Icon(
-                Icons.menu,
-                color: Theme.of(context).primaryColor,
-                size: 24.sp,
+            const Spacer(),
+            if (actions != null)
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: actions!,
               ),
-            ),
-          SizedBox(width: 10.w),
-          Text(
-            text,
-            style: AppTextStyles.hevoLight25WhiteBlackW900,
-          ),
-          const Spacer(),
-          if (actions != null)
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: actions!,
-            ),
-        ],
+          ],
+        ),
       ),
     );
   }
