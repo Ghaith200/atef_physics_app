@@ -10,7 +10,11 @@ class AppTextStyles {
     fontFamily: FontFamily.hevoLight,
     fontWeight: FontWeight.w900,
   );
-
+  static TextStyle hevoLight20BlackWhiteW900 = TextStyle(
+    fontSize: 20.sp,
+    fontFamily: FontFamily.hevoLight,
+    fontWeight: FontWeight.w900,
+  );
   static TextStyle hevoLight25WhiteBlackW900 = TextStyle(
     fontSize: 25.sp,
     //color: AppColors.whiteBlack,
@@ -88,7 +92,6 @@ class AppTextStyles {
     fontWeight: FontWeight.w500,
   );
   static TextStyle hevoLight20WhitekW100 = TextStyle(
-    
     fontFamily: FontFamily.hevoLight,
     fontSize: 20.sp,
     fontWeight: FontWeight.w100,

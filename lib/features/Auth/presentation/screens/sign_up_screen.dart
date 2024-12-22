@@ -128,8 +128,7 @@ class _SignUpBodyState extends State<SignUpBody> {
                   validator: (p0) => Validators.phoneNumberValidator(p0),
                   keyboardType: const TextInputType.numberWithOptions(),
                   hintText: "Phone Number",
-                  prefixIcon: Assets.images.icons.phoneIcon
-                      .svg(color: AppColors.whiteBlack),
+                  prefixIcon: Assets.images.icons.phoneIcon.svg(),
                   label: "User Name",
                 ),
                 SizedBox(height: 12.h),

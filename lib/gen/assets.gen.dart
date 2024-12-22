@@ -63,10 +63,6 @@ class $AssetsImagesGen {
   /// File path: assets/images/Code.svg
   SvgGenImage get code => const SvgGenImage('assets/images/Code.svg');
 
-  /// File path: assets/images/Picsart_24-12-19_17-44-20-091.png
-  AssetGenImage get picsart241219174420091 =>
-      const AssetGenImage('assets/images/Picsart_24-12-19_17-44-20-091.png');
-
   /// File path: assets/images/active_status.png
   AssetGenImage get activeStatus =>
       const AssetGenImage('assets/images/active_status.png');
@@ -85,8 +81,11 @@ class $AssetsImagesGen {
   /// Directory path: assets/images/icons
   $AssetsImagesIconsGen get icons => const $AssetsImagesIconsGen();
 
+  /// File path: assets/images/logo.png
+  AssetGenImage get logoPng => const AssetGenImage('assets/images/logo.png');
+
   /// File path: assets/images/logo.svg
-  SvgGenImage get logo => const SvgGenImage('assets/images/logo.svg');
+  SvgGenImage get logoSvg => const SvgGenImage('assets/images/logo.svg');
 
   /// File path: assets/images/me.jpg
   AssetGenImage get me => const AssetGenImage('assets/images/me.jpg');
@@ -117,6 +116,9 @@ class $AssetsImagesGen {
   SvgGenImage get profileImagePlaceholder =>
       const SvgGenImage('assets/images/profile_image_placeholder.svg');
 
+  /// File path: assets/images/splash.png
+  AssetGenImage get splash => const AssetGenImage('assets/images/splash.png');
+
   /// File path: assets/images/user_name.png
   AssetGenImage get userName =>
       const AssetGenImage('assets/images/user_name.png');
@@ -124,12 +126,12 @@ class $AssetsImagesGen {
   /// List of all assets
   List<dynamic> get values => [
         code,
-        picsart241219174420091,
         activeStatus,
         darkModeOffIcon,
         darkModeOnIcon,
         icon,
-        logo,
+        logoPng,
+        logoSvg,
         me,
         notification,
         onboarding,
@@ -138,6 +140,7 @@ class $AssetsImagesGen {
         phone,
         profileFrame,
         profileImagePlaceholder,
+        splash,
         userName
       ];
 }
