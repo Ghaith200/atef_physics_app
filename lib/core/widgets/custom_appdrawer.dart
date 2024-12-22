@@ -1,18 +1,14 @@
 import 'package:atef_physics/core/constants/app_text_styles.dart';
-import 'package:atef_physics/core/routes/app_router.dart';
 import 'package:atef_physics/core/utils/storage.dart';
 import 'package:atef_physics/core/models/user_model.dart';
+
 import 'package:atef_physics/gen/assets.gen.dart';
 
 import 'package:atef_physics/features/Auth/presentation/screens/login_screen.dart';
 import 'package:atef_physics/features/profile/screens/profile_screen.dart';
-import 'package:atef_physics/gen/assets.gen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class CustomAppdrawer extends StatelessWidget {
   const CustomAppdrawer({super.key});
@@ -20,7 +16,6 @@ class CustomAppdrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     final UserModel user = Storage.instance.user;
     return Drawer(
-
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
         child: Column(
@@ -78,15 +73,18 @@ class CustomAppdrawer extends StatelessWidget {
                   context.pushReplacementNamed(LoginScreen.id);
                 },
                 child: IconButton(
-                    onPressed: () {
-                      FirebaseAuth.instance.signOut();
-                      context.pushReplacementNamed(LoginScreen.id);
+                    onPressed: () async {
+                      await FirebaseAuth.instance.signOut();
+                      await Storage.instance.logout();
+                      if (context.mounted) {
+                        context.pushReplacementNamed(LoginScreen.id);
+                      }
                     },
                     icon: const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
+                        children: [
                           Icon(Icons.logout_rounded),
-                          const SizedBox(width: 10),
+                          SizedBox(width: 10),
                           Text('تسجيل الخروج')
                         ])))
           ],

@@ -47,5 +47,5 @@ class Storage {
   set user(UserModel user) =>
       prefs.setString(StorageKeys.user, json.encode(user.toJson()));
 
-  Future<void> logout() => prefs.remove(StorageKeys.user);
+  Future<void> logout()async =>await prefs.remove(StorageKeys.user);
 }

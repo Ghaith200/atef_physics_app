@@ -8,13 +8,13 @@ part of 'lesson_model.dart';
 
 LessonModel _$LessonModelFromJson(Map<String, dynamic> json) => LessonModel(
       id: json['id'] as String,
-      title: json['title'] as String,
-      content: json['content'] as String,
+      name: json['name'] as String,
+      video: json['video'] as String,
     );
 
 Map<String, dynamic> _$LessonModelToJson(LessonModel instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'title': instance.title,
-      'content': instance.content,
+      'name': instance.name,
+      'video': instance.video,
     };

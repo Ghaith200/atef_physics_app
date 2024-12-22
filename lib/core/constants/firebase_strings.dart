@@ -6,11 +6,10 @@ class FirebaseStrings {
   static const String userType = "userType";
 
   static const String coures = "courses";
+  static const String price = "price";
+  static const String video = "video";
+
   static const String photo = "photo";
   static const String lessons = "lessons";
   static const String users = "users";
-
-  
-
-  
 }

@@ -5,13 +5,13 @@ part 'lesson_model.g.dart';
 @JsonSerializable()
 class LessonModel {
   final String id;
-  final String title;
-  final String content;
+  final String name;
+  final String video;
 
   LessonModel({
     required this.id,
-    required this.title,
-    required this.content,
+    required this.name,
+    required this.video,
   });
 
   factory LessonModel.fromJson(Map<String, dynamic> json) =>
@@ -22,16 +22,16 @@ class LessonModel {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
-      'title': title,
-      'content': content,
+      'name': name,
+      'video': video,
     };
   }
 
   factory LessonModel.fromMap(Map<String, dynamic> map) {
     return LessonModel(
       id: map['id'] as String,
-      title: map['title'] as String,
-      content: map['content'] as String,
+      name: map['name'] as String,
+      video: map['video'] as String,
     );
   }
 }

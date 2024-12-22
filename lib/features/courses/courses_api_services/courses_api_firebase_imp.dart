@@ -4,10 +4,84 @@ import 'package:atef_physics/core/models/lesson_model.dart';
 import 'package:atef_physics/core/models/user_model.dart';
 import 'package:atef_physics/core/network/api_error_handler.dart';
 import 'package:atef_physics/core/network/api_result.dart';
+import 'package:atef_physics/core/utils/user_type_enum.dart';
 import 'package:atef_physics/features/courses/courses_api_services/courses_api_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CoursesApiFirebaseImp implements CoursesApiServices {
+  @override
+  Future<ApiResult<CourseModel>> addCourse({
+    required String title,
+    required String photo,
+    required int price,
+  }) async {
+    try {
+      final doc =
+          FirebaseFirestore.instance.collection(FirebaseStrings.coures).doc();
+      await doc.set({
+        FirebaseStrings.name: title,
+        FirebaseStrings.photo: photo,
+        FirebaseStrings.price: price,
+        FirebaseStrings.lessons: [],
+        FirebaseStrings.users: []
+      });
+      return ApiResult.success(CourseModel(
+        id: doc.id,
+        title: title,
+        photo: photo,
+        price: price,
+        lessons: [],
+        users: [],
+      ));
+    } catch (e) {
+      return ApiResult.failure(ApiErrorHandler(
+        statusCode: 00,
+        statusMessage: e.toString(),
+        success: false,
+      ));
+    }
+  }
+
+  @override
+  Future<ApiResult<LessonModel>> addLesson({
+    required CourseModel model,
+    required String name,
+    required String video,
+  }) async {
+    try {
+      final data =
+          FirebaseFirestore.instance.collection(FirebaseStrings.lessons).doc();
+      data.set({});
+      await FirebaseFirestore.instance
+          .collection(FirebaseStrings.coures)
+          .doc(model.id)
+          .set({
+        FirebaseStrings.name: name,
+        FirebaseStrings.video: video,
+      });
+      final LessonModel lessonModel =
+          LessonModel(id: data.id, name: name, video: video);
+      return ApiResult.success(lessonModel);
+    } catch (e) {
+      return ApiResult.failure(ApiErrorHandler(
+          statusCode: 00, statusMessage: e.toString(), success: false));
+    }
+  }
+
+  @override
+  Future<ApiResult<void>> addUser(CourseModel model, String userId) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection(FirebaseStrings.coures)
+          .doc(model.id)
+          .set({});
+      return const ApiResult.success(null);
+    } catch (e) {
+      return ApiResult.failure(ApiErrorHandler(
+          statusCode: 00, statusMessage: e.toString(), success: false));
+    }
+  }
+
   @override
   Future<ApiResult<CourseModel>> course(String id) async {
     try {
@@ -20,8 +94,9 @@ class CoursesApiFirebaseImp implements CoursesApiServices {
         id: data.id,
         title: data.data()![FirebaseStrings.name],
         photo: data.data()![FirebaseStrings.photo],
+        price: 0,
         lessons: data.data()![FirebaseStrings.lessons],
-        enrolledUsers: data.data()![FirebaseStrings.users],
+        users: data.data()![FirebaseStrings.users],
       );
       return ApiResult.success(courses);
     } catch (e) {
@@ -45,8 +120,9 @@ class CoursesApiFirebaseImp implements CoursesApiServices {
                 id: doc.id,
                 title: doc.data()[FirebaseStrings.name],
                 photo: doc.data()[FirebaseStrings.photo],
+                price: 0,
                 lessons: doc.data()[FirebaseStrings.lessons],
-                enrolledUsers: doc.data()[FirebaseStrings.users],
+                users: doc.data()[FirebaseStrings.users],
               ))
           .toList();
       return ApiResult.success(coursesList);
@@ -60,74 +136,104 @@ class CoursesApiFirebaseImp implements CoursesApiServices {
   }
 
   @override
-  Future<ApiResult<CourseModel>> addCourse({
-    required String title,
-    required String photo,
-  }) async {
+  Future<ApiResult<List<LessonModel>>> courseLessons(CourseModel model) async {
     try {
-      final doc =
-          FirebaseFirestore.instance.collection(FirebaseStrings.coures).doc();
-      await doc.set({
-        FirebaseStrings.name: title,
-        FirebaseStrings.photo: photo,
-        FirebaseStrings.lessons: [],
-        FirebaseStrings.users: []
-      });
-      return ApiResult.success(CourseModel(
-        id: doc.id,
-        title: title,
-        photo: photo,
-        lessons: [],
-        enrolledUsers: [],
-      ));
+      List<LessonModel> lessonsModel = [];
+      for (var lesson in model.lessons) {
+        final data = await FirebaseFirestore.instance
+            .collection(FirebaseStrings.lessons)
+            .doc(lesson)
+            .get();
+        lessonsModel.add(LessonModel(
+          id: data.id,
+          name: "title",
+          video: "content",
+        ));
+      }
+      return ApiResult.success(lessonsModel);
     } catch (e) {
       return ApiResult.failure(ApiErrorHandler(
-        statusCode: 00,
-        statusMessage: e.toString(),
-        success: false,
-      ));
+          statusCode: 00, statusMessage: e.toString(), success: false));
     }
   }
 
   @override
-  Future<ApiResult> addLesson(CourseModel model, String lessonId) {
-    // TODO: implement addLesson
-    throw UnimplementedError();
+  Future<ApiResult<void>> removeLesson(
+      CourseModel model, String lessonId) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection(FirebaseStrings.coures)
+          .doc(model.id)
+          .update({
+        FirebaseStrings.lessons: FieldValue.arrayRemove([lessonId])
+      });
+      return const ApiResult.success(null);
+    } catch (e) {
+      return ApiResult.failure(ApiErrorHandler(
+          statusCode: 00, statusMessage: e.toString(), success: false));
+    }
   }
 
   @override
-  Future<ApiResult> addUser(CourseModel model, String userId) {
-    // TODO: implement addUser
-    throw UnimplementedError();
+  Future<ApiResult<void>> removeUser(CourseModel model, String id) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection(FirebaseStrings.coures)
+          .doc(model.id)
+          .update({
+        FirebaseStrings.lessons: FieldValue.arrayRemove([id])
+      });
+      return const ApiResult.success(null);
+    } catch (e) {
+      return ApiResult.failure(ApiErrorHandler(
+          statusCode: 00, statusMessage: e.toString(), success: false));
+    }
   }
 
   @override
-  Future<ApiResult<List<LessonModel>>> lessonCourses(CourseModel model) {
-    // TODO: implement lessonCourses
-    throw UnimplementedError();
+  Future<ApiResult<CourseModel>> updateCourse(
+      {required CourseModel model,
+      String? title,
+      String? photo,
+      int? price}) async {
+    try {
+      final doc = FirebaseFirestore.instance.doc(model.id);
+      await doc.update({
+        FirebaseStrings.name: title,
+        FirebaseStrings.photo: photo,
+        FirebaseStrings.price: price,
+      });
+      return ApiResult.success(
+          model.copyWith(title: title, photo: photo, price: price));
+    } catch (e) {
+      return ApiResult.failure(ApiErrorHandler(
+          statusCode: 00, statusMessage: e.toString(), success: false));
+    }
   }
 
   @override
-  Future<ApiResult> removeLesson(CourseModel model, String lessonId) {
-    // TODO: implement removeLesson
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<ApiResult> removeUser(CourseModel model, String id) {
-    // TODO: implement removeUser
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<ApiResult> updateCourse({String? title, String? photo}) {
-    // TODO: implement updateCourse
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<ApiResult<List<UserModel>>> userCourses(CourseModel model) {
-    // TODO: implement userCourses
-    throw UnimplementedError();
+  Future<ApiResult<List<UserModel>>> courseUsers(CourseModel model) async {
+    try {
+      List<UserModel> lessonsModel = [];
+      for (var lesson in model.users) {
+        final data = await FirebaseFirestore.instance
+            .collection(FirebaseStrings.lessons)
+            .doc(lesson)
+            .get();
+        lessonsModel.add(UserModel(
+          uid: data.id,
+          name: data.data()![FirebaseStrings.name],
+          phoneNumber: data.data()![FirebaseStrings.phoneNumber],
+          email: "",
+          fcmToken: data.data()![FirebaseStrings.fcmToken],
+          userType: UserTypeEnum.values
+              .byName(data.data()![FirebaseStrings.userType]),
+        ));
+      }
+      return ApiResult.success(lessonsModel);
+    } catch (e) {
+      return ApiResult.failure(ApiErrorHandler(
+          statusCode: 00, statusMessage: e.toString(), success: false));
+    }
   }
 }
