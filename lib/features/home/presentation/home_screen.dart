@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:atef_physics/core/constants/app_text_styles.dart';
 import 'package:atef_physics/core/models/course_model.dart';
 import 'package:atef_physics/core/utils/app_colors.dart';
 import 'package:atef_physics/core/widgets/custom_appdrawer.dart';
@@ -22,7 +25,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late CourseCubit cubit;
-  late List<CourseModel> courses;
+  List<CourseModel> courses = [];
+  @override
   initState() {
     super.initState();
     cubit = BlocProvider.of<CourseCubit>(context);
@@ -90,28 +94,35 @@ class _HomeScreenState extends State<HomeScreen> {
               error: (error) => error.showError(context),
             ),
             builder: (context, state) {
-              state.whenOrNull(
+              final Widget? widge = state.whenOrNull<Widget>(
                 load: () => const Center(child: CircularProgressIndicator()),
                 successAll: (models) {
-                  return GridView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate:
-                        const SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: 150,
-                      mainAxisSpacing: 20,
-                      crossAxisSpacing: 20,
-                    ),
-                    itemCount: models.length,
-                    itemBuilder: (context, index) {
-                      return CourseWidget(
-                        courses: courses,
-                        index: index,
-                      );
-                    },
-                  );
+                  log("Courses Loaded");
+                  courses = models;
+                  return null;
                 },
               );
-              return const SizedBox();
+              if (widge != null) {
+                return widge;
+              }
+              return courses.isEmpty
+                  ? Text(
+                      "لا يوجد كورسات حاليا",
+                      style: AppTextStyles.hevoLight20BlackWhiteW900,
+                    )
+                  : GridView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      gridDelegate:
+                          const SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: 150,
+                        mainAxisSpacing: 20,
+                        crossAxisSpacing: 20,
+                      ),
+                      itemCount: courses.length,
+                      itemBuilder: (context, index) {
+                        return CourseWidget(course: courses[index]);
+                      },
+                    );
             },
           ),
         ),

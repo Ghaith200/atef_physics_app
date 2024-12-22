@@ -22,7 +22,6 @@ class _AddCourseScreenState extends State<AddCourseScreen> {
   late CourseCubit cubit;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     titleController = TextEditingController();
     priceController = TextEditingController();
@@ -54,11 +53,11 @@ class _AddCourseScreenState extends State<AddCourseScreen> {
                     photo = image.path;
                   });
                 },
-                child: const Icon(Icons.add_a_photo),
                 boxDecoration: BoxDecoration(
                   color: Colors.grey[200],
                   borderRadius: BorderRadius.circular(10),
                 ),
+                child: const Icon(Icons.add_a_photo),
               ),
               const SizedBox(height: 20),
               Form(
