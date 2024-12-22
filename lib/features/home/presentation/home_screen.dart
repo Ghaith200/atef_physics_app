@@ -1,41 +1,42 @@
+import 'package:atef_physics/core/models/course_model.dart';
 import 'package:atef_physics/core/utils/app_colors.dart';
 import 'package:atef_physics/core/widgets/custom_appdrawer.dart';
+import 'package:atef_physics/features/add_course/presentation/add_course_screen.dart';
+import 'package:atef_physics/features/courses/presentation/cubit/course_cubit.dart';
 import 'package:atef_physics/features/courses/widgets/course_widget.dart';
 import 'package:atef_physics/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:atef_physics/core/widgets/custom_appbar.dart';
+import 'package:go_router/go_router.dart';
 
-class HomeScreen extends StatelessWidget {
-  HomeScreen({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
   static const String id = "/HomeScreen";
-  final courses = [
-    {
-      "title": "1",
-      "image": Assets.images.icon.path,
-    },
-    {
-      "title": "2",
-      "image": Assets.images.icon.path,
-    },
-    {
-      "title": "3",
-      "image": Assets.images.icon.path,
-    },
-    {
-      "title": "4",
-      "image": Assets.images.icon.path,
-    },
-    {
-      "title": "5",
-      "image": Assets.images.icon.path,
-    },
-  ];
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  late CourseCubit cubit;
+  late List<CourseModel> courses;
+  initState() {
+    super.initState();
+    cubit = BlocProvider.of<CourseCubit>(context);
+    cubit.getCourses();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            context.pushNamed(AddCourseScreen.id);
+          },
+          child: const Icon(Icons.add)),
       drawer: const CustomAppdrawer(),
       appBar: CustomAppBars(
         text: "Atef Physics",
@@ -84,19 +85,33 @@ class HomeScreen extends StatelessWidget {
         },
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: GridView.builder(
-            physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 150,
-              mainAxisSpacing: 20,
-              crossAxisSpacing: 20,
+          child: BlocConsumer<CourseCubit, CourseState>(
+            listener: (context, state) => state.whenOrNull(
+              error: (error) => error.showError(context),
             ),
-            itemCount: courses.length,
-            itemBuilder: (context, index) {
-              return CourseWidget(
-                courses: courses,
-                index: index,
+            builder: (context, state) {
+              state.whenOrNull(
+                load: () => const Center(child: CircularProgressIndicator()),
+                successAll: (models) {
+                  return GridView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate:
+                        const SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent: 150,
+                      mainAxisSpacing: 20,
+                      crossAxisSpacing: 20,
+                    ),
+                    itemCount: models.length,
+                    itemBuilder: (context, index) {
+                      return CourseWidget(
+                        courses: courses,
+                        index: index,
+                      );
+                    },
+                  );
+                },
               );
+              return const SizedBox();
             },
           ),
         ),

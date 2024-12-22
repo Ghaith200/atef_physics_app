@@ -1,3 +1,5 @@
+import 'package:atef_physics/features/add_course/presentation/add_course_screen.dart';
+import 'package:atef_physics/features/courses/presentation/cubit/course_cubit.dart';
 import 'package:atef_physics/features/onboarding/widgets/terms_and_conditions.dart';
 import 'package:go_router/go_router.dart';
 import 'package:atef_physics/core/utils/storage.dart';
@@ -8,7 +10,7 @@ import 'package:atef_physics/features/Auth/presentation/screens/login_screen.dar
 import 'package:atef_physics/features/onboarding/onboarding_screen.dart';
 import 'package:atef_physics/features/profile/screens/profile_screen.dart';
 import 'package:atef_physics/features/Auth/presentation/screens/sign_up_screen.dart';
-import 'package:atef_physics/features/home/home_screen.dart';
+import 'package:atef_physics/features/home/presentation/home_screen.dart';
 //cubits
 import 'package:atef_physics/features/Auth/presentation/cubit/auth_cubit.dart';
 
@@ -55,7 +57,10 @@ abstract class AppRouter {
       GoRoute(
         path: HomeScreen.id,
         name: HomeScreen.id,
-        builder: (context, state) => HomeScreen(),
+        builder: (context, state) => BlocProvider(
+          create: (context) => CourseCubit(),
+          child: HomeScreen(),
+        ),
       ),
       GoRoute(
         path: ProfileScreen.id,
@@ -66,6 +71,13 @@ abstract class AppRouter {
           path: TermsAndConditionsPage.id,
           name: TermsAndConditionsPage.id,
           builder: (context, state) => const TermsAndConditionsPage()),
+      GoRoute(
+          path: AddCourseScreen.id,
+          name: AddCourseScreen.id,
+          builder: (context, state) => BlocProvider(
+                create: (context) => CourseCubit(),
+                child: AddCourseScreen(),
+              )),
     ],
   );
 }
