@@ -15,8 +15,8 @@ class CourseCubit extends Cubit<CourseState> {
     emit(loading);
     final data = await apiServices.coursesList();
     data.when(
-        success: (data) => CourseState.successAll(data),
-        failure: (e) => CourseState.error(e));
+        success: (data) => emit(CourseState.successAll(data)),
+        failure: (e) => emit(CourseState.error(e)));
   }
 
   Future<void> addCourse({
@@ -28,7 +28,7 @@ class CourseCubit extends Cubit<CourseState> {
     final data =
         await apiServices.addCourse(title: title, photo: photo, price: price);
     data.when(
-        success: (c) => CourseState.success(c),
-        failure: (e) => CourseState.error(e));
+        success: (c) => emit(CourseState.success(c)),
+        failure: (e) => emit(CourseState.error(e)));
   }
 }

@@ -26,6 +26,10 @@ class CustomAppdrawer extends StatelessWidget {
               style: AppTextStyles.hevoLight20BlackWhiteW900,
             ),
             const SizedBox(height: 30),
+            Text(
+              "Admin User",
+              style: AppTextStyles.hevoLight20BlackWhiteW900,
+            ),
             const Divider(),
             const SizedBox(height: 10),
             GestureDetector(

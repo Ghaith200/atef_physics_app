@@ -139,8 +139,11 @@ class CoursesApiFirebaseImp implements CoursesApiServices {
                 title: doc.data()[FirebaseStrings.name],
                 photo: doc.data()[FirebaseStrings.photo],
                 price: 0,
-                lessons: doc.data()[FirebaseStrings.lessons],
-                users: doc.data()[FirebaseStrings.users],
+                lessons: List<String>.from(doc
+                    .data()[FirebaseStrings.lessons]
+                    .map((e) => e.toString())),
+                users: List<String>.from(
+                    doc.data()[FirebaseStrings.users].map((e) => e.toString())),
               ))
           .toList();
       return ApiResult.success(coursesList);
