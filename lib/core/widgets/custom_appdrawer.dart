@@ -1,6 +1,8 @@
 import 'package:atef_physics/core/constants/app_text_styles.dart';
 import 'package:atef_physics/core/routes/app_router.dart';
 import 'package:atef_physics/core/utils/storage.dart';
+import 'package:atef_physics/core/models/user_model.dart';
+import 'package:atef_physics/gen/assets.gen.dart';
 import 'package:atef_physics/features/Auth/data/model/user_model.dart';
 import 'package:atef_physics/features/Auth/presentation/screens/login_screen.dart';
 import 'package:atef_physics/features/profile/screens/profile_screen.dart';
@@ -18,6 +20,7 @@ class CustomAppdrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     final UserModel user = Storage.instance.user;
     return Drawer(
+
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
         child: Column(

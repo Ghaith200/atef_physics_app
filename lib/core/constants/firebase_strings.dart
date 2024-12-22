@@ -4,4 +4,13 @@ class FirebaseStrings {
   static const String phoneNumber = "phoneNumber";
   static const String fcmToken = "fcmToken";
   static const String userType = "userType";
+
+  static const String coures = "courses";
+  static const String photo = "photo";
+  static const String lessons = "lessons";
+  static const String users = "users";
+
+  
+
+  
 }
