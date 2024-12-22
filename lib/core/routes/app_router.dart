@@ -1,3 +1,4 @@
+import 'package:atef_physics/features/onboarding/widgets/terms_and_conditions.dart';
 import 'package:go_router/go_router.dart';
 import 'package:atef_physics/core/utils/storage.dart';
 import 'package:atef_physics/features/backdoor/Back_door_services.dart';
@@ -61,6 +62,10 @@ abstract class AppRouter {
         name: ProfileScreen.id,
         builder: (context, state) => const ProfileScreen(),
       ),
+      GoRoute(
+          path: TermsAndConditionsPage.id,
+          name: TermsAndConditionsPage.id,
+          builder: (context, state) => const TermsAndConditionsPage()),
     ],
   );
 }
