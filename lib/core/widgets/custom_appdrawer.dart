@@ -1,6 +1,7 @@
 import 'package:atef_physics/core/constants/app_text_styles.dart';
 import 'package:atef_physics/core/utils/storage.dart';
-import 'package:atef_physics/features/Auth/data/model/user_model.dart';
+import 'package:atef_physics/core/models/user_model.dart';
+import 'package:atef_physics/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppdrawer extends StatelessWidget {
@@ -23,7 +24,6 @@ class CustomAppdrawer extends StatelessWidget {
             user.name,
             style: AppTextStyles.hevoLight25BlackWhiteW900,
           ),
-          
         ],
       ),
     );

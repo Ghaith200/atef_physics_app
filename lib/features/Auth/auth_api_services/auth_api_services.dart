@@ -1,5 +1,5 @@
 import 'package:atef_physics/core/network/api_result.dart';
-import 'package:atef_physics/features/Auth/data/model/user_model.dart';
+import 'package:atef_physics/core/models/user_model.dart';
 
 abstract class AuthApiServices {
   Future<ApiResult<UserModel>> login(

@@ -39,7 +39,7 @@ class OnboardingScreen extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 25.sp),
               child: CustomButton(
-                onTap: () async{
+                onTap: () async {
                   Storage.instance.isFirstTime = false;
                   context.pushReplacementNamed(LoginScreen.id);
                 },

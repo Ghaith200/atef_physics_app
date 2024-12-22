@@ -28,7 +28,7 @@ void main() async {
   await BackDoorServices.main();
 
   await Storage.instance.initStorage();
-  Storage.instance.isFirstTime = true;
+  // Storage.instance.isFirstTime = true;
   AppColors.isDarkMode = Storage.instance.isDarkMood;
 
   runApp(

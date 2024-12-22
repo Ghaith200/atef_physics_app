@@ -5,7 +5,7 @@ import 'package:atef_physics/core/network/api_error_handler.dart';
 import 'package:atef_physics/core/network/api_result.dart';
 import 'package:atef_physics/core/utils/user_type_enum.dart';
 import 'package:atef_physics/features/Auth/auth_api_services/auth_api_services.dart';
-import 'package:atef_physics/features/Auth/data/model/user_model.dart';
+import 'package:atef_physics/core/models/user_model.dart';
 
 class AuthApiFirebaseImp implements AuthApiServices {
   @override

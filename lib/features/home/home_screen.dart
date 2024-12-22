@@ -1,4 +1,3 @@
-
 import 'package:atef_physics/core/widgets/custom_appdrawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,13 +19,9 @@ class HomeScreen extends StatelessWidget {
         ),
         body: Column(
           children: [
-            const CustomTextFormField(
-                hintText: "Search",
-                suffixIcon: Icon(Icons.search),
-                prefixIcon: SizedBox.shrink(),
-                label: "Search"),
-            SizedBox(height: 12.h),
+            
           ],
+
         ),
       ),
     );
