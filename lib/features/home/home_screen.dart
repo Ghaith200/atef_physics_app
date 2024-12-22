@@ -1,4 +1,3 @@
-
 import 'package:atef_physics/core/widgets/custom_appdrawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,23 +10,15 @@ class HomeScreen extends StatelessWidget {
   static const String id = "/HomeScreen";
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 10.sp, vertical: 15.sp),
-      child: Scaffold(
-        drawer: const CustomAppdrawer(),
-        appBar: const CustomAppBars(
-          text: "Home",
-        ),
-        body: Column(
-          children: [
-            const CustomTextFormField(
-                hintText: "Search",
-                suffixIcon: Icon(Icons.search),
-                prefixIcon: SizedBox.shrink(),
-                label: "Search"),
-            SizedBox(height: 12.h),
-          ],
-        ),
+    return Scaffold(
+      drawer: const CustomAppdrawer(),
+      appBar: const CustomAppBars(
+        text: "Home",
+      ),
+      body: Column(
+        children: [
+          
+        ],
       ),
     );
   }
