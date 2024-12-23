@@ -120,8 +120,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     : GridView.builder(
                         physics: const NeverScrollableScrollPhysics(),
                         gridDelegate:
-                            const SliverGridDelegateWithMaxCrossAxisExtent(
-                          maxCrossAxisExtent: 350,
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
                           mainAxisSpacing: 20,
                           crossAxisSpacing: 20,
                         ),
