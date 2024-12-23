@@ -39,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return RefreshIndicator(
       triggerMode: RefreshIndicatorTriggerMode.anywhere,
       onRefresh: () async {
-        cubit.getCourses();
+        await cubit.getCourses();
       },
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
@@ -128,12 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         itemCount: courses.length,
                         itemBuilder: (context, index) {
-                          return GestureDetector(
-                              onTap: () {
-                                context.pushNamed(CourseDetails.id,
-                                    extra: {'courses': courses[index]});
-                              },
-                              child: CourseWidget(course: courses[index]));
+                          return CourseWidget(course: courses[index]);
                         },
                       );
               },
