@@ -1,28 +1,58 @@
 import 'package:atef_physics/core/models/lesson_model.dart';
+import 'package:atef_physics/features/courses/presentation/course_lessons/cubit/course_lessons_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CourseLessonsList extends StatelessWidget {
-  final List< LessonModel> lessons;
+class CourseLessonsList extends StatefulWidget {
   const CourseLessonsList({
     super.key,
-    required this.lessons,
   });
 
   @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      shrinkWrap: true, // Ensures the ListView takes only the required space
-      physics:
-          const NeverScrollableScrollPhysics(), // Disable ListView's scroll
+  State<CourseLessonsList> createState() => _CourseLessonsListState();
+}
 
-      itemCount: lessons.length,
-      itemBuilder: (BuildContext context, int index) {
-        return ListTile(
-          onTap: () {},
-          title: Text(lessons[index].name),
-          trailing: const Icon(Icons.play_circle_outline_rounded),
-          contentPadding: const EdgeInsets.symmetric(horizontal: 5),
+class _CourseLessonsListState extends State<CourseLessonsList> {
+  List<LessonModel> lesson = [];
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<CourseLessonsCubit, CourseLessonsState>(
+      listener: (context, state) {
+        state.whenOrNull(
+          error: (error) => error.showError(context),
+          successAll: (models) => lesson = models,
         );
+      },
+      builder: (context, state) {
+        return state.maybeWhen<Widget>(
+            orElse: () => lesson.isEmpty
+                ? const Center(
+                    child: Text(
+                      "No lessons",
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  )
+                : ListView.builder(
+                    shrinkWrap:
+                        true, // Ensures the ListView takes only the required space
+                    physics:
+                        const NeverScrollableScrollPhysics(), // Disable ListView's scroll
+
+                    itemCount: lesson.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return ListTile(
+                        onTap: () {},
+                        title: Text(lesson[index].name),
+                        trailing: const Icon(Icons.play_circle_outline_rounded),
+                        contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 5),
+                      );
+                    },
+                  ),
+            load: () => const Center(
+                  child: CircularProgressIndicator(),
+                ));
       },
     );
   }
