@@ -2,6 +2,8 @@ import 'package:atef_physics/core/models/course_model.dart';
 import 'package:atef_physics/features/courses/presentation/course/screens/add_course_screen.dart';
 import 'package:atef_physics/features/courses/presentation/course_details/screens/course_details.dart';
 import 'package:atef_physics/features/courses/presentation/course/cubit/course_cubit.dart';
+import 'package:atef_physics/features/courses/presentation/course_lessons/cubit/course_lessons_cubit.dart';
+import 'package:atef_physics/features/courses/presentation/course_lessons/presentaion/screens/course_add_lesson.dart';
 import 'package:atef_physics/features/onboarding/widgets/terms_and_conditions.dart';
 import 'package:go_router/go_router.dart';
 import 'package:atef_physics/core/utils/storage.dart';
@@ -86,8 +88,21 @@ abstract class AppRouter {
         builder: (context, state) {
           final extra = state.extra as Map<String, dynamic>? ?? {};
           final courses = extra['courses'] as CourseModel;
-          return CourseDetails(
-            courses: courses,
+          return BlocProvider(
+            create: (context) => CourseLessonsCubit(),
+            child: CourseDetails(
+              courses: courses,
+            ),
+          );
+        },
+      ),
+      GoRoute(
+        path: CourseAddLesson.id,
+        name: CourseAddLesson.id,
+        builder: (context, state) {
+          return BlocProvider(
+            create: (context) => CourseLessonsCubit(),
+            child: const CourseAddLesson(),
           );
         },
       )

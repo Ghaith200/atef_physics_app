@@ -13,10 +13,12 @@ abstract class CoursesApiServices {
   Future<ApiResult<void>> addUser(CourseModel model, String userId);
   Future<ApiResult<void>> removeUser(CourseModel model, String id);
   Future<ApiResult<List<UserModel>>> courseUsers(CourseModel model);
-  Future<ApiResult<LessonModel>> addLesson(
-      {required CourseModel model,
-      required String name,
-      required String video});
+  Future<ApiResult<LessonModel>> addLesson({
+    required CourseModel model,
+    required String name,
+    required String video,
+    required int watchCount,
+  });
   Future<ApiResult<void>> removeLesson(CourseModel model, String lessonId);
   Future<ApiResult<List<LessonModel>>> courseLessons(CourseModel model);
 }

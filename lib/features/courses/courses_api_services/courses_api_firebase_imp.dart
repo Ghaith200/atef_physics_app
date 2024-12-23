@@ -65,6 +65,7 @@ class CoursesApiFirebaseImp implements CoursesApiServices {
     required CourseModel model,
     required String name,
     required String video,
+    required int watchCount,
   }) async {
     try {
       final data =
@@ -76,9 +77,14 @@ class CoursesApiFirebaseImp implements CoursesApiServices {
           .set({
         FirebaseStrings.name: name,
         FirebaseStrings.video: video,
+        FirebaseStrings.watchCount: watchCount
       });
-      final LessonModel lessonModel =
-          LessonModel(id: data.id, name: name, video: video);
+      final LessonModel lessonModel = LessonModel(
+        id: data.id,
+        name: name,
+        video: video,
+        watchCount: watchCount,
+      );
       return ApiResult.success(lessonModel);
     } catch (e) {
       return ApiResult.failure(ApiErrorHandler(
@@ -138,7 +144,7 @@ class CoursesApiFirebaseImp implements CoursesApiServices {
                 id: doc.id,
                 title: doc.data()[FirebaseStrings.name],
                 photo: doc.data()[FirebaseStrings.photo],
-                price: 0,
+                price: doc.data()[FirebaseStrings.price],
                 lessons: List<String>.from(doc
                     .data()[FirebaseStrings.lessons]
                     .map((e) => e.toString())),
@@ -169,6 +175,7 @@ class CoursesApiFirebaseImp implements CoursesApiServices {
           id: data.id,
           name: "title",
           video: "content",
+          watchCount: 5,
         ));
       }
       return ApiResult.success(lessonsModel);
