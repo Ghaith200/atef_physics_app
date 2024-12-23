@@ -1,7 +1,13 @@
 import 'package:atef_physics/core/models/course_model.dart';
 import 'package:atef_physics/core/models/lesson_model.dart';
 import 'package:atef_physics/core/widgets/custom_appbar.dart';
+
 import 'package:atef_physics/features/courses/presentation/course_details/widgets/enrolled_users_page_view.dart';
+
+import 'package:atef_physics/features/courses/presentation/course/cubit/course_cubit.dart';
+import 'package:atef_physics/features/courses/presentation/course_users/cubit/course_users_cubit.dart';
+import 'package:atef_physics/features/courses/presentation/course_users/screens/enrolled_users_page_view.dart';
+
 import 'package:atef_physics/features/courses/presentation/course_details/widgets/lessons_page_view.dart';
 import 'package:atef_physics/features/courses/presentation/course_lessons/cubit/course_lessons_cubit.dart';
 import 'package:atef_physics/features/courses/presentation/course_lessons/presentaion/screens/course_add_lesson.dart';
@@ -29,6 +35,7 @@ class _CourseDetailsState extends State<CourseDetails> {
   @override
   void initState() {
     super.initState();
+
     courseCubit = BlocProvider.of<CourseLessonsCubit>(context);
     courseCubit.getCourseLessons(widget.courses);
   }
@@ -162,7 +169,11 @@ class _CourseDetailsState extends State<CourseDetails> {
                     // First page with lessons
                     LessonsPageView(courses: widget.courses),
                     // Second page with users
-                    const EnrolledUsersPageView(),
+
+                    BlocProvider(
+                      create: (context) => CourseUsersCubit(),
+                      child: EnrolledUsersPageView(model: widget.courses),
+                    ),
                   ],
                 ),
               ),
