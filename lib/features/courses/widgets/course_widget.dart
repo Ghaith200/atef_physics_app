@@ -1,7 +1,9 @@
 import 'package:atef_physics/core/models/course_model.dart';
+import 'package:atef_physics/features/course_details/course_details.dart';
 import 'package:atef_physics/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:go_router/go_router.dart';
 
 class CourseWidget extends StatelessWidget {
   final CourseModel course;
@@ -9,38 +11,43 @@ class CourseWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.grey,
-        borderRadius: BorderRadius.circular(20),
-      ),
+    return GestureDetector(
+      onTap: () {
+        context.pushNamed(CourseDetails.id, extra: {'courses': course});
+      },
       child: Container(
-        clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(
+          color: Colors.grey,
           borderRadius: BorderRadius.circular(20),
         ),
-        child: GridTile(
-          footer: Container(
-            width: double.infinity,
-            padding: const EdgeInsetsDirectional.symmetric(
-                horizontal: 15, vertical: 10),
-            color: const Color.fromARGB(170, 255, 255, 255),
-            alignment: Alignment.bottomCenter,
-            child: Text(
-              course.title,
-              style: const TextStyle(
-                height: 1,
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-              overflow: TextOverflow.ellipsis,
-              maxLines: 1,
-              textAlign: TextAlign.center,
-            ),
+        child: Container(
+          clipBehavior: Clip.antiAlias,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
           ),
-          child: CachedNetworkImage(
-            imageUrl: course.photo,
-            fit: BoxFit.cover,
+          child: GridTile(
+            footer: Container(
+              width: double.infinity,
+              padding: const EdgeInsetsDirectional.symmetric(
+                  horizontal: 15, vertical: 10),
+              color: const Color.fromARGB(170, 255, 255, 255),
+              alignment: Alignment.bottomCenter,
+              child: Text(
+                course.title,
+                style: const TextStyle(
+                  height: 1,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+                textAlign: TextAlign.center,
+              ),
+            ),
+            child: CachedNetworkImage(
+              imageUrl: course.photo,
+              fit: BoxFit.cover,
+            ),
           ),
         ),
       ),
