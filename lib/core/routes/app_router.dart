@@ -1,4 +1,6 @@
+import 'package:atef_physics/core/models/course_model.dart';
 import 'package:atef_physics/features/add_course/presentation/add_course_screen.dart';
+import 'package:atef_physics/features/course_details/course_details.dart';
 import 'package:atef_physics/features/courses/presentation/cubit/course_cubit.dart';
 import 'package:atef_physics/features/onboarding/widgets/terms_and_conditions.dart';
 import 'package:go_router/go_router.dart';
@@ -78,6 +80,17 @@ abstract class AppRouter {
                 create: (context) => CourseCubit(),
                 child: const AddCourseScreen(),
               )),
+      GoRoute(
+        path: CourseDetails.id,
+        name: CourseDetails.id,
+        builder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>? ?? {};
+          final courses = extra['courses'] as CourseModel;
+          return CourseDetails(
+            courses: courses,
+          );
+        },
+      )
     ],
   );
 }
