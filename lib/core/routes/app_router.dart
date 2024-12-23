@@ -1,10 +1,12 @@
 import 'package:atef_physics/core/models/course_model.dart';
+import 'package:atef_physics/core/models/lesson_model.dart';
 import 'package:atef_physics/features/courses/presentation/course/screens/add_course_screen.dart';
 import 'package:atef_physics/features/courses/presentation/course_details/screens/course_details.dart';
 import 'package:atef_physics/features/courses/presentation/course/cubit/course_cubit.dart';
 import 'package:atef_physics/features/courses/presentation/course_lessons/cubit/course_lessons_cubit.dart';
 import 'package:atef_physics/features/courses/presentation/course_lessons/presentation/screens/course_add_lesson.dart';
 import 'package:atef_physics/features/onboarding/widgets/terms_and_conditions.dart';
+import 'package:atef_physics/features/vedio/screens/vedio_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:atef_physics/core/utils/storage.dart';
 import 'package:atef_physics/features/backdoor/Back_door_services.dart';
@@ -109,7 +111,16 @@ abstract class AppRouter {
             ),
           );
         },
-      )
+      ),
+      GoRoute(
+        path: VedioScreen.id,
+        name: VedioScreen.id,
+        builder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>? ?? {};
+          final lesson = extra['lesson'] as LessonModel;
+          return VedioScreen(lesson: lesson);
+        },
+      ),
     ],
   );
 }
