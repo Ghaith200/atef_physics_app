@@ -25,7 +25,7 @@ class CustomAppBars extends StatelessWidget implements PreferredSizeWidget {
     return Padding(
       padding: EdgeInsets.only(
         top: MediaQuery.viewPaddingOf(context).top + 5,
-        bottom: 15,
+        bottom: 5,
         left: 5.w,
         right: 5.w,
       ),
@@ -54,7 +54,7 @@ class CustomAppBars extends StatelessWidget implements PreferredSizeWidget {
             IconButton(
               onPressed: () {
                 //check first if the context can pop or not
-      
+
                 Scaffold.of(context).openDrawer();
                 log(Storage.instance.prefs.getString(StorageKeys.user) ??
                     "dawd");

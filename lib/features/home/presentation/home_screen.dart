@@ -5,7 +5,6 @@ import 'package:atef_physics/core/models/course_model.dart';
 import 'package:atef_physics/core/utils/app_colors.dart';
 import 'package:atef_physics/core/widgets/custom_appdrawer.dart';
 import 'package:atef_physics/features/courses/presentation/course/screens/add_course_screen.dart';
-import 'package:atef_physics/features/course_details/course_details.dart';
 import 'package:atef_physics/features/courses/presentation/course/cubit/course_cubit.dart';
 import 'package:atef_physics/features/courses/presentation/widgets/course_widget.dart';
 import 'package:atef_physics/gen/assets.gen.dart';
@@ -121,8 +120,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     : GridView.builder(
                         physics: const NeverScrollableScrollPhysics(),
                         gridDelegate:
-                            const SliverGridDelegateWithMaxCrossAxisExtent(
-                          maxCrossAxisExtent: 150,
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
                           mainAxisSpacing: 20,
                           crossAxisSpacing: 20,
                         ),

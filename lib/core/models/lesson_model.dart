@@ -7,12 +7,13 @@ class LessonModel {
   final String id;
   final String name;
   final String video;
+  final int watchCount;
 
-  LessonModel({
-    required this.id,
-    required this.name,
-    required this.video,
-  });
+  LessonModel(
+      {required this.id,
+      required this.name,
+      required this.video,
+      required this.watchCount});
 
   factory LessonModel.fromJson(Map<String, dynamic> json) =>
       _$LessonModelFromJson(json);
@@ -24,6 +25,7 @@ class LessonModel {
       'id': id,
       'name': name,
       'video': video,
+      'watchCount': watchCount
     };
   }
 
@@ -32,6 +34,7 @@ class LessonModel {
       id: map['id'] as String,
       name: map['name'] as String,
       video: map['video'] as String,
+      watchCount: map['video'] as int,
     );
   }
 }
