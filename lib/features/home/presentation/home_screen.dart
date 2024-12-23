@@ -5,6 +5,7 @@ import 'package:atef_physics/core/models/course_model.dart';
 import 'package:atef_physics/core/utils/app_colors.dart';
 import 'package:atef_physics/core/widgets/custom_appdrawer.dart';
 import 'package:atef_physics/features/add_course/presentation/add_course_screen.dart';
+import 'package:atef_physics/features/course_details/course_details.dart';
 import 'package:atef_physics/features/courses/presentation/cubit/course_cubit.dart';
 import 'package:atef_physics/features/courses/widgets/course_widget.dart';
 import 'package:atef_physics/gen/assets.gen.dart';
@@ -35,95 +36,106 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            context.pushNamed(AddCourseScreen.id);
-          },
-          child: const Icon(Icons.add)),
-      drawer: const CustomAppdrawer(),
-      appBar: CustomAppBars(
-        text: "Atef Physics",
-        actions: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: CircleAvatar(
-              backgroundImage: AssetImage(Assets.images.icon.path),
-              radius: 20.sp,
-            ),
-          ),
-        ],
-      ),
-      body: NestedScrollView(
-        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-          return [
-            SliverToBoxAdapter(
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.grey,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      height: 200.sp,
-                    ),
-                    const SizedBox(height: 20),
-                    const Text(
-                      'الاضافات الاخيره',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: AppColors.blue,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                  ],
-                ),
+    return RefreshIndicator(
+      triggerMode: RefreshIndicatorTriggerMode.anywhere,
+      onRefresh: () async {
+        cubit.getCourses();
+      },
+      child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              context.pushNamed(AddCourseScreen.id);
+            },
+            child: const Icon(Icons.add)),
+        drawer: const CustomAppdrawer(),
+        appBar: CustomAppBars(
+          text: "Atef Physics",
+          actions: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: CircleAvatar(
+                backgroundImage: AssetImage(Assets.images.icon.path),
+                radius: 20.sp,
               ),
             ),
-          ];
-        },
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: BlocConsumer<CourseCubit, CourseState>(
-            listener: (context, state) => state.whenOrNull(
-              error: (error) => error.showError(context),
-            ),
-            builder: (context, state) {
-              final Widget? widge = state.whenOrNull<Widget>(
-                load: () => const Center(child: CircularProgressIndicator()),
-                successAll: (models) {
-                  log("Courses Loaded");
-                  courses = models;
-                  return null;
-                },
-              );
-              if (widge != null) {
-                return widge;
-              }
-              return courses.isEmpty
-                  ? Text(
-                      "لا يوجد كورسات حاليا",
-                      style: AppTextStyles.hevoLight20BlackWhiteW900,
-                    )
-                  : GridView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate:
-                          const SliverGridDelegateWithMaxCrossAxisExtent(
-                        maxCrossAxisExtent: 150,
-                        mainAxisSpacing: 20,
-                        crossAxisSpacing: 20,
+          ],
+        ),
+        body: NestedScrollView(
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return [
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        height: 200.sp,
                       ),
-                      itemCount: courses.length,
-                      itemBuilder: (context, index) {
-                        return CourseWidget(course: courses[index]);
-                      },
-                    );
-            },
+                      const SizedBox(height: 20),
+                      const Text(
+                        'الاضافات الاخيره',
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: AppColors.blue,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                    ],
+                  ),
+                ),
+              ),
+            ];
+          },
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: BlocConsumer<CourseCubit, CourseState>(
+              listener: (context, state) => state.whenOrNull(
+                error: (error) => error.showError(context),
+              ),
+              builder: (context, state) {
+                final Widget? widge = state.whenOrNull<Widget>(
+                  load: () => const Center(child: CircularProgressIndicator()),
+                  successAll: (models) {
+                    log("Courses Loaded");
+                    courses = models;
+                    return null;
+                  },
+                );
+                if (widge != null) {
+                  return widge;
+                }
+                return courses.isEmpty
+                    ? Text(
+                        "لا يوجد كورسات حاليا",
+                        style: AppTextStyles.hevoLight20BlackWhiteW900,
+                      )
+                    : GridView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        gridDelegate:
+                            const SliverGridDelegateWithMaxCrossAxisExtent(
+                          maxCrossAxisExtent: 150,
+                          mainAxisSpacing: 20,
+                          crossAxisSpacing: 20,
+                        ),
+                        itemCount: courses.length,
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                              onTap: () {
+                                context.pushNamed(CourseDetails.id,
+                                    extra: {'courses': courses[index]});
+                              },
+                              child: CourseWidget(course: courses[index]));
+                        },
+                      );
+              },
+            ),
           ),
         ),
       ),
