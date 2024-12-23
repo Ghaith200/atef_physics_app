@@ -2,7 +2,7 @@ import 'package:atef_physics/core/constants/app_text_styles.dart';
 import 'package:atef_physics/core/models/course_model.dart';
 import 'package:atef_physics/core/utils/app_colors.dart';
 import 'package:atef_physics/core/utils/storage.dart';
-import 'package:atef_physics/features/course_details/course_details.dart';
+import 'package:atef_physics/features/courses/presentation/course_details/screens/course_details.dart';
 import 'package:atef_physics/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
