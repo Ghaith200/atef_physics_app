@@ -100,9 +100,13 @@ abstract class AppRouter {
         path: CourseAddLesson.id,
         name: CourseAddLesson.id,
         builder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>? ?? {};
+          final course = extra['course'] as CourseModel;
           return BlocProvider(
             create: (context) => CourseLessonsCubit(),
-            child: const CourseAddLesson(),
+            child: CourseAddLesson(
+              courses: course,
+            ),
           );
         },
       )

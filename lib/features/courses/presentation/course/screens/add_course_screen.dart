@@ -1,5 +1,6 @@
 import 'package:atef_physics/core/utils/app_colors.dart';
 import 'package:atef_physics/core/utils/app_snack_bar.dart';
+import 'package:atef_physics/core/widgets/custom_button.dart';
 import 'package:atef_physics/core/widgets/custom_image_picker.dart';
 import 'package:atef_physics/features/courses/presentation/course/cubit/course_cubit.dart';
 import 'package:flutter/material.dart';
@@ -103,41 +104,38 @@ class _AddCourseScreenState extends State<AddCourseScreen> {
                 ),
               ),
               const Spacer(),
-              Container(
-                width: 327,
-                height: 52,
-                decoration: BoxDecoration(
-                  color: AppColors.blue,
-                  borderRadius: BorderRadius.circular(25),
-                ),
-                child: TextButton(
-                  onPressed: () {
-                    if (photo == null) {
-                      AppSnackBar.showSnackBar(
-                        context,
-                        "Please add a photo",
-                      );
-                      return;
-                    }
-                    if (!formKey.currentState!.validate()) {
-                      // Process form data here
-                      return;
-                    }
+              BlocConsumer<CourseCubit, CourseState>(
+                builder: (context, state) {
+                  return state.maybeWhen<Widget>(
+                      load: () => CircularProgressIndicator(),
+                      orElse: () => CustomButton(
+                            onTap: () {
+                              if (photo == null) {
+                                AppSnackBar.showSnackBar(
+                                  context,
+                                  "Please add a photo",
+                                );
+                                return;
+                              }
+                              if (!formKey.currentState!.validate()) {
+                                // Process form data here
+                                return;
+                              }
 
-                    cubit.addCourse(
-                      title: titleController.text,
-                      price: int.parse(priceController.text),
-                      photo: photo!,
-                    );
-                  },
-                  child: const Text(
-                    'Add Course',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                              cubit.addCourse(
+                                title: titleController.text,
+                                price: int.parse(priceController.text),
+                                photo: photo!,
+                              );
+                            },
+                            boarderRadius: 30,
+                            title: "add course",
+                          ));
+                },
+                listener: (context, state) => state.mapOrNull(
+                  error: (value) => value.error.showError(context),
+                  success: (value) => AppSnackBar.showSnackBar(
+                      context, "${value.model.title} \n created Successfully"),
                 ),
               ),
             ],

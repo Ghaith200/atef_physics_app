@@ -1,13 +1,16 @@
 import 'package:atef_physics/core/models/course_model.dart';
+import 'package:atef_physics/core/routes/app_router.dart';
 import 'package:atef_physics/core/models/lesson_model.dart';
 import 'package:atef_physics/core/widgets/custom_appbar.dart';
 import 'package:atef_physics/features/courses/presentation/course/cubit/course_cubit.dart';
 import 'package:atef_physics/features/courses/presentation/course_details/widgets/enrolled_users_page_view.dart';
 import 'package:atef_physics/features/courses/presentation/course_details/widgets/lessons_page_view.dart';
 import 'package:atef_physics/features/courses/presentation/course_lessons/cubit/course_lessons_cubit.dart';
+import 'package:atef_physics/features/courses/presentation/course_lessons/presentaion/screens/course_add_lesson.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class CourseDetails extends StatefulWidget {
   static const String id = '/CourseDetails';
@@ -38,7 +41,9 @@ class _CourseDetailsState extends State<CourseDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          context.pushNamed(CourseAddLesson.id, extra: {"course": widget.courses});
+        },
         child: const Icon(Icons.edit),
       ),
       appBar: CustomAppBars(

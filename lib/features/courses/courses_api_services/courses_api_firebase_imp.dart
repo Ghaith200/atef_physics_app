@@ -70,14 +70,16 @@ class CoursesApiFirebaseImp implements CoursesApiServices {
     try {
       final data =
           FirebaseFirestore.instance.collection(FirebaseStrings.lessons).doc();
-      data.set({});
-      await FirebaseFirestore.instance
-          .collection(FirebaseStrings.coures)
-          .doc(model.id)
-          .set({
+      data.set({
         FirebaseStrings.name: name,
         FirebaseStrings.video: video,
         FirebaseStrings.watchCount: watchCount
+      });
+      await FirebaseFirestore.instance
+          .collection(FirebaseStrings.coures)
+          .doc(model.id)
+          .update({
+        FirebaseStrings.lessons: FieldValue.arrayUnion([data.id])
       });
       final LessonModel lessonModel = LessonModel(
         id: data.id,
@@ -166,11 +168,12 @@ class CoursesApiFirebaseImp implements CoursesApiServices {
   Future<ApiResult<List<LessonModel>>> courseLessons(CourseModel model) async {
     try {
       List<LessonModel> lessonsModel = [];
-      for (var lesson in model.lessons) {
+      for (String lesson in model.lessons) {
         final data = await FirebaseFirestore.instance
             .collection(FirebaseStrings.lessons)
             .doc(lesson)
             .get();
+
         lessonsModel.add(LessonModel(
           id: data.id,
           name: "title",
