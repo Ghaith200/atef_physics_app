@@ -9,7 +9,6 @@ import 'package:atef_physics/core/network/api_result.dart';
 import 'package:atef_physics/core/utils/user_type_enum.dart';
 import 'package:atef_physics/features/courses/courses_api_services/courses_api_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class CoursesApiFirebaseImp implements CoursesApiServices {
