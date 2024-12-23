@@ -3,6 +3,7 @@ import 'package:atef_physics/core/models/lesson_model.dart';
 import 'package:atef_physics/core/utils/app_snack_bar.dart';
 import 'package:atef_physics/features/courses/presentation/course_lessons/cubit/course_lessons_cubit.dart';
 import 'package:atef_physics/features/courses/presentation/course_lessons/presentation/screens/course_add_lesson.dart';
+import 'package:atef_physics/features/vedio/screens/vedio_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -73,7 +74,10 @@ class _CourseLessonsListState extends State<CourseLessonsList> {
                     itemCount: lesson.length,
                     itemBuilder: (BuildContext context, int index) {
                       return ListTile(
-                        onTap: () {},
+                        onTap: () {
+                          context.pushNamed(VedioScreen.id,
+                              extra: {'lesson': lesson[index]});
+                        },
                         title: Text(lesson[index].name),
                         trailing: Row(
                           mainAxisSize: MainAxisSize.min,
