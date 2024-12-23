@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
             onPressed: () {
-              context.pushNamed(AddCourseScreen.id);
+              context.pushNamed(AddCourseScreen.id, extra: {"cubit": cubit});
             },
             child: const Icon(Icons.add)),
         drawer: const CustomAppdrawer(),
@@ -95,17 +95,19 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: BlocConsumer<CourseCubit, CourseState>(
               listener: (context, state) => state.whenOrNull(
-                add: (model) => courses.add(model),
+                error: (error) => error.showError(context),
+                // add: (model) => courses.add(model),
+                successAll: (models) => courses = models,
               ),
               builder: (context, state) {
-                // state.whenOrNull(
-                //     add: (model) => courses.add(model),
-                //     update: (model) {
-                //       AppSnackBar.showSnackBar(
-                //           context, "${model.title} Updated");
-                //       final e = courses.indexWhere((e) => e.id == model.id);
-                //       courses[e] = model;
-                //     });
+                state.whenOrNull(
+                  add: (model) => courses.add(model),
+                  // update: (model) {
+                  //   AppSnackBar.showSnackBar(context, "${model.title} Updated");
+                  //   final e = courses.indexWhere((e) => e.id == model.id);
+                  //   courses[e] = model;
+                  // },
+                );
                 return state.maybeWhen<Widget>(
                   load: () => const Center(child: CircularProgressIndicator()),
                   orElse: () => courses.isEmpty

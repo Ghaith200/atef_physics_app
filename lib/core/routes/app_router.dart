@@ -83,8 +83,10 @@ abstract class AppRouter {
           builder: (context, state) {
             final extra = state.extra as Map<String, dynamic>? ?? {};
             final CourseModel? course = extra['course'] as CourseModel?;
-            return BlocProvider(
-              create: (context) => CourseCubit(),
+            final CourseCubit? cubit = extra['cubit'];
+            return BlocProvider<CourseCubit>.value(
+              // create: (context) => CourseCubit(),
+              value: cubit ?? CourseCubit(),
               child: AddCourseScreen(
                 model: course,
               ),
@@ -116,11 +118,11 @@ abstract class AppRouter {
         name: CourseAddLesson.id,
         builder: (context, state) {
           final extra = state.extra as Map<String, dynamic>? ?? {};
+          final CourseLessonsCubit? cubit = extra["cubit"];
           final course = extra['course'] as CourseModel;
           final LessonModel? lessson = extra['lesson'];
-
-          return BlocProvider(
-            create: (context) => CourseLessonsCubit(),
+          return BlocProvider<CourseLessonsCubit>.value(
+            value: cubit ?? CourseLessonsCubit(),
             child: CourseAddLesson(
               courses: course,
               lesson: lessson,
