@@ -1,3 +1,4 @@
+import 'package:atef_physics/core/constants/app_text_styles.dart';
 import 'package:atef_physics/core/models/course_model.dart';
 import 'package:atef_physics/core/models/user_model.dart';
 import 'package:atef_physics/features/courses/presentation/course_users/cubit/course_users_cubit.dart';
@@ -28,18 +29,21 @@ class _EnrolledUsersPageViewState extends State<EnrolledUsersPageView> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          BlocConsumer<CourseUsersCubit, CourseUsersState>(
-            listener: (context, state) => state.whenOrNull(
-              error: (error) => error.showError(context),
-              successAll: (models) => users = models,
-            ),
-            builder: (context, state) => state.maybeWhen<Widget>(
-              load: () => const Center(child: CircularProgressIndicator()),
-              orElse: () => SizedBox(
+    return BlocConsumer<CourseUsersCubit, CourseUsersState>(
+      listener: (context, state) => state.whenOrNull(
+        error: (error) => error.showError(context),
+        successAll: (models) => users.addAll(models),
+      ),
+      builder: (context, state) => state.maybeWhen<Widget>(
+        load: () => const Center(child: CircularProgressIndicator()),
+        orElse: () => users.isEmpty
+            ? Center(
+                child: Text(
+                  "No Users",
+                  style: AppTextStyles.hevoLight25GreyW900,
+                ),
+              )
+            : SizedBox(
                 height: MediaQuery.of(context).size.height *
                     0.6, // Constrain the height
                 child: ListView.builder(
@@ -50,9 +54,6 @@ class _EnrolledUsersPageViewState extends State<EnrolledUsersPageView> {
                   },
                 ),
               ),
-            ),
-          )
-        ],
       ),
     );
   }

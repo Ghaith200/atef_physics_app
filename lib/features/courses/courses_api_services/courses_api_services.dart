@@ -10,7 +10,8 @@ abstract class CoursesApiServices {
       {required String title, required String photo, required int price});
   Future<ApiResult<CourseModel>> updateCourse(
       {required CourseModel model, String? title, String? photo, int? price});
-  Future<ApiResult<void>> addUser(CourseModel model, String userId);
+  Future<ApiResult<Map<String, List>>> addUser(
+      CourseModel model, List<String> phoneNumber);
   Future<ApiResult<void>> removeUser(CourseModel model, String id);
   Future<ApiResult<List<UserModel>>> courseUsers(CourseModel model);
   Future<ApiResult<LessonModel>> addLesson({
@@ -22,8 +23,7 @@ abstract class CoursesApiServices {
   Future<ApiResult<void>> removeLesson(CourseModel model, String lessonId);
   Future<ApiResult<List<LessonModel>>> courseLessons(CourseModel model);
   Future<ApiResult<LessonModel>> updateLesson(
-      {
-      required LessonModel lesson,
+      {required LessonModel lesson,
       required String? name,
       required String? video,
       required int? watchCount});

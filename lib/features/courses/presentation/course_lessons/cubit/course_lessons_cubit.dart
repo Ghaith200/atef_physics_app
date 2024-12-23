@@ -53,7 +53,7 @@ class CourseLessonsCubit extends Cubit<CourseLessonsState> {
     final data = await apiServices.updateLesson(
         lesson: lesson, name: name, video: video, watchCount: watchCount);
     data.when(
-      success: (d) => emit(CourseLessonsState.update(lesson)),
+      success: (d) => emit(CourseLessonsState.update(d)),
       failure: (e) => emit(CourseLessonsState.error(e)),
     );
   }

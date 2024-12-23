@@ -62,7 +62,7 @@ class _CustomImagePickerState extends State<CustomImagePicker> {
 
   ontap() async {
     final ImagePicker picker = ImagePicker();
-
+  
     final XFile? response = await picker.pickImage(source: ImageSource.gallery);
     if (response == null) {
       return;
