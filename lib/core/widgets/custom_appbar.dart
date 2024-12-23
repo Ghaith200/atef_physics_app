@@ -1,9 +1,12 @@
+import 'dart:developer';
+
+import 'package:atef_physics/core/constants/storage_keys.dart';
+import 'package:atef_physics/core/utils/storage.dart';
 import 'package:flutter/material.dart';
 import 'package:atef_physics/core/constants/app_text_styles.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:atef_physics/core/utils/app_utils.dart';
-import 'package:atef_physics/features/profile/screens/profile_screen.dart';
-import 'package:atef_physics/gen/assets.gen.dart';
+
 import "package:go_router/go_router.dart";
 
 class CustomAppBars extends StatelessWidget implements PreferredSizeWidget {
@@ -47,21 +50,25 @@ class CustomAppBars extends StatelessWidget implements PreferredSizeWidget {
                 ),
               ),
             ),
-          GestureDetector(
-            onTap: () => context.push(ProfileScreen.id),
-            child: SizedBox(
-              height: 40.sp,
-              width: 40.sp,
-              child: ClipOval(
-                child: Assets.images.pexelsRioKuncoro13738342773977
-                    .image(fit: BoxFit.cover),
+          if (!backbutton)
+            IconButton(
+              onPressed: () {
+                //check first if the context can pop or not
+      
+                Scaffold.of(context).openDrawer();
+                log(Storage.instance.prefs.getString(StorageKeys.user) ??
+                    "dawd");
+              },
+              icon: Icon(
+                Icons.menu,
+                color: Theme.of(context).primaryColor,
+                size: 24.sp,
               ),
             ),
-          ),
           SizedBox(width: 10.w),
           Text(
             text,
-            style: AppTextStyles.alexandria25WhiteBlackW900,
+            style: AppTextStyles.hevoLight25WhiteBlackW900,
           ),
           const Spacer(),
           if (actions != null)

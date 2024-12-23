@@ -8,7 +8,7 @@ import 'package:atef_physics/core/utils/app_utils.dart';
 import 'package:atef_physics/core/widgets/custom_button.dart';
 import 'package:atef_physics/core/widgets/custom_textfield.dart';
 import 'package:atef_physics/features/Auth/presentation/cubit/auth_cubit.dart';
-import 'package:atef_physics/features/home/home_screen.dart';
+import 'package:atef_physics/features/home/presentation/home_screen.dart';
 import 'package:atef_physics/features/Auth/presentation/screens/login_screen.dart';
 import 'package:atef_physics/gen/assets.gen.dart';
 import 'package:atef_physics/core/utils/validator_utils.dart';
@@ -128,8 +128,7 @@ class _SignUpBodyState extends State<SignUpBody> {
                   validator: (p0) => Validators.phoneNumberValidator(p0),
                   keyboardType: const TextInputType.numberWithOptions(),
                   hintText: "Phone Number",
-                  prefixIcon: Assets.images.icons.phoneIcon
-                      .svg(color: AppColors.whiteBlack),
+                  prefixIcon: Assets.images.icons.phoneIcon.svg(),
                   label: "User Name",
                 ),
                 SizedBox(height: 12.h),
@@ -208,10 +207,10 @@ class _SignUpBodyState extends State<SignUpBody> {
             child: Text.rich(TextSpan(children: [
               TextSpan(
                   text: "Already have an account ?  ",
-                  style: AppTextStyles.alexandria15WhiteBlackW500),
+                  style: AppTextStyles.hevoLight15WhiteBlackW500),
               TextSpan(
                 text: "login",
-                style: AppTextStyles.alexandria15WhiteBlackW500.copyWith(
+                style: AppTextStyles.hevoLight15WhiteBlackW500.copyWith(
                   decoration: TextDecoration.underline,
                   decorationColor: AppColors.whiteBlack,
                 ),

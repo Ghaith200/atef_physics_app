@@ -22,14 +22,14 @@ class OnboardingScreen extends StatelessWidget {
               padding: EdgeInsets.only(top: 80.sp),
               child: Align(
                 alignment: Alignment.center,
-                child: Assets.images.onboarding.image(
+                child: Assets.images.logoPng.image(
                   width: 250.sp,
                   height: 250.sp,
                   fit: BoxFit.contain,
                 ),
               ),
             ),
-            const SizedBox(height: 25),
+            const SizedBox(height: 50),
             Text(
               'Welcome to Atef Physics',
               style: AppTextStyles.poppins24WBlackhiteW900,
@@ -39,7 +39,7 @@ class OnboardingScreen extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 25.sp),
               child: CustomButton(
-                onTap: () {
+                onTap: () async {
                   Storage.instance.isFirstTime = false;
                   context.pushReplacementNamed(LoginScreen.id);
                 },
@@ -49,9 +49,12 @@ class OnboardingScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 25),
-            const Text(
-              'Terms and Conditions',
-              style: TextStyle(decoration: TextDecoration.underline),
+            GestureDetector(
+              onTap: () => context.pushNamed('/terms-and-conditions'),
+              child: const Text(
+                'Terms and Conditions',
+                style: TextStyle(decoration: TextDecoration.underline),
+              ),
             ),
             const SizedBox(height: 25),
           ],

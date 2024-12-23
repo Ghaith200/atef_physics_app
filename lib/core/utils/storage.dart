@@ -1,6 +1,7 @@
 import 'dart:convert';
+import 'dart:developer';
 
-import 'package:atef_physics/features/Auth/data/model/user_model.dart';
+import 'package:atef_physics/core/models/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:atef_physics/core/constants/storage_keys.dart';
 
@@ -19,7 +20,7 @@ class Storage {
   }
 
   /// Getter and Setter for Dark Mode Preference
-  bool get isDarkMood => prefs.getBool(StorageKeys.isDarkMood) ?? true;
+  bool get isDarkMood => false;
 
   set isDarkMood(bool isDarkMood) =>
       prefs.setBool(StorageKeys.isDarkMood, isDarkMood);
@@ -32,6 +33,7 @@ class Storage {
 
   bool get isAuth {
     final userdata = prefs.getString(StorageKeys.user);
+    log("User Data $userdata");
     if (userdata == null) {
       return false;
     } else {
@@ -40,9 +42,10 @@ class Storage {
   }
 
   UserModel get user =>
-      UserModel.fromJson(jsonDecode(prefs.getString(StorageKeys.user)!));
+      UserModel.fromJson(json.decode(prefs.getString(StorageKeys.user)!));
 
   set user(UserModel user) =>
-      prefs.setString(StorageKeys.user, user.toJson().toString());
-  Future<void> logout() => prefs.remove(StorageKeys.user);
+      prefs.setString(StorageKeys.user, json.encode(user.toJson()));
+
+  Future<void> logout()async =>await prefs.remove(StorageKeys.user);
 }

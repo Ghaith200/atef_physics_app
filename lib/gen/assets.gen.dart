@@ -43,13 +43,17 @@ class $AssetsFontsGen {
   /// File path: assets/fonts/Poppins-Regular.ttf
   String get poppinsRegular => 'assets/fonts/Poppins-Regular.ttf';
 
+  /// File path: assets/fonts/hevo_light.ttf
+  String get hevoLight => 'assets/fonts/hevo_light.ttf';
+
   /// List of all assets
   List<String> get values => [
         alexBrushRegular,
         alexandriaLight,
         alexandria,
         poppinsBold,
-        poppinsRegular
+        poppinsRegular,
+        hevoLight
       ];
 }
 
@@ -70,6 +74,9 @@ class $AssetsImagesGen {
   /// File path: assets/images/dark_mode_on_icon.png
   AssetGenImage get darkModeOnIcon =>
       const AssetGenImage('assets/images/dark_mode_on_icon.png');
+
+  /// File path: assets/images/icon.png
+  AssetGenImage get icon => const AssetGenImage('assets/images/icon.png');
 
   /// Directory path: assets/images/icons
   $AssetsImagesIconsGen get icons => const $AssetsImagesIconsGen();
@@ -109,6 +116,9 @@ class $AssetsImagesGen {
   SvgGenImage get profileImagePlaceholder =>
       const SvgGenImage('assets/images/profile_image_placeholder.svg');
 
+  /// File path: assets/images/splash.png
+  AssetGenImage get splash => const AssetGenImage('assets/images/splash.png');
+
   /// File path: assets/images/user_name.png
   AssetGenImage get userName =>
       const AssetGenImage('assets/images/user_name.png');
@@ -119,6 +129,7 @@ class $AssetsImagesGen {
         activeStatus,
         darkModeOffIcon,
         darkModeOnIcon,
+        icon,
         logoPng,
         logoSvg,
         me,
@@ -129,6 +140,7 @@ class $AssetsImagesGen {
         phone,
         profileFrame,
         profileImagePlaceholder,
+        splash,
         userName
       ];
 }

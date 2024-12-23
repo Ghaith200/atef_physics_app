@@ -1,6 +1,8 @@
+import 'package:atef_physics/core/utils/simple_observer.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -28,8 +30,9 @@ void main() async {
   await BackDoorServices.main();
 
   await Storage.instance.initStorage();
-  Storage.instance.isFirstTime = true;
+  // Storage.instance.isFirstTime = true;
   AppColors.isDarkMode = Storage.instance.isDarkMood;
+  Bloc.observer = SimpleObserver();
 
   runApp(
     EasyLocalization(
@@ -59,6 +62,7 @@ class MyApp extends StatelessWidget {
           supportedLocales: context.supportedLocales,
           locale: context.locale,
           debugShowCheckedModeBanner: false,
+
           theme: ThemeData(
             appBarTheme: AppBarTheme(
               iconTheme: IconThemeData(
@@ -72,7 +76,7 @@ class MyApp extends StatelessWidget {
               selectionColor: AppColors.blue.withOpacity(0.5),
               selectionHandleColor: AppColors.blue,
             ),
-            fontFamily: FontFamily.alexandria,
+            fontFamily: FontFamily.hevoLight,
             useMaterial3: true,
             scaffoldBackgroundColor: AppColors.blackWhite,
           ),

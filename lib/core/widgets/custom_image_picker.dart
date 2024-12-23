@@ -68,7 +68,10 @@ class _CustomImagePickerState extends State<CustomImagePicker> {
       return;
     }
     imagePath = File(response.path);
-    setState(() {});
+    setState(() {
+      
+    });
     widget.ontap(response);
   }
+
 }

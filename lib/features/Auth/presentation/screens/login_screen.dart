@@ -8,7 +8,7 @@ import 'package:atef_physics/core/utils/validator_utils.dart';
 import 'package:atef_physics/core/widgets/custom_button.dart';
 import 'package:atef_physics/core/widgets/custom_textfield.dart';
 import 'package:atef_physics/features/Auth/presentation/cubit/auth_cubit.dart';
-import 'package:atef_physics/features/home/home_screen.dart';
+import 'package:atef_physics/features/home/presentation/home_screen.dart';
 import 'package:atef_physics/features/Auth/presentation/screens/sign_up_screen.dart';
 import 'package:atef_physics/gen/assets.gen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -59,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 20),
               Text(
                 'Welcome Back',
-                style: AppTextStyles.alexandria25WhiteBlackW900,
+                style: AppTextStyles.hevoLight25WhiteBlackW900,
               ),
               SizedBox(height: 50.sp),
 
@@ -142,10 +142,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Text.rich(TextSpan(children: [
                   TextSpan(
                       text: "Don't have an account ?  ",
-                      style: AppTextStyles.alexandria15WhiteBlackW500),
+                      style: AppTextStyles.hevoLight15WhiteBlackW500),
                   TextSpan(
                     text: "Sign Up",
-                    style: AppTextStyles.alexandria15WhiteBlackW500.copyWith(
+                    style: AppTextStyles.hevoLight15WhiteBlackW500.copyWith(
                       decoration: TextDecoration.underline,
                       decorationColor: AppColors.whiteBlack,
                     ),

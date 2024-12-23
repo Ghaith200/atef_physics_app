@@ -7,10 +7,11 @@ class AppColors {
   // AppColors._internal();
 
   // Static theme mode variable
-  static bool isDarkMode = true;
+  static bool isDarkMode = false;
 
   // // Static color definitions
-  static const Color blue = Color(0xFF002DE3);
+  static const Color blue = Color(0xFF0096FF);
+
   static const Color red = Color.fromARGB(255, 255, 0, 0);
   // // static const Color gery = Colors.grey;
 
@@ -18,7 +19,7 @@ class AppColors {
   static Color get blackWhite => isDarkMode ? Colors.black : Colors.white;
 
   static Color get whiteBlack => isDarkMode ? Colors.white : Colors.black;
-  
+
   static Color get grey =>
       isDarkMode ? Colors.grey.shade500 : Colors.grey.shade700;
 
