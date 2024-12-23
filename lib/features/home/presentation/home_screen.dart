@@ -39,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return RefreshIndicator(
       triggerMode: RefreshIndicatorTriggerMode.anywhere,
       onRefresh: () async {
-        cubit.getCourses();
+     await   cubit.getCourses();
       },
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
