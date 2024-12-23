@@ -1,4 +1,3 @@
-import 'package:atef_physics/core/utils/app_colors.dart';
 import 'package:atef_physics/core/utils/app_snack_bar.dart';
 import 'package:atef_physics/core/widgets/custom_button.dart';
 import 'package:atef_physics/core/widgets/custom_image_picker.dart';
@@ -24,7 +23,6 @@ class _AddCourseScreenState extends State<AddCourseScreen> {
   late CourseCubit cubit;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     titleController = TextEditingController();
     priceController = TextEditingController();
@@ -107,7 +105,7 @@ class _AddCourseScreenState extends State<AddCourseScreen> {
               BlocConsumer<CourseCubit, CourseState>(
                 builder: (context, state) {
                   return state.maybeWhen<Widget>(
-                      load: () => CircularProgressIndicator(),
+                      load: () => const CircularProgressIndicator(),
                       orElse: () => CustomButton(
                             onTap: () {
                               if (photo == null) {

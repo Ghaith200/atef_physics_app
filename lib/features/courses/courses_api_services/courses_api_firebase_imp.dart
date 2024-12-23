@@ -177,8 +177,8 @@ class CoursesApiFirebaseImp implements CoursesApiServices {
 
         lessonsModel.add(LessonModel(
           id: data.id,
-          name: "title",
-          video: "content",
+          name: data.data()![FirebaseStrings.name],
+          video: data.data()![FirebaseStrings.video],
           watchCount: 5,
         ));
       }

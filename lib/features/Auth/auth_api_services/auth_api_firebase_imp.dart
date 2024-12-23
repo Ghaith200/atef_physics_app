@@ -10,7 +10,6 @@ import 'package:atef_physics/core/models/user_model.dart';
 class AuthApiFirebaseImp implements AuthApiServices {
   @override
   Future<bool> isSessionValid() {
-    // TODO: implement isSessionValid
     throw UnimplementedError();
   }
 

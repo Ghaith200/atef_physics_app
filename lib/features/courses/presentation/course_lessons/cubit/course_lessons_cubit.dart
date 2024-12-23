@@ -3,7 +3,7 @@ import 'package:atef_physics/core/models/lesson_model.dart';
 import 'package:atef_physics/core/network/api_error_handler.dart';
 import 'package:atef_physics/features/courses/courses_api_services/courses_api_firebase_imp.dart';
 import 'package:atef_physics/features/courses/courses_api_services/courses_api_services.dart';
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'course_lessons_state.dart';

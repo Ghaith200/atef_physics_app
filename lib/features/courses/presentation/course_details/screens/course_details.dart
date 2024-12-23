@@ -1,10 +1,13 @@
 import 'package:atef_physics/core/models/course_model.dart';
-import 'package:atef_physics/core/routes/app_router.dart';
 import 'package:atef_physics/core/models/lesson_model.dart';
 import 'package:atef_physics/core/widgets/custom_appbar.dart';
+
+import 'package:atef_physics/features/courses/presentation/course_details/widgets/enrolled_users_page_view.dart';
+
 import 'package:atef_physics/features/courses/presentation/course/cubit/course_cubit.dart';
 import 'package:atef_physics/features/courses/presentation/course_users/cubit/course_users_cubit.dart';
 import 'package:atef_physics/features/courses/presentation/course_users/screens/enrolled_users_page_view.dart';
+
 import 'package:atef_physics/features/courses/presentation/course_details/widgets/lessons_page_view.dart';
 import 'package:atef_physics/features/courses/presentation/course_lessons/cubit/course_lessons_cubit.dart';
 import 'package:atef_physics/features/courses/presentation/course_lessons/presentaion/screens/course_add_lesson.dart';
@@ -120,12 +123,27 @@ class _CourseDetailsState extends State<CourseDetails> {
                             ),
                           ),
                           const SizedBox(height: 5),
-                          Text(
-                            '${widget.courses.price} \$',
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                            ),
+                          Row(
+                            children: [
+                              const Text(
+                                'ريال',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight
+                                      .bold, // Example of adding additional styling
+                                ),
+                              ),
+                              Text(
+                                ' ${widget.courses.price} ',
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight
+                                      .bold, // Example of adding additional styling
+                                ),
+                              ),
+                            ],
                           ),
                           const SizedBox(height: 5),
                           Text(
@@ -149,11 +167,9 @@ class _CourseDetailsState extends State<CourseDetails> {
                 child: PageView(
                   children: [
                     // First page with lessons
-                    LessonsPageView(
-                      courses: widget.courses,
-                      lessons: lessons,
-                    ),
+                    LessonsPageView(courses: widget.courses),
                     // Second page with users
+
                     BlocProvider(
                       create: (context) => CourseUsersCubit(),
                       child: EnrolledUsersPageView(model: widget.courses),

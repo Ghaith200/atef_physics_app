@@ -1,9 +1,6 @@
 import 'package:atef_physics/core/models/course_model.dart';
-import 'package:atef_physics/core/utils/app_colors.dart';
 import 'package:atef_physics/core/utils/app_snack_bar.dart';
 import 'package:atef_physics/core/widgets/custom_button.dart';
-import 'package:atef_physics/core/widgets/custom_image_picker.dart';
-import 'package:atef_physics/features/courses/presentation/course/cubit/course_cubit.dart';
 import 'package:atef_physics/features/courses/presentation/course_lessons/cubit/course_lessons_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -112,7 +109,7 @@ class _CourseAddLessonState extends State<CourseAddLesson> {
               BlocConsumer<CourseLessonsCubit, CourseLessonsState>(
                 builder: (context, state) {
                   return state.maybeWhen<Widget>(
-                      load: () => CircularProgressIndicator(),
+                      load: () => const CircularProgressIndicator(),
                       orElse: () => CustomButton(
                             onTap: () {
                               if (formKey.currentState!.validate()) {
