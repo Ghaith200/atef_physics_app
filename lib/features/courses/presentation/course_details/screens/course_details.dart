@@ -3,7 +3,8 @@ import 'package:atef_physics/core/routes/app_router.dart';
 import 'package:atef_physics/core/models/lesson_model.dart';
 import 'package:atef_physics/core/widgets/custom_appbar.dart';
 import 'package:atef_physics/features/courses/presentation/course/cubit/course_cubit.dart';
-import 'package:atef_physics/features/courses/presentation/course_details/widgets/enrolled_users_page_view.dart';
+import 'package:atef_physics/features/courses/presentation/course_users/cubit/course_users_cubit.dart';
+import 'package:atef_physics/features/courses/presentation/course_users/screens/enrolled_users_page_view.dart';
 import 'package:atef_physics/features/courses/presentation/course_details/widgets/lessons_page_view.dart';
 import 'package:atef_physics/features/courses/presentation/course_lessons/cubit/course_lessons_cubit.dart';
 import 'package:atef_physics/features/courses/presentation/course_lessons/presentaion/screens/course_add_lesson.dart';
@@ -15,7 +16,6 @@ import 'package:go_router/go_router.dart';
 class CourseDetails extends StatefulWidget {
   static const String id = '/CourseDetails';
   final CourseModel courses;
-
 
   const CourseDetails({
     super.key,
@@ -32,9 +32,9 @@ class _CourseDetailsState extends State<CourseDetails> {
   @override
   void initState() {
     super.initState();
+
     courseCubit = BlocProvider.of<CourseLessonsCubit>(context);
     courseCubit.getCourseLessons(widget.courses);
-    
   }
 
   @override
@@ -42,7 +42,8 @@ class _CourseDetailsState extends State<CourseDetails> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          context.pushNamed(CourseAddLesson.id, extra: {"course": widget.courses});
+          context
+              .pushNamed(CourseAddLesson.id, extra: {"course": widget.courses});
         },
         child: const Icon(Icons.edit),
       ),
@@ -153,8 +154,10 @@ class _CourseDetailsState extends State<CourseDetails> {
                       lessons: lessons,
                     ),
                     // Second page with users
-                     EnrolledUsersPageView(),
-
+                    BlocProvider(
+                      create: (context) => CourseUsersCubit(),
+                      child: EnrolledUsersPageView(model: widget.courses),
+                    ),
                   ],
                 ),
               ),
