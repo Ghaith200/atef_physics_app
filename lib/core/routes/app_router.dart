@@ -3,7 +3,7 @@ import 'package:atef_physics/features/courses/presentation/course/screens/add_co
 import 'package:atef_physics/features/courses/presentation/course_details/screens/course_details.dart';
 import 'package:atef_physics/features/courses/presentation/course/cubit/course_cubit.dart';
 import 'package:atef_physics/features/courses/presentation/course_lessons/cubit/course_lessons_cubit.dart';
-import 'package:atef_physics/features/courses/presentation/course_lessons/presentaion/screens/course_add_lesson.dart';
+import 'package:atef_physics/features/courses/presentation/course_lessons/presentation/screens/course_add_lesson.dart';
 import 'package:atef_physics/features/onboarding/widgets/terms_and_conditions.dart';
 import 'package:go_router/go_router.dart';
 import 'package:atef_physics/core/utils/storage.dart';

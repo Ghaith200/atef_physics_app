@@ -21,7 +21,7 @@ mixin _$CourseLessonsState {
     required TResult Function() initial,
     required TResult Function() load,
     required TResult Function(List<LessonModel> models) successAll,
-    required TResult Function(LessonModel models) success,
+    required TResult Function(LessonModel models) add,
     required TResult Function(LessonModel model) remove,
     required TResult Function(ApiErrorHandler error) error,
   }) =>
@@ -31,7 +31,7 @@ mixin _$CourseLessonsState {
     TResult? Function()? initial,
     TResult? Function()? load,
     TResult? Function(List<LessonModel> models)? successAll,
-    TResult? Function(LessonModel models)? success,
+    TResult? Function(LessonModel models)? add,
     TResult? Function(LessonModel model)? remove,
     TResult? Function(ApiErrorHandler error)? error,
   }) =>
@@ -41,7 +41,7 @@ mixin _$CourseLessonsState {
     TResult Function()? initial,
     TResult Function()? load,
     TResult Function(List<LessonModel> models)? successAll,
-    TResult Function(LessonModel models)? success,
+    TResult Function(LessonModel models)? add,
     TResult Function(LessonModel model)? remove,
     TResult Function(ApiErrorHandler error)? error,
     required TResult orElse(),
@@ -52,7 +52,7 @@ mixin _$CourseLessonsState {
     required TResult Function(_Initial value) initial,
     required TResult Function(CourseLessonsLoading value) load,
     required TResult Function(AllCourseLessons value) successAll,
-    required TResult Function(CourseLessons value) success,
+    required TResult Function(CourseLessons value) add,
     required TResult Function(CourseLessonRemoved value) remove,
     required TResult Function(CourseLessonError value) error,
   }) =>
@@ -62,7 +62,7 @@ mixin _$CourseLessonsState {
     TResult? Function(_Initial value)? initial,
     TResult? Function(CourseLessonsLoading value)? load,
     TResult? Function(AllCourseLessons value)? successAll,
-    TResult? Function(CourseLessons value)? success,
+    TResult? Function(CourseLessons value)? add,
     TResult? Function(CourseLessonRemoved value)? remove,
     TResult? Function(CourseLessonError value)? error,
   }) =>
@@ -72,7 +72,7 @@ mixin _$CourseLessonsState {
     TResult Function(_Initial value)? initial,
     TResult Function(CourseLessonsLoading value)? load,
     TResult Function(AllCourseLessons value)? successAll,
-    TResult Function(CourseLessons value)? success,
+    TResult Function(CourseLessons value)? add,
     TResult Function(CourseLessonRemoved value)? remove,
     TResult Function(CourseLessonError value)? error,
     required TResult orElse(),
@@ -145,7 +145,7 @@ class _$InitialImpl implements _Initial {
     required TResult Function() initial,
     required TResult Function() load,
     required TResult Function(List<LessonModel> models) successAll,
-    required TResult Function(LessonModel models) success,
+    required TResult Function(LessonModel models) add,
     required TResult Function(LessonModel model) remove,
     required TResult Function(ApiErrorHandler error) error,
   }) {
@@ -158,7 +158,7 @@ class _$InitialImpl implements _Initial {
     TResult? Function()? initial,
     TResult? Function()? load,
     TResult? Function(List<LessonModel> models)? successAll,
-    TResult? Function(LessonModel models)? success,
+    TResult? Function(LessonModel models)? add,
     TResult? Function(LessonModel model)? remove,
     TResult? Function(ApiErrorHandler error)? error,
   }) {
@@ -171,7 +171,7 @@ class _$InitialImpl implements _Initial {
     TResult Function()? initial,
     TResult Function()? load,
     TResult Function(List<LessonModel> models)? successAll,
-    TResult Function(LessonModel models)? success,
+    TResult Function(LessonModel models)? add,
     TResult Function(LessonModel model)? remove,
     TResult Function(ApiErrorHandler error)? error,
     required TResult orElse(),
@@ -188,7 +188,7 @@ class _$InitialImpl implements _Initial {
     required TResult Function(_Initial value) initial,
     required TResult Function(CourseLessonsLoading value) load,
     required TResult Function(AllCourseLessons value) successAll,
-    required TResult Function(CourseLessons value) success,
+    required TResult Function(CourseLessons value) add,
     required TResult Function(CourseLessonRemoved value) remove,
     required TResult Function(CourseLessonError value) error,
   }) {
@@ -201,7 +201,7 @@ class _$InitialImpl implements _Initial {
     TResult? Function(_Initial value)? initial,
     TResult? Function(CourseLessonsLoading value)? load,
     TResult? Function(AllCourseLessons value)? successAll,
-    TResult? Function(CourseLessons value)? success,
+    TResult? Function(CourseLessons value)? add,
     TResult? Function(CourseLessonRemoved value)? remove,
     TResult? Function(CourseLessonError value)? error,
   }) {
@@ -214,7 +214,7 @@ class _$InitialImpl implements _Initial {
     TResult Function(_Initial value)? initial,
     TResult Function(CourseLessonsLoading value)? load,
     TResult Function(AllCourseLessons value)? successAll,
-    TResult Function(CourseLessons value)? success,
+    TResult Function(CourseLessons value)? add,
     TResult Function(CourseLessonRemoved value)? remove,
     TResult Function(CourseLessonError value)? error,
     required TResult orElse(),
@@ -275,7 +275,7 @@ class _$CourseLessonsLoadingImpl implements CourseLessonsLoading {
     required TResult Function() initial,
     required TResult Function() load,
     required TResult Function(List<LessonModel> models) successAll,
-    required TResult Function(LessonModel models) success,
+    required TResult Function(LessonModel models) add,
     required TResult Function(LessonModel model) remove,
     required TResult Function(ApiErrorHandler error) error,
   }) {
@@ -288,7 +288,7 @@ class _$CourseLessonsLoadingImpl implements CourseLessonsLoading {
     TResult? Function()? initial,
     TResult? Function()? load,
     TResult? Function(List<LessonModel> models)? successAll,
-    TResult? Function(LessonModel models)? success,
+    TResult? Function(LessonModel models)? add,
     TResult? Function(LessonModel model)? remove,
     TResult? Function(ApiErrorHandler error)? error,
   }) {
@@ -301,7 +301,7 @@ class _$CourseLessonsLoadingImpl implements CourseLessonsLoading {
     TResult Function()? initial,
     TResult Function()? load,
     TResult Function(List<LessonModel> models)? successAll,
-    TResult Function(LessonModel models)? success,
+    TResult Function(LessonModel models)? add,
     TResult Function(LessonModel model)? remove,
     TResult Function(ApiErrorHandler error)? error,
     required TResult orElse(),
@@ -318,7 +318,7 @@ class _$CourseLessonsLoadingImpl implements CourseLessonsLoading {
     required TResult Function(_Initial value) initial,
     required TResult Function(CourseLessonsLoading value) load,
     required TResult Function(AllCourseLessons value) successAll,
-    required TResult Function(CourseLessons value) success,
+    required TResult Function(CourseLessons value) add,
     required TResult Function(CourseLessonRemoved value) remove,
     required TResult Function(CourseLessonError value) error,
   }) {
@@ -331,7 +331,7 @@ class _$CourseLessonsLoadingImpl implements CourseLessonsLoading {
     TResult? Function(_Initial value)? initial,
     TResult? Function(CourseLessonsLoading value)? load,
     TResult? Function(AllCourseLessons value)? successAll,
-    TResult? Function(CourseLessons value)? success,
+    TResult? Function(CourseLessons value)? add,
     TResult? Function(CourseLessonRemoved value)? remove,
     TResult? Function(CourseLessonError value)? error,
   }) {
@@ -344,7 +344,7 @@ class _$CourseLessonsLoadingImpl implements CourseLessonsLoading {
     TResult Function(_Initial value)? initial,
     TResult Function(CourseLessonsLoading value)? load,
     TResult Function(AllCourseLessons value)? successAll,
-    TResult Function(CourseLessons value)? success,
+    TResult Function(CourseLessons value)? add,
     TResult Function(CourseLessonRemoved value)? remove,
     TResult Function(CourseLessonError value)? error,
     required TResult orElse(),
@@ -439,7 +439,7 @@ class _$AllCourseLessonsImpl implements AllCourseLessons {
     required TResult Function() initial,
     required TResult Function() load,
     required TResult Function(List<LessonModel> models) successAll,
-    required TResult Function(LessonModel models) success,
+    required TResult Function(LessonModel models) add,
     required TResult Function(LessonModel model) remove,
     required TResult Function(ApiErrorHandler error) error,
   }) {
@@ -452,7 +452,7 @@ class _$AllCourseLessonsImpl implements AllCourseLessons {
     TResult? Function()? initial,
     TResult? Function()? load,
     TResult? Function(List<LessonModel> models)? successAll,
-    TResult? Function(LessonModel models)? success,
+    TResult? Function(LessonModel models)? add,
     TResult? Function(LessonModel model)? remove,
     TResult? Function(ApiErrorHandler error)? error,
   }) {
@@ -465,7 +465,7 @@ class _$AllCourseLessonsImpl implements AllCourseLessons {
     TResult Function()? initial,
     TResult Function()? load,
     TResult Function(List<LessonModel> models)? successAll,
-    TResult Function(LessonModel models)? success,
+    TResult Function(LessonModel models)? add,
     TResult Function(LessonModel model)? remove,
     TResult Function(ApiErrorHandler error)? error,
     required TResult orElse(),
@@ -482,7 +482,7 @@ class _$AllCourseLessonsImpl implements AllCourseLessons {
     required TResult Function(_Initial value) initial,
     required TResult Function(CourseLessonsLoading value) load,
     required TResult Function(AllCourseLessons value) successAll,
-    required TResult Function(CourseLessons value) success,
+    required TResult Function(CourseLessons value) add,
     required TResult Function(CourseLessonRemoved value) remove,
     required TResult Function(CourseLessonError value) error,
   }) {
@@ -495,7 +495,7 @@ class _$AllCourseLessonsImpl implements AllCourseLessons {
     TResult? Function(_Initial value)? initial,
     TResult? Function(CourseLessonsLoading value)? load,
     TResult? Function(AllCourseLessons value)? successAll,
-    TResult? Function(CourseLessons value)? success,
+    TResult? Function(CourseLessons value)? add,
     TResult? Function(CourseLessonRemoved value)? remove,
     TResult? Function(CourseLessonError value)? error,
   }) {
@@ -508,7 +508,7 @@ class _$AllCourseLessonsImpl implements AllCourseLessons {
     TResult Function(_Initial value)? initial,
     TResult Function(CourseLessonsLoading value)? load,
     TResult Function(AllCourseLessons value)? successAll,
-    TResult Function(CourseLessons value)? success,
+    TResult Function(CourseLessons value)? add,
     TResult Function(CourseLessonRemoved value)? remove,
     TResult Function(CourseLessonError value)? error,
     required TResult orElse(),
@@ -576,7 +576,7 @@ class _$CourseLessonsImpl implements CourseLessons {
 
   @override
   String toString() {
-    return 'CourseLessonsState.success(models: $models)';
+    return 'CourseLessonsState.add(models: $models)';
   }
 
   @override
@@ -604,11 +604,11 @@ class _$CourseLessonsImpl implements CourseLessons {
     required TResult Function() initial,
     required TResult Function() load,
     required TResult Function(List<LessonModel> models) successAll,
-    required TResult Function(LessonModel models) success,
+    required TResult Function(LessonModel models) add,
     required TResult Function(LessonModel model) remove,
     required TResult Function(ApiErrorHandler error) error,
   }) {
-    return success(models);
+    return add(models);
   }
 
   @override
@@ -617,11 +617,11 @@ class _$CourseLessonsImpl implements CourseLessons {
     TResult? Function()? initial,
     TResult? Function()? load,
     TResult? Function(List<LessonModel> models)? successAll,
-    TResult? Function(LessonModel models)? success,
+    TResult? Function(LessonModel models)? add,
     TResult? Function(LessonModel model)? remove,
     TResult? Function(ApiErrorHandler error)? error,
   }) {
-    return success?.call(models);
+    return add?.call(models);
   }
 
   @override
@@ -630,13 +630,13 @@ class _$CourseLessonsImpl implements CourseLessons {
     TResult Function()? initial,
     TResult Function()? load,
     TResult Function(List<LessonModel> models)? successAll,
-    TResult Function(LessonModel models)? success,
+    TResult Function(LessonModel models)? add,
     TResult Function(LessonModel model)? remove,
     TResult Function(ApiErrorHandler error)? error,
     required TResult orElse(),
   }) {
-    if (success != null) {
-      return success(models);
+    if (add != null) {
+      return add(models);
     }
     return orElse();
   }
@@ -647,11 +647,11 @@ class _$CourseLessonsImpl implements CourseLessons {
     required TResult Function(_Initial value) initial,
     required TResult Function(CourseLessonsLoading value) load,
     required TResult Function(AllCourseLessons value) successAll,
-    required TResult Function(CourseLessons value) success,
+    required TResult Function(CourseLessons value) add,
     required TResult Function(CourseLessonRemoved value) remove,
     required TResult Function(CourseLessonError value) error,
   }) {
-    return success(this);
+    return add(this);
   }
 
   @override
@@ -660,11 +660,11 @@ class _$CourseLessonsImpl implements CourseLessons {
     TResult? Function(_Initial value)? initial,
     TResult? Function(CourseLessonsLoading value)? load,
     TResult? Function(AllCourseLessons value)? successAll,
-    TResult? Function(CourseLessons value)? success,
+    TResult? Function(CourseLessons value)? add,
     TResult? Function(CourseLessonRemoved value)? remove,
     TResult? Function(CourseLessonError value)? error,
   }) {
-    return success?.call(this);
+    return add?.call(this);
   }
 
   @override
@@ -673,13 +673,13 @@ class _$CourseLessonsImpl implements CourseLessons {
     TResult Function(_Initial value)? initial,
     TResult Function(CourseLessonsLoading value)? load,
     TResult Function(AllCourseLessons value)? successAll,
-    TResult Function(CourseLessons value)? success,
+    TResult Function(CourseLessons value)? add,
     TResult Function(CourseLessonRemoved value)? remove,
     TResult Function(CourseLessonError value)? error,
     required TResult orElse(),
   }) {
-    if (success != null) {
-      return success(this);
+    if (add != null) {
+      return add(this);
     }
     return orElse();
   }
@@ -769,7 +769,7 @@ class _$CourseLessonRemovedImpl implements CourseLessonRemoved {
     required TResult Function() initial,
     required TResult Function() load,
     required TResult Function(List<LessonModel> models) successAll,
-    required TResult Function(LessonModel models) success,
+    required TResult Function(LessonModel models) add,
     required TResult Function(LessonModel model) remove,
     required TResult Function(ApiErrorHandler error) error,
   }) {
@@ -782,7 +782,7 @@ class _$CourseLessonRemovedImpl implements CourseLessonRemoved {
     TResult? Function()? initial,
     TResult? Function()? load,
     TResult? Function(List<LessonModel> models)? successAll,
-    TResult? Function(LessonModel models)? success,
+    TResult? Function(LessonModel models)? add,
     TResult? Function(LessonModel model)? remove,
     TResult? Function(ApiErrorHandler error)? error,
   }) {
@@ -795,7 +795,7 @@ class _$CourseLessonRemovedImpl implements CourseLessonRemoved {
     TResult Function()? initial,
     TResult Function()? load,
     TResult Function(List<LessonModel> models)? successAll,
-    TResult Function(LessonModel models)? success,
+    TResult Function(LessonModel models)? add,
     TResult Function(LessonModel model)? remove,
     TResult Function(ApiErrorHandler error)? error,
     required TResult orElse(),
@@ -812,7 +812,7 @@ class _$CourseLessonRemovedImpl implements CourseLessonRemoved {
     required TResult Function(_Initial value) initial,
     required TResult Function(CourseLessonsLoading value) load,
     required TResult Function(AllCourseLessons value) successAll,
-    required TResult Function(CourseLessons value) success,
+    required TResult Function(CourseLessons value) add,
     required TResult Function(CourseLessonRemoved value) remove,
     required TResult Function(CourseLessonError value) error,
   }) {
@@ -825,7 +825,7 @@ class _$CourseLessonRemovedImpl implements CourseLessonRemoved {
     TResult? Function(_Initial value)? initial,
     TResult? Function(CourseLessonsLoading value)? load,
     TResult? Function(AllCourseLessons value)? successAll,
-    TResult? Function(CourseLessons value)? success,
+    TResult? Function(CourseLessons value)? add,
     TResult? Function(CourseLessonRemoved value)? remove,
     TResult? Function(CourseLessonError value)? error,
   }) {
@@ -838,7 +838,7 @@ class _$CourseLessonRemovedImpl implements CourseLessonRemoved {
     TResult Function(_Initial value)? initial,
     TResult Function(CourseLessonsLoading value)? load,
     TResult Function(AllCourseLessons value)? successAll,
-    TResult Function(CourseLessons value)? success,
+    TResult Function(CourseLessons value)? add,
     TResult Function(CourseLessonRemoved value)? remove,
     TResult Function(CourseLessonError value)? error,
     required TResult orElse(),
@@ -935,7 +935,7 @@ class _$CourseLessonErrorImpl implements CourseLessonError {
     required TResult Function() initial,
     required TResult Function() load,
     required TResult Function(List<LessonModel> models) successAll,
-    required TResult Function(LessonModel models) success,
+    required TResult Function(LessonModel models) add,
     required TResult Function(LessonModel model) remove,
     required TResult Function(ApiErrorHandler error) error,
   }) {
@@ -948,7 +948,7 @@ class _$CourseLessonErrorImpl implements CourseLessonError {
     TResult? Function()? initial,
     TResult? Function()? load,
     TResult? Function(List<LessonModel> models)? successAll,
-    TResult? Function(LessonModel models)? success,
+    TResult? Function(LessonModel models)? add,
     TResult? Function(LessonModel model)? remove,
     TResult? Function(ApiErrorHandler error)? error,
   }) {
@@ -961,7 +961,7 @@ class _$CourseLessonErrorImpl implements CourseLessonError {
     TResult Function()? initial,
     TResult Function()? load,
     TResult Function(List<LessonModel> models)? successAll,
-    TResult Function(LessonModel models)? success,
+    TResult Function(LessonModel models)? add,
     TResult Function(LessonModel model)? remove,
     TResult Function(ApiErrorHandler error)? error,
     required TResult orElse(),
@@ -978,7 +978,7 @@ class _$CourseLessonErrorImpl implements CourseLessonError {
     required TResult Function(_Initial value) initial,
     required TResult Function(CourseLessonsLoading value) load,
     required TResult Function(AllCourseLessons value) successAll,
-    required TResult Function(CourseLessons value) success,
+    required TResult Function(CourseLessons value) add,
     required TResult Function(CourseLessonRemoved value) remove,
     required TResult Function(CourseLessonError value) error,
   }) {
@@ -991,7 +991,7 @@ class _$CourseLessonErrorImpl implements CourseLessonError {
     TResult? Function(_Initial value)? initial,
     TResult? Function(CourseLessonsLoading value)? load,
     TResult? Function(AllCourseLessons value)? successAll,
-    TResult? Function(CourseLessons value)? success,
+    TResult? Function(CourseLessons value)? add,
     TResult? Function(CourseLessonRemoved value)? remove,
     TResult? Function(CourseLessonError value)? error,
   }) {
@@ -1004,7 +1004,7 @@ class _$CourseLessonErrorImpl implements CourseLessonError {
     TResult Function(_Initial value)? initial,
     TResult Function(CourseLessonsLoading value)? load,
     TResult Function(AllCourseLessons value)? successAll,
-    TResult Function(CourseLessons value)? success,
+    TResult Function(CourseLessons value)? add,
     TResult Function(CourseLessonRemoved value)? remove,
     TResult Function(CourseLessonError value)? error,
     required TResult orElse(),
