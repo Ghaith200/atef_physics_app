@@ -1,6 +1,7 @@
 import 'package:atef_physics/core/models/course_model.dart';
 import 'package:atef_physics/core/widgets/custom_appbar.dart';
 import 'package:atef_physics/gen/assets.gen.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class CourseDetails extends StatelessWidget {
@@ -11,35 +12,42 @@ class CourseDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: const Icon(Icons.edit),
+      ),
       appBar: AppBar(
         title: const Text('Course Details'),
       ),
       body: SafeArea(
           child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: Column(
           children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                    clipBehavior: Clip.antiAlias,
-                    decoration: BoxDecoration(
+            Container(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                      clipBehavior: Clip.antiAlias,
+                      height: 100,
+                      decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        image: DecorationImage(
-                            image: AssetImage(Assets.images.icon.path))),
-                    child: Image.asset(
-                      Assets.images.icon.path,
-                      width: 120,
-                    )),
-                const SizedBox(width: 25),
-                Column(
-                  children: [
-                    Text(courses.title),
-                    Text(courses.price.toString()),
-                  ],
-                ),
-              ],
+                      ),
+                      child: CachedNetworkImage(
+                        imageUrl: courses.photo,
+                      )),
+                  const SizedBox(width: 25),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(courses.title),
+                      Text('${courses.price} \$'),
+                      Text('enrolled : 50'),
+                    ],
+                  ),
+                ],
+              ),
             ),
             const SizedBox(
               height: 20,
