@@ -11,6 +11,7 @@ class CourseCubit extends Cubit<CourseState> {
   CourseCubit() : super(const CourseState.initial());
   final loading = const CourseState.load();
   final CoursesApiServices apiServices = CoursesApiFirebaseImp();
+  
   Future<void> getCourses() async {
     emit(loading);
     final data = await apiServices.coursesList();

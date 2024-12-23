@@ -101,6 +101,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   courses = models;
                   return null;
                 },
+                success: (models) {
+                  log("Courses Loaded");
+                  courses.add(models);
+                  return null;
+                },
               );
               if (widge != null) {
                 return widge;
