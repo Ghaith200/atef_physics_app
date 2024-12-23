@@ -9,6 +9,8 @@ class CourseLessonsState with _$CourseLessonsState {
   const factory CourseLessonsState.add(LessonModel models) = CourseLessons;
   const factory CourseLessonsState.remove(LessonModel model) =
       CourseLessonRemoved;
+  const factory CourseLessonsState.update(LessonModel model) =
+      CourseLessonUpdated;
   const factory CourseLessonsState.error(ApiErrorHandler error) =
       CourseLessonError;
 }

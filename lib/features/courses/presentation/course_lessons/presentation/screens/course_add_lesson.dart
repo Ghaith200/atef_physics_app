@@ -1,5 +1,7 @@
 import 'package:atef_physics/core/models/course_model.dart';
+import 'package:atef_physics/core/models/lesson_model.dart';
 import 'package:atef_physics/core/utils/app_snack_bar.dart';
+import 'package:atef_physics/core/widgets/custom_appbar.dart';
 import 'package:atef_physics/core/widgets/custom_button.dart';
 import 'package:atef_physics/features/courses/presentation/course_lessons/cubit/course_lessons_cubit.dart';
 import 'package:flutter/material.dart';
@@ -9,8 +11,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class CourseAddLesson extends StatefulWidget {
   static const String id = "/CourseAddLesson";
   final CourseModel courses;
-
-  const CourseAddLesson({super.key, required this.courses});
+  final LessonModel? lesson;
+  const CourseAddLesson({
+    super.key,
+    required this.courses,
+    this.lesson,
+  });
 
   @override
   State<CourseAddLesson> createState() => _CourseAddLessonState();
@@ -21,7 +27,7 @@ class _CourseAddLessonState extends State<CourseAddLesson> {
   late TextEditingController titleController;
   late TextEditingController videoController;
   late TextEditingController watchCountController;
-
+  late LessonModel? model = widget.lesson;
   String? photo;
   late CourseLessonsCubit cubit;
   @override
@@ -31,6 +37,11 @@ class _CourseAddLessonState extends State<CourseAddLesson> {
     videoController = TextEditingController();
     watchCountController = TextEditingController();
     cubit = BlocProvider.of<CourseLessonsCubit>(context);
+    if (model != null) {
+      titleController.text = model!.name;
+      videoController.text = model!.video;
+      watchCountController.text = model!.watchCount.toString();
+    }
   }
 
   @override
@@ -44,8 +55,9 @@ class _CourseAddLessonState extends State<CourseAddLesson> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        title: const Text('Add Lesson'),
+      appBar: CustomAppBars(
+        text: model == null ? "Add Lesson" : "Update Lesson",
+        backbutton: true,
       ),
       body: SafeArea(
         child: Padding(
@@ -114,17 +126,26 @@ class _CourseAddLessonState extends State<CourseAddLesson> {
                             onTap: () {
                               if (formKey.currentState!.validate()) {
                                 // Process form data here
-                                cubit.addLesson(
-                                  course: widget.courses,
-                                  name: titleController.text,
-                                  video: videoController.text,
-                                  watchCount:
-                                      int.parse(watchCountController.text),
-                                );
+                                model == null
+                                    ? cubit.addLesson(
+                                        course: widget.courses,
+                                        name: titleController.text,
+                                        video: videoController.text,
+                                        watchCount: int.parse(
+                                            watchCountController.text),
+                                      )
+                                    : cubit.updateLesson(
+                                        lesson: model!,
+                                        name: titleController.text,
+                                        video: videoController.text,
+                                        watchCount: int.parse(
+                                            watchCountController.text),
+                                      );
                               }
                             },
                             boarderRadius: 30,
-                            title: "add Lesson",
+                            title:
+                                model == null ? "Add Lesson" : "Update Lesson",
                           ));
                 },
                 listener: (context, state) => state.mapOrNull(

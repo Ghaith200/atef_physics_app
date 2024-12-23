@@ -2,7 +2,8 @@ import 'package:atef_physics/core/constants/app_text_styles.dart';
 import 'package:atef_physics/core/models/course_model.dart';
 import 'package:atef_physics/core/utils/app_colors.dart';
 import 'package:atef_physics/core/utils/storage.dart';
-import 'package:atef_physics/features/courses/presentation/course_details/screens/course_details.dart';
+import 'package:atef_physics/features/courses/presentation/course/screens/add_course_screen.dart';
+import 'package:atef_physics/features/courses/presentation/course/screens/course_details.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:go_router/go_router.dart';
@@ -41,7 +42,8 @@ class CourseWidget extends StatelessWidget {
                   horizontal: 15, vertical: 10),
               alignment: Alignment.topRight,
               child: GestureDetector(
-                onTap: () {},
+                onTap: () => context
+                    .pushNamed(AddCourseScreen.id, extra: {"course": course}),
                 child: CircleAvatar(
                   backgroundColor: Colors.white.withOpacity(.6),
                   child: const Icon(Icons.edit),

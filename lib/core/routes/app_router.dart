@@ -1,9 +1,11 @@
 import 'package:atef_physics/core/models/course_model.dart';
+import 'package:atef_physics/core/models/lesson_model.dart';
 import 'package:atef_physics/features/courses/presentation/course/screens/add_course_screen.dart';
-import 'package:atef_physics/features/courses/presentation/course_details/screens/course_details.dart';
+import 'package:atef_physics/features/courses/presentation/course/screens/course_details.dart';
 import 'package:atef_physics/features/courses/presentation/course/cubit/course_cubit.dart';
 import 'package:atef_physics/features/courses/presentation/course_lessons/cubit/course_lessons_cubit.dart';
 import 'package:atef_physics/features/courses/presentation/course_lessons/presentation/screens/course_add_lesson.dart';
+import 'package:atef_physics/features/courses/presentation/course_users/cubit/course_users_cubit.dart';
 import 'package:atef_physics/features/onboarding/widgets/terms_and_conditions.dart';
 import 'package:go_router/go_router.dart';
 import 'package:atef_physics/core/utils/storage.dart';
@@ -78,18 +80,31 @@ abstract class AppRouter {
       GoRoute(
           path: AddCourseScreen.id,
           name: AddCourseScreen.id,
-          builder: (context, state) => BlocProvider(
-                create: (context) => CourseCubit(),
-                child: const AddCourseScreen(),
-              )),
+          builder: (context, state) {
+            final extra = state.extra as Map<String, dynamic>? ?? {};
+            final CourseModel? course = extra['course'] as CourseModel?;
+            return BlocProvider(
+              create: (context) => CourseCubit(),
+              child: AddCourseScreen(
+                model: course,
+              ),
+            );
+          }),
       GoRoute(
         path: CourseDetails.id,
         name: CourseDetails.id,
         builder: (context, state) {
           final extra = state.extra as Map<String, dynamic>? ?? {};
           final courses = extra['courses'] as CourseModel;
-          return BlocProvider(
-            create: (context) => CourseLessonsCubit(),
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => CourseLessonsCubit(),
+              ),
+              BlocProvider(
+                create: (context) => CourseUsersCubit(),
+              ),
+            ],
             child: CourseDetails(
               courses: courses,
             ),
@@ -102,10 +117,13 @@ abstract class AppRouter {
         builder: (context, state) {
           final extra = state.extra as Map<String, dynamic>? ?? {};
           final course = extra['course'] as CourseModel;
+          final LessonModel? lessson = extra['lesson'];
+
           return BlocProvider(
             create: (context) => CourseLessonsCubit(),
             child: CourseAddLesson(
               courses: course,
+              lesson: lessson,
             ),
           );
         },

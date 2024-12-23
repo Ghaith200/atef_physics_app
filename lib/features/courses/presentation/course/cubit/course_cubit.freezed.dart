@@ -21,7 +21,8 @@ mixin _$CourseState {
     required TResult Function() initial,
     required TResult Function() load,
     required TResult Function(List<CourseModel> models) successAll,
-    required TResult Function(CourseModel model) success,
+    required TResult Function(CourseModel model) add,
+    required TResult Function(CourseModel model) update,
     required TResult Function(ApiErrorHandler error) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -30,7 +31,8 @@ mixin _$CourseState {
     TResult? Function()? initial,
     TResult? Function()? load,
     TResult? Function(List<CourseModel> models)? successAll,
-    TResult? Function(CourseModel model)? success,
+    TResult? Function(CourseModel model)? add,
+    TResult? Function(CourseModel model)? update,
     TResult? Function(ApiErrorHandler error)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -39,7 +41,8 @@ mixin _$CourseState {
     TResult Function()? initial,
     TResult Function()? load,
     TResult Function(List<CourseModel> models)? successAll,
-    TResult Function(CourseModel model)? success,
+    TResult Function(CourseModel model)? add,
+    TResult Function(CourseModel model)? update,
     TResult Function(ApiErrorHandler error)? error,
     required TResult orElse(),
   }) =>
@@ -49,7 +52,8 @@ mixin _$CourseState {
     required TResult Function(_Initial value) initial,
     required TResult Function(CoursesLoading value) load,
     required TResult Function(AllCourses value) successAll,
-    required TResult Function(Courses value) success,
+    required TResult Function(AddCourses value) add,
+    required TResult Function(UpdateCourses value) update,
     required TResult Function(CoursesError value) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -58,7 +62,8 @@ mixin _$CourseState {
     TResult? Function(_Initial value)? initial,
     TResult? Function(CoursesLoading value)? load,
     TResult? Function(AllCourses value)? successAll,
-    TResult? Function(Courses value)? success,
+    TResult? Function(AddCourses value)? add,
+    TResult? Function(UpdateCourses value)? update,
     TResult? Function(CoursesError value)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -67,7 +72,8 @@ mixin _$CourseState {
     TResult Function(_Initial value)? initial,
     TResult Function(CoursesLoading value)? load,
     TResult Function(AllCourses value)? successAll,
-    TResult Function(Courses value)? success,
+    TResult Function(AddCourses value)? add,
+    TResult Function(UpdateCourses value)? update,
     TResult Function(CoursesError value)? error,
     required TResult orElse(),
   }) =>
@@ -139,7 +145,8 @@ class _$InitialImpl implements _Initial {
     required TResult Function() initial,
     required TResult Function() load,
     required TResult Function(List<CourseModel> models) successAll,
-    required TResult Function(CourseModel model) success,
+    required TResult Function(CourseModel model) add,
+    required TResult Function(CourseModel model) update,
     required TResult Function(ApiErrorHandler error) error,
   }) {
     return initial();
@@ -151,7 +158,8 @@ class _$InitialImpl implements _Initial {
     TResult? Function()? initial,
     TResult? Function()? load,
     TResult? Function(List<CourseModel> models)? successAll,
-    TResult? Function(CourseModel model)? success,
+    TResult? Function(CourseModel model)? add,
+    TResult? Function(CourseModel model)? update,
     TResult? Function(ApiErrorHandler error)? error,
   }) {
     return initial?.call();
@@ -163,7 +171,8 @@ class _$InitialImpl implements _Initial {
     TResult Function()? initial,
     TResult Function()? load,
     TResult Function(List<CourseModel> models)? successAll,
-    TResult Function(CourseModel model)? success,
+    TResult Function(CourseModel model)? add,
+    TResult Function(CourseModel model)? update,
     TResult Function(ApiErrorHandler error)? error,
     required TResult orElse(),
   }) {
@@ -179,7 +188,8 @@ class _$InitialImpl implements _Initial {
     required TResult Function(_Initial value) initial,
     required TResult Function(CoursesLoading value) load,
     required TResult Function(AllCourses value) successAll,
-    required TResult Function(Courses value) success,
+    required TResult Function(AddCourses value) add,
+    required TResult Function(UpdateCourses value) update,
     required TResult Function(CoursesError value) error,
   }) {
     return initial(this);
@@ -191,7 +201,8 @@ class _$InitialImpl implements _Initial {
     TResult? Function(_Initial value)? initial,
     TResult? Function(CoursesLoading value)? load,
     TResult? Function(AllCourses value)? successAll,
-    TResult? Function(Courses value)? success,
+    TResult? Function(AddCourses value)? add,
+    TResult? Function(UpdateCourses value)? update,
     TResult? Function(CoursesError value)? error,
   }) {
     return initial?.call(this);
@@ -203,7 +214,8 @@ class _$InitialImpl implements _Initial {
     TResult Function(_Initial value)? initial,
     TResult Function(CoursesLoading value)? load,
     TResult Function(AllCourses value)? successAll,
-    TResult Function(Courses value)? success,
+    TResult Function(AddCourses value)? add,
+    TResult Function(UpdateCourses value)? update,
     TResult Function(CoursesError value)? error,
     required TResult orElse(),
   }) {
@@ -262,7 +274,8 @@ class _$CoursesLoadingImpl implements CoursesLoading {
     required TResult Function() initial,
     required TResult Function() load,
     required TResult Function(List<CourseModel> models) successAll,
-    required TResult Function(CourseModel model) success,
+    required TResult Function(CourseModel model) add,
+    required TResult Function(CourseModel model) update,
     required TResult Function(ApiErrorHandler error) error,
   }) {
     return load();
@@ -274,7 +287,8 @@ class _$CoursesLoadingImpl implements CoursesLoading {
     TResult? Function()? initial,
     TResult? Function()? load,
     TResult? Function(List<CourseModel> models)? successAll,
-    TResult? Function(CourseModel model)? success,
+    TResult? Function(CourseModel model)? add,
+    TResult? Function(CourseModel model)? update,
     TResult? Function(ApiErrorHandler error)? error,
   }) {
     return load?.call();
@@ -286,7 +300,8 @@ class _$CoursesLoadingImpl implements CoursesLoading {
     TResult Function()? initial,
     TResult Function()? load,
     TResult Function(List<CourseModel> models)? successAll,
-    TResult Function(CourseModel model)? success,
+    TResult Function(CourseModel model)? add,
+    TResult Function(CourseModel model)? update,
     TResult Function(ApiErrorHandler error)? error,
     required TResult orElse(),
   }) {
@@ -302,7 +317,8 @@ class _$CoursesLoadingImpl implements CoursesLoading {
     required TResult Function(_Initial value) initial,
     required TResult Function(CoursesLoading value) load,
     required TResult Function(AllCourses value) successAll,
-    required TResult Function(Courses value) success,
+    required TResult Function(AddCourses value) add,
+    required TResult Function(UpdateCourses value) update,
     required TResult Function(CoursesError value) error,
   }) {
     return load(this);
@@ -314,7 +330,8 @@ class _$CoursesLoadingImpl implements CoursesLoading {
     TResult? Function(_Initial value)? initial,
     TResult? Function(CoursesLoading value)? load,
     TResult? Function(AllCourses value)? successAll,
-    TResult? Function(Courses value)? success,
+    TResult? Function(AddCourses value)? add,
+    TResult? Function(UpdateCourses value)? update,
     TResult? Function(CoursesError value)? error,
   }) {
     return load?.call(this);
@@ -326,7 +343,8 @@ class _$CoursesLoadingImpl implements CoursesLoading {
     TResult Function(_Initial value)? initial,
     TResult Function(CoursesLoading value)? load,
     TResult Function(AllCourses value)? successAll,
-    TResult Function(Courses value)? success,
+    TResult Function(AddCourses value)? add,
+    TResult Function(UpdateCourses value)? update,
     TResult Function(CoursesError value)? error,
     required TResult orElse(),
   }) {
@@ -418,7 +436,8 @@ class _$AllCoursesImpl implements AllCourses {
     required TResult Function() initial,
     required TResult Function() load,
     required TResult Function(List<CourseModel> models) successAll,
-    required TResult Function(CourseModel model) success,
+    required TResult Function(CourseModel model) add,
+    required TResult Function(CourseModel model) update,
     required TResult Function(ApiErrorHandler error) error,
   }) {
     return successAll(models);
@@ -430,7 +449,8 @@ class _$AllCoursesImpl implements AllCourses {
     TResult? Function()? initial,
     TResult? Function()? load,
     TResult? Function(List<CourseModel> models)? successAll,
-    TResult? Function(CourseModel model)? success,
+    TResult? Function(CourseModel model)? add,
+    TResult? Function(CourseModel model)? update,
     TResult? Function(ApiErrorHandler error)? error,
   }) {
     return successAll?.call(models);
@@ -442,7 +462,8 @@ class _$AllCoursesImpl implements AllCourses {
     TResult Function()? initial,
     TResult Function()? load,
     TResult Function(List<CourseModel> models)? successAll,
-    TResult Function(CourseModel model)? success,
+    TResult Function(CourseModel model)? add,
+    TResult Function(CourseModel model)? update,
     TResult Function(ApiErrorHandler error)? error,
     required TResult orElse(),
   }) {
@@ -458,7 +479,8 @@ class _$AllCoursesImpl implements AllCourses {
     required TResult Function(_Initial value) initial,
     required TResult Function(CoursesLoading value) load,
     required TResult Function(AllCourses value) successAll,
-    required TResult Function(Courses value) success,
+    required TResult Function(AddCourses value) add,
+    required TResult Function(UpdateCourses value) update,
     required TResult Function(CoursesError value) error,
   }) {
     return successAll(this);
@@ -470,7 +492,8 @@ class _$AllCoursesImpl implements AllCourses {
     TResult? Function(_Initial value)? initial,
     TResult? Function(CoursesLoading value)? load,
     TResult? Function(AllCourses value)? successAll,
-    TResult? Function(Courses value)? success,
+    TResult? Function(AddCourses value)? add,
+    TResult? Function(UpdateCourses value)? update,
     TResult? Function(CoursesError value)? error,
   }) {
     return successAll?.call(this);
@@ -482,7 +505,8 @@ class _$AllCoursesImpl implements AllCourses {
     TResult Function(_Initial value)? initial,
     TResult Function(CoursesLoading value)? load,
     TResult Function(AllCourses value)? successAll,
-    TResult Function(Courses value)? success,
+    TResult Function(AddCourses value)? add,
+    TResult Function(UpdateCourses value)? update,
     TResult Function(CoursesError value)? error,
     required TResult orElse(),
   }) {
@@ -506,20 +530,20 @@ abstract class AllCourses implements CourseState {
 }
 
 /// @nodoc
-abstract class _$$CoursesImplCopyWith<$Res> {
-  factory _$$CoursesImplCopyWith(
-          _$CoursesImpl value, $Res Function(_$CoursesImpl) then) =
-      __$$CoursesImplCopyWithImpl<$Res>;
+abstract class _$$AddCoursesImplCopyWith<$Res> {
+  factory _$$AddCoursesImplCopyWith(
+          _$AddCoursesImpl value, $Res Function(_$AddCoursesImpl) then) =
+      __$$AddCoursesImplCopyWithImpl<$Res>;
   @useResult
   $Res call({CourseModel model});
 }
 
 /// @nodoc
-class __$$CoursesImplCopyWithImpl<$Res>
-    extends _$CourseStateCopyWithImpl<$Res, _$CoursesImpl>
-    implements _$$CoursesImplCopyWith<$Res> {
-  __$$CoursesImplCopyWithImpl(
-      _$CoursesImpl _value, $Res Function(_$CoursesImpl) _then)
+class __$$AddCoursesImplCopyWithImpl<$Res>
+    extends _$CourseStateCopyWithImpl<$Res, _$AddCoursesImpl>
+    implements _$$AddCoursesImplCopyWith<$Res> {
+  __$$AddCoursesImplCopyWithImpl(
+      _$AddCoursesImpl _value, $Res Function(_$AddCoursesImpl) _then)
       : super(_value, _then);
 
   /// Create a copy of CourseState
@@ -529,7 +553,7 @@ class __$$CoursesImplCopyWithImpl<$Res>
   $Res call({
     Object? model = null,
   }) {
-    return _then(_$CoursesImpl(
+    return _then(_$AddCoursesImpl(
       null == model
           ? _value.model
           : model // ignore: cast_nullable_to_non_nullable
@@ -540,22 +564,22 @@ class __$$CoursesImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$CoursesImpl implements Courses {
-  const _$CoursesImpl(this.model);
+class _$AddCoursesImpl implements AddCourses {
+  const _$AddCoursesImpl(this.model);
 
   @override
   final CourseModel model;
 
   @override
   String toString() {
-    return 'CourseState.success(model: $model)';
+    return 'CourseState.add(model: $model)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$CoursesImpl &&
+            other is _$AddCoursesImpl &&
             (identical(other.model, model) || other.model == model));
   }
 
@@ -567,8 +591,8 @@ class _$CoursesImpl implements Courses {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$CoursesImplCopyWith<_$CoursesImpl> get copyWith =>
-      __$$CoursesImplCopyWithImpl<_$CoursesImpl>(this, _$identity);
+  _$$AddCoursesImplCopyWith<_$AddCoursesImpl> get copyWith =>
+      __$$AddCoursesImplCopyWithImpl<_$AddCoursesImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -576,10 +600,11 @@ class _$CoursesImpl implements Courses {
     required TResult Function() initial,
     required TResult Function() load,
     required TResult Function(List<CourseModel> models) successAll,
-    required TResult Function(CourseModel model) success,
+    required TResult Function(CourseModel model) add,
+    required TResult Function(CourseModel model) update,
     required TResult Function(ApiErrorHandler error) error,
   }) {
-    return success(model);
+    return add(model);
   }
 
   @override
@@ -588,10 +613,11 @@ class _$CoursesImpl implements Courses {
     TResult? Function()? initial,
     TResult? Function()? load,
     TResult? Function(List<CourseModel> models)? successAll,
-    TResult? Function(CourseModel model)? success,
+    TResult? Function(CourseModel model)? add,
+    TResult? Function(CourseModel model)? update,
     TResult? Function(ApiErrorHandler error)? error,
   }) {
-    return success?.call(model);
+    return add?.call(model);
   }
 
   @override
@@ -600,12 +626,13 @@ class _$CoursesImpl implements Courses {
     TResult Function()? initial,
     TResult Function()? load,
     TResult Function(List<CourseModel> models)? successAll,
-    TResult Function(CourseModel model)? success,
+    TResult Function(CourseModel model)? add,
+    TResult Function(CourseModel model)? update,
     TResult Function(ApiErrorHandler error)? error,
     required TResult orElse(),
   }) {
-    if (success != null) {
-      return success(model);
+    if (add != null) {
+      return add(model);
     }
     return orElse();
   }
@@ -616,10 +643,11 @@ class _$CoursesImpl implements Courses {
     required TResult Function(_Initial value) initial,
     required TResult Function(CoursesLoading value) load,
     required TResult Function(AllCourses value) successAll,
-    required TResult Function(Courses value) success,
+    required TResult Function(AddCourses value) add,
+    required TResult Function(UpdateCourses value) update,
     required TResult Function(CoursesError value) error,
   }) {
-    return success(this);
+    return add(this);
   }
 
   @override
@@ -628,10 +656,11 @@ class _$CoursesImpl implements Courses {
     TResult? Function(_Initial value)? initial,
     TResult? Function(CoursesLoading value)? load,
     TResult? Function(AllCourses value)? successAll,
-    TResult? Function(Courses value)? success,
+    TResult? Function(AddCourses value)? add,
+    TResult? Function(UpdateCourses value)? update,
     TResult? Function(CoursesError value)? error,
   }) {
-    return success?.call(this);
+    return add?.call(this);
   }
 
   @override
@@ -640,26 +669,191 @@ class _$CoursesImpl implements Courses {
     TResult Function(_Initial value)? initial,
     TResult Function(CoursesLoading value)? load,
     TResult Function(AllCourses value)? successAll,
-    TResult Function(Courses value)? success,
+    TResult Function(AddCourses value)? add,
+    TResult Function(UpdateCourses value)? update,
     TResult Function(CoursesError value)? error,
     required TResult orElse(),
   }) {
-    if (success != null) {
-      return success(this);
+    if (add != null) {
+      return add(this);
     }
     return orElse();
   }
 }
 
-abstract class Courses implements CourseState {
-  const factory Courses(final CourseModel model) = _$CoursesImpl;
+abstract class AddCourses implements CourseState {
+  const factory AddCourses(final CourseModel model) = _$AddCoursesImpl;
 
   CourseModel get model;
 
   /// Create a copy of CourseState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$CoursesImplCopyWith<_$CoursesImpl> get copyWith =>
+  _$$AddCoursesImplCopyWith<_$AddCoursesImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$UpdateCoursesImplCopyWith<$Res> {
+  factory _$$UpdateCoursesImplCopyWith(
+          _$UpdateCoursesImpl value, $Res Function(_$UpdateCoursesImpl) then) =
+      __$$UpdateCoursesImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({CourseModel model});
+}
+
+/// @nodoc
+class __$$UpdateCoursesImplCopyWithImpl<$Res>
+    extends _$CourseStateCopyWithImpl<$Res, _$UpdateCoursesImpl>
+    implements _$$UpdateCoursesImplCopyWith<$Res> {
+  __$$UpdateCoursesImplCopyWithImpl(
+      _$UpdateCoursesImpl _value, $Res Function(_$UpdateCoursesImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of CourseState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? model = null,
+  }) {
+    return _then(_$UpdateCoursesImpl(
+      null == model
+          ? _value.model
+          : model // ignore: cast_nullable_to_non_nullable
+              as CourseModel,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$UpdateCoursesImpl implements UpdateCourses {
+  const _$UpdateCoursesImpl(this.model);
+
+  @override
+  final CourseModel model;
+
+  @override
+  String toString() {
+    return 'CourseState.update(model: $model)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$UpdateCoursesImpl &&
+            (identical(other.model, model) || other.model == model));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, model);
+
+  /// Create a copy of CourseState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$UpdateCoursesImplCopyWith<_$UpdateCoursesImpl> get copyWith =>
+      __$$UpdateCoursesImplCopyWithImpl<_$UpdateCoursesImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() load,
+    required TResult Function(List<CourseModel> models) successAll,
+    required TResult Function(CourseModel model) add,
+    required TResult Function(CourseModel model) update,
+    required TResult Function(ApiErrorHandler error) error,
+  }) {
+    return update(model);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? load,
+    TResult? Function(List<CourseModel> models)? successAll,
+    TResult? Function(CourseModel model)? add,
+    TResult? Function(CourseModel model)? update,
+    TResult? Function(ApiErrorHandler error)? error,
+  }) {
+    return update?.call(model);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? load,
+    TResult Function(List<CourseModel> models)? successAll,
+    TResult Function(CourseModel model)? add,
+    TResult Function(CourseModel model)? update,
+    TResult Function(ApiErrorHandler error)? error,
+    required TResult orElse(),
+  }) {
+    if (update != null) {
+      return update(model);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(CoursesLoading value) load,
+    required TResult Function(AllCourses value) successAll,
+    required TResult Function(AddCourses value) add,
+    required TResult Function(UpdateCourses value) update,
+    required TResult Function(CoursesError value) error,
+  }) {
+    return update(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(CoursesLoading value)? load,
+    TResult? Function(AllCourses value)? successAll,
+    TResult? Function(AddCourses value)? add,
+    TResult? Function(UpdateCourses value)? update,
+    TResult? Function(CoursesError value)? error,
+  }) {
+    return update?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(CoursesLoading value)? load,
+    TResult Function(AllCourses value)? successAll,
+    TResult Function(AddCourses value)? add,
+    TResult Function(UpdateCourses value)? update,
+    TResult Function(CoursesError value)? error,
+    required TResult orElse(),
+  }) {
+    if (update != null) {
+      return update(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class UpdateCourses implements CourseState {
+  const factory UpdateCourses(final CourseModel model) = _$UpdateCoursesImpl;
+
+  CourseModel get model;
+
+  /// Create a copy of CourseState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$UpdateCoursesImplCopyWith<_$UpdateCoursesImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -734,7 +928,8 @@ class _$CoursesErrorImpl implements CoursesError {
     required TResult Function() initial,
     required TResult Function() load,
     required TResult Function(List<CourseModel> models) successAll,
-    required TResult Function(CourseModel model) success,
+    required TResult Function(CourseModel model) add,
+    required TResult Function(CourseModel model) update,
     required TResult Function(ApiErrorHandler error) error,
   }) {
     return error(this.error);
@@ -746,7 +941,8 @@ class _$CoursesErrorImpl implements CoursesError {
     TResult? Function()? initial,
     TResult? Function()? load,
     TResult? Function(List<CourseModel> models)? successAll,
-    TResult? Function(CourseModel model)? success,
+    TResult? Function(CourseModel model)? add,
+    TResult? Function(CourseModel model)? update,
     TResult? Function(ApiErrorHandler error)? error,
   }) {
     return error?.call(this.error);
@@ -758,7 +954,8 @@ class _$CoursesErrorImpl implements CoursesError {
     TResult Function()? initial,
     TResult Function()? load,
     TResult Function(List<CourseModel> models)? successAll,
-    TResult Function(CourseModel model)? success,
+    TResult Function(CourseModel model)? add,
+    TResult Function(CourseModel model)? update,
     TResult Function(ApiErrorHandler error)? error,
     required TResult orElse(),
   }) {
@@ -774,7 +971,8 @@ class _$CoursesErrorImpl implements CoursesError {
     required TResult Function(_Initial value) initial,
     required TResult Function(CoursesLoading value) load,
     required TResult Function(AllCourses value) successAll,
-    required TResult Function(Courses value) success,
+    required TResult Function(AddCourses value) add,
+    required TResult Function(UpdateCourses value) update,
     required TResult Function(CoursesError value) error,
   }) {
     return error(this);
@@ -786,7 +984,8 @@ class _$CoursesErrorImpl implements CoursesError {
     TResult? Function(_Initial value)? initial,
     TResult? Function(CoursesLoading value)? load,
     TResult? Function(AllCourses value)? successAll,
-    TResult? Function(Courses value)? success,
+    TResult? Function(AddCourses value)? add,
+    TResult? Function(UpdateCourses value)? update,
     TResult? Function(CoursesError value)? error,
   }) {
     return error?.call(this);
@@ -798,7 +997,8 @@ class _$CoursesErrorImpl implements CoursesError {
     TResult Function(_Initial value)? initial,
     TResult Function(CoursesLoading value)? load,
     TResult Function(AllCourses value)? successAll,
-    TResult Function(Courses value)? success,
+    TResult Function(AddCourses value)? add,
+    TResult Function(UpdateCourses value)? update,
     TResult Function(CoursesError value)? error,
     required TResult orElse(),
   }) {

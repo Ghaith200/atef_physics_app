@@ -1,4 +1,5 @@
 import 'package:atef_physics/core/utils/simple_observer.dart';
+import 'package:atef_physics/locator.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -28,6 +29,7 @@ void main() async {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   await BackDoorServices.main();
+  // setupServiceLocator();
 
   await Storage.instance.initStorage();
   // Storage.instance.isFirstTime = true;

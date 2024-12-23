@@ -1,8 +1,7 @@
-import 'dart:developer';
-
 import 'package:atef_physics/core/constants/app_text_styles.dart';
 import 'package:atef_physics/core/models/course_model.dart';
 import 'package:atef_physics/core/utils/app_colors.dart';
+import 'package:atef_physics/core/utils/app_snack_bar.dart';
 import 'package:atef_physics/core/widgets/custom_appdrawer.dart';
 import 'package:atef_physics/features/courses/presentation/course/screens/add_course_screen.dart';
 import 'package:atef_physics/features/courses/presentation/course/cubit/course_cubit.dart';
@@ -96,40 +95,38 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: BlocConsumer<CourseCubit, CourseState>(
               listener: (context, state) => state.whenOrNull(
-                error: (error) => error.showError(context),
-                successAll: (models) => courses = models,
-                success: (model) => courses.add(model),
+                add: (model) => courses.add(model),
               ),
               builder: (context, state) {
-                final Widget? widge = state.whenOrNull<Widget>(
+                // state.whenOrNull(
+                //     add: (model) => courses.add(model),
+                //     update: (model) {
+                //       AppSnackBar.showSnackBar(
+                //           context, "${model.title} Updated");
+                //       final e = courses.indexWhere((e) => e.id == model.id);
+                //       courses[e] = model;
+                //     });
+                return state.maybeWhen<Widget>(
                   load: () => const Center(child: CircularProgressIndicator()),
-                  successAll: (models) {
-                    log("Courses Loaded");
-                    courses = models;
-                    return null;
-                  },
-                );
-                if (widge != null) {
-                  return widge;
-                }
-                return courses.isEmpty
-                    ? Text(
-                        "لا يوجد كورسات حاليا",
-                        style: AppTextStyles.hevoLight20BlackWhiteW900,
-                      )
-                    : GridView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          mainAxisSpacing: 20,
-                          crossAxisSpacing: 20,
+                  orElse: () => courses.isEmpty
+                      ? Text(
+                          "لا يوجد كورسات حاليا",
+                          style: AppTextStyles.hevoLight20BlackWhiteW900,
+                        )
+                      : GridView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 20,
+                            crossAxisSpacing: 20,
+                          ),
+                          itemCount: courses.length,
+                          itemBuilder: (context, index) {
+                            return CourseWidget(course: courses[index]);
+                          },
                         ),
-                        itemCount: courses.length,
-                        itemBuilder: (context, index) {
-                          return CourseWidget(course: courses[index]);
-                        },
-                      );
+                );
               },
             ),
           ),

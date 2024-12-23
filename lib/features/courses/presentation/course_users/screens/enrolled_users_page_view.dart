@@ -21,7 +21,9 @@ class _EnrolledUsersPageViewState extends State<EnrolledUsersPageView> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<CourseUsersCubit>(context).getCourseUsers(widget.model);
+    if (users.isEmpty) {
+      BlocProvider.of<CourseUsersCubit>(context).getCourseUsers(widget.model);
+    }
   }
 
   @override
@@ -30,13 +32,6 @@ class _EnrolledUsersPageViewState extends State<EnrolledUsersPageView> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Enrolled Users',
-            style: TextStyle(color: Colors.black),
-          ),
-          const SizedBox(height: 10),
-          // Example user list
-          // EnrolledUsersList()
           BlocConsumer<CourseUsersCubit, CourseUsersState>(
             listener: (context, state) => state.whenOrNull(
               error: (error) => error.showError(context),

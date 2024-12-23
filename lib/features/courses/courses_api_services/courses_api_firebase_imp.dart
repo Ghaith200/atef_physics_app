@@ -228,11 +228,13 @@ class CoursesApiFirebaseImp implements CoursesApiServices {
       String? photo,
       int? price}) async {
     try {
-      final doc = FirebaseFirestore.instance.doc(model.id);
+      final doc = FirebaseFirestore.instance
+          .collection(FirebaseStrings.coures)
+          .doc(model.id);
       await doc.update({
-        FirebaseStrings.name: title,
-        FirebaseStrings.photo: photo,
-        FirebaseStrings.price: price,
+        FirebaseStrings.name: title ?? model.title,
+        FirebaseStrings.photo: photo ?? model.photo,
+        FirebaseStrings.price: price ?? model.price,
       });
       return ApiResult.success(
           model.copyWith(title: title, photo: photo, price: price));
@@ -262,6 +264,29 @@ class CoursesApiFirebaseImp implements CoursesApiServices {
         ));
       }
       return ApiResult.success(lessonsModel);
+    } catch (e) {
+      return ApiResult.failure(ApiErrorHandler(
+          statusCode: 00, statusMessage: e.toString(), success: false));
+    }
+  }
+
+  @override
+  Future<ApiResult<LessonModel>> updateLesson(
+      {required LessonModel lesson,
+      required String? name,
+      required String? video,
+      required int? watchCount}) async {
+    try {
+      final doc = FirebaseFirestore.instance
+          .collection(FirebaseStrings.lessons)
+          .doc(lesson.id);
+      doc.update({
+        FirebaseStrings.name: name ?? lesson.name,
+        FirebaseStrings.video: video ?? lesson.video,
+        FirebaseStrings.watchCount: watchCount ?? lesson.watchCount,
+      });
+      lesson.copyWith(name: name, video: video, watchCount: watchCount);
+      return ApiResult.success(lesson);
     } catch (e) {
       return ApiResult.failure(ApiErrorHandler(
           statusCode: 00, statusMessage: e.toString(), success: false));

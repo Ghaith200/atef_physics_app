@@ -11,7 +11,7 @@ class CourseCubit extends Cubit<CourseState> {
   CourseCubit() : super(const CourseState.initial());
   final loading = const CourseState.load();
   final CoursesApiServices apiServices = CoursesApiFirebaseImp();
-  
+
   Future<void> getCourses() async {
     emit(loading);
     final data = await apiServices.coursesList();
@@ -29,8 +29,21 @@ class CourseCubit extends Cubit<CourseState> {
     final data =
         await apiServices.addCourse(title: title, photo: photo, price: price);
     data.when(
-        success: (c) => emit(CourseState.success(c)),
+        success: (c) => emit(CourseState.add(c)),
         failure: (e) => emit(CourseState.error(e)));
   }
 
+  Future<void> updateCOurse({
+    required CourseModel model,
+    required String title,
+    required String photo,
+    required int price,
+  }) async {
+    final data = await apiServices.updateCourse(
+        model: model, title: title, price: price, photo: photo);
+    data.when(
+      success: (data) => emit(CourseState.update(data)),
+      failure: (error) => emit(CourseState.error(error)),
+    );
+  }
 }

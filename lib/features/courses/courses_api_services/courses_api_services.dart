@@ -21,4 +21,10 @@ abstract class CoursesApiServices {
   });
   Future<ApiResult<void>> removeLesson(CourseModel model, String lessonId);
   Future<ApiResult<List<LessonModel>>> courseLessons(CourseModel model);
+  Future<ApiResult<LessonModel>> updateLesson(
+      {
+      required LessonModel lesson,
+      required String? name,
+      required String? video,
+      required int? watchCount});
 }
