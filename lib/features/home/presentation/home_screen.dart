@@ -4,10 +4,9 @@ import 'package:atef_physics/core/constants/app_text_styles.dart';
 import 'package:atef_physics/core/models/course_model.dart';
 import 'package:atef_physics/core/utils/app_colors.dart';
 import 'package:atef_physics/core/widgets/custom_appdrawer.dart';
-import 'package:atef_physics/features/add_course/presentation/add_course_screen.dart';
-import 'package:atef_physics/features/course_details/course_details.dart';
-import 'package:atef_physics/features/courses/presentation/cubit/course_cubit.dart';
-import 'package:atef_physics/features/courses/widgets/course_widget.dart';
+import 'package:atef_physics/features/courses/presentation/course/screens/add_course_screen.dart';
+import 'package:atef_physics/features/courses/presentation/course/cubit/course_cubit.dart';
+import 'package:atef_physics/features/courses/presentation/widgets/course_widget.dart';
 import 'package:atef_physics/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -98,6 +97,8 @@ class _HomeScreenState extends State<HomeScreen> {
             child: BlocConsumer<CourseCubit, CourseState>(
               listener: (context, state) => state.whenOrNull(
                 error: (error) => error.showError(context),
+                successAll: (models) => courses = models,
+                success: (model) => courses.add(model),
               ),
               builder: (context, state) {
                 final Widget? widge = state.whenOrNull<Widget>(
@@ -120,7 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         physics: const NeverScrollableScrollPhysics(),
                         gridDelegate:
                             const SliverGridDelegateWithMaxCrossAxisExtent(
-                          maxCrossAxisExtent: 150,
+                          maxCrossAxisExtent: 350,
                           mainAxisSpacing: 20,
                           crossAxisSpacing: 20,
                         ),

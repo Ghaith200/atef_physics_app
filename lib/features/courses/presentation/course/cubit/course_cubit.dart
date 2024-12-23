@@ -32,4 +32,5 @@ class CourseCubit extends Cubit<CourseState> {
         success: (c) => emit(CourseState.success(c)),
         failure: (e) => emit(CourseState.error(e)));
   }
+
 }
