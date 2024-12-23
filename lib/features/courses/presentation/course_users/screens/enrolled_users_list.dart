@@ -8,7 +8,8 @@ class EnrolledUsersList extends StatelessWidget {
     return SizedBox(
       height: MediaQuery.of(context).size.height * 0.6, // Constrain the height
       child: ListView.builder(
-        itemCount: 5,
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: 20,
         itemBuilder: (BuildContext context, int index) {
           return ListTile(
             contentPadding: const EdgeInsets.symmetric(horizontal: 5),

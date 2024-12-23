@@ -14,6 +14,7 @@ class CourseLessonsCubit extends Cubit<CourseLessonsState> {
   final loading = const CourseLessonsState.load();
   final CoursesApiServices apiServices = CoursesApiFirebaseImp();
   
+
   Future<void> getCourseLessons(CourseModel model) async {
     emit(loading);
     final data = await apiServices.courseLessons(model);
@@ -31,9 +32,10 @@ class CourseLessonsCubit extends Cubit<CourseLessonsState> {
     final data = await apiServices.addLesson(
         model: course, name: name, video: video, watchCount: watchCount);
     data.when(
-        success: (data) => emit(CourseLessonsState.success(data)),
+        success: (data) => emit(CourseLessonsState.add(data)),
         failure: (e) => emit(CourseLessonsState.error(e)));
   }
+
 
   Future<void> removeLesson(
       {required CourseModel course, required LessonModel lesson}) async {
