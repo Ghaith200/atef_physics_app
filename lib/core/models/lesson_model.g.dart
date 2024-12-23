@@ -10,6 +10,7 @@ LessonModel _$LessonModelFromJson(Map<String, dynamic> json) => LessonModel(
       id: json['id'] as String,
       name: json['name'] as String,
       video: json['video'] as String,
+      watchCount: (json['watchCount'] as num).toInt(),
     );
 
 Map<String, dynamic> _$LessonModelToJson(LessonModel instance) =>
@@ -17,4 +18,5 @@ Map<String, dynamic> _$LessonModelToJson(LessonModel instance) =>
       'id': instance.id,
       'name': instance.name,
       'video': instance.video,
+      'watchCount': instance.watchCount,
     };
