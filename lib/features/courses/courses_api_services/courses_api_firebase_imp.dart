@@ -77,8 +77,8 @@ class CoursesApiFirebaseImp implements CoursesApiServices {
       });
       await FirebaseFirestore.instance
           .collection(FirebaseStrings.coures)
-          .doc(data.id)
-          .set({
+          .doc(model.id)
+          .update({
         FirebaseStrings.lessons: FieldValue.arrayUnion([data.id])
       });
       final LessonModel lessonModel = LessonModel(
@@ -168,11 +168,12 @@ class CoursesApiFirebaseImp implements CoursesApiServices {
   Future<ApiResult<List<LessonModel>>> courseLessons(CourseModel model) async {
     try {
       List<LessonModel> lessonsModel = [];
-      for (var lesson in model.lessons) {
+      for (String lesson in model.lessons) {
         final data = await FirebaseFirestore.instance
             .collection(FirebaseStrings.lessons)
             .doc(lesson)
             .get();
+
         lessonsModel.add(LessonModel(
           id: data.id,
           name: "title",
