@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:atef_physics/core/constants/app_text_styles.dart';
 import 'package:atef_physics/core/models/course_model.dart';
 import 'package:atef_physics/core/utils/app_colors.dart';
@@ -10,7 +12,6 @@ import 'package:atef_physics/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:atef_physics/core/widgets/custom_appbar.dart';
 import 'package:go_router/go_router.dart';
 
@@ -96,18 +97,17 @@ class _HomeScreenState extends State<HomeScreen> {
             child: BlocConsumer<CourseCubit, CourseState>(
               listener: (context, state) => state.whenOrNull(
                 error: (error) => error.showError(context),
-                // add: (model) => courses.add(model),
-                successAll: (models) => courses = models,
+                successAll: (models) => courses.addAll(models),
+                add: (model) => courses.add(model),
+                update: (model) {
+                  AppSnackBar.showSnackBar(context, "${model.title} Updated");
+                  final e = courses.indexWhere((e) => e.id == model.id);
+                  courses[e] = model;
+                },
               ),
               builder: (context, state) {
-                state.whenOrNull(
-                  add: (model) => courses.add(model),
-                  // update: (model) {
-                  //   AppSnackBar.showSnackBar(context, "${model.title} Updated");
-                  //   final e = courses.indexWhere((e) => e.id == model.id);
-                  //   courses[e] = model;
-                  // },
-                );
+                log("Home Screen ${state.runtimeType} ");
+
                 return state.maybeWhen<Widget>(
                   load: () => const Center(child: CircularProgressIndicator()),
                   orElse: () => courses.isEmpty

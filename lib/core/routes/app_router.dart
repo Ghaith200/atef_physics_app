@@ -6,6 +6,7 @@ import 'package:atef_physics/features/courses/presentation/course/cubit/course_c
 import 'package:atef_physics/features/courses/presentation/course_lessons/cubit/course_lessons_cubit.dart';
 import 'package:atef_physics/features/courses/presentation/course_lessons/presentation/screens/course_add_lesson.dart';
 import 'package:atef_physics/features/courses/presentation/course_users/cubit/course_users_cubit.dart';
+import 'package:atef_physics/features/courses/presentation/course_users/screens/course_add_user.dart';
 import 'package:atef_physics/features/onboarding/widgets/terms_and_conditions.dart';
 import 'package:atef_physics/features/vedio/screens/vedio_screen.dart';
 import 'package:go_router/go_router.dart';
@@ -85,7 +86,7 @@ abstract class AppRouter {
             final extra = state.extra as Map<String, dynamic>? ?? {};
             final CourseModel? course = extra['course'] as CourseModel?;
             final CourseCubit? cubit = extra['cubit'];
-            return BlocProvider<CourseCubit>.value(
+            return BlocProvider.value(
               // create: (context) => CourseCubit(),
               value: cubit ?? CourseCubit(),
               child: AddCourseScreen(
@@ -122,7 +123,7 @@ abstract class AppRouter {
           final CourseLessonsCubit? cubit = extra["cubit"];
           final course = extra['course'] as CourseModel;
           final LessonModel? lessson = extra['lesson'];
-          return BlocProvider<CourseLessonsCubit>.value(
+          return BlocProvider.value(
             value: cubit ?? CourseLessonsCubit(),
             child: CourseAddLesson(
               courses: course,
@@ -138,6 +139,21 @@ abstract class AppRouter {
           final extra = state.extra as Map<String, dynamic>? ?? {};
           final lesson = extra['lesson'] as LessonModel;
           return VedioScreen(lesson: lesson);
+        },
+      ),
+      GoRoute(
+        path: CourseAddUser.id,
+        name: CourseAddUser.id,
+        builder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>? ?? {};
+          final CourseModel model = extra['model'];
+          final CourseUsersCubit? cubit = extra['cubit'];
+
+          return BlocProvider.value(
+            value: cubit ?? CourseUsersCubit(),
+            // create: (context) => SubjectBloc(),
+            child: CourseAddUser(course: model),
+          );
         },
       ),
     ],

@@ -36,12 +36,14 @@ class _CourseLessonsListState extends State<CourseLessonsList> {
       listener: (context, state) {
         state.whenOrNull(
           error: (error) => error.showError(context),
-          successAll: (models) => lesson = models,
+          successAll: (models) => lesson.addAll(models),
           add: (models) => lesson.add(models),
-          remove: (model) =>
-              AppSnackBar.showSnackBar(context, "${model.name} \n removed"),
+          remove: (model) {
+            AppSnackBar.showSnackBar(context, "${model.name}\n removed");
+            lesson.removeWhere((e) => e.id == model.id);
+          },
           update: (model) {
-            AppSnackBar.showSnackBar(context, "${model.name} Updated");
+            AppSnackBar.showSnackBar(context, "${model.name}\n Updated");
             final e = lesson.indexWhere((e) => e.id == model.id);
             lesson[e] = model;
           },
@@ -87,6 +89,9 @@ class _CourseLessonsListState extends State<CourseLessonsList> {
                                         .pushNamed(CourseAddLesson.id, extra: {
                                       "course": widget.course,
                                       "lesson": lesson[index],
+                                      "cubit":
+                                          BlocProvider.of<CourseLessonsCubit>(
+                                              context)
                                     }),
                                 icon: Icon(Icons.edit)),
                             const Icon(Icons.play_circle_outline_rounded),
