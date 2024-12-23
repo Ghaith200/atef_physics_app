@@ -70,14 +70,16 @@ class CoursesApiFirebaseImp implements CoursesApiServices {
     try {
       final data =
           FirebaseFirestore.instance.collection(FirebaseStrings.lessons).doc();
-      data.set({});
-      await FirebaseFirestore.instance
-          .collection(FirebaseStrings.coures)
-          .doc(model.id)
-          .set({
+      data.set({
         FirebaseStrings.name: name,
         FirebaseStrings.video: video,
         FirebaseStrings.watchCount: watchCount
+      });
+      await FirebaseFirestore.instance
+          .collection(FirebaseStrings.coures)
+          .doc(data.id)
+          .set({
+        FirebaseStrings.lessons: FieldValue.arrayUnion([data.id])
       });
       final LessonModel lessonModel = LessonModel(
         id: data.id,
