@@ -1,14 +1,16 @@
 import 'package:atef_physics/core/models/course_model.dart';
-import 'package:atef_physics/features/courses/presentation/course_details/widgets/coure_lessons_list.dart';
+import 'package:atef_physics/core/models/lesson_model.dart';
+import 'package:atef_physics/features/courses/presentation/course_lessons/presentation/screens/course_lessons_list.dart';
 import 'package:flutter/material.dart';
 
 class LessonsPageView extends StatelessWidget {
+  final CourseModel courses;
+  final List<LessonModel> lessons;
   const LessonsPageView({
     super.key,
     required this.courses,
+    required this.lessons,
   });
-
-  final CourseModel courses;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,9 @@ class LessonsPageView extends StatelessWidget {
             style: const TextStyle(color: Colors.black),
           ),
           const SizedBox(height: 10),
-          const CoureLessonsList(),
+          CourseLessonsList(
+            lessons: lessons,
+          ),
         ],
       ),
     );

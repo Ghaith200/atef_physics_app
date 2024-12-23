@@ -1,8 +1,11 @@
+import 'package:atef_physics/core/models/lesson_model.dart';
 import 'package:flutter/material.dart';
 
-class CoureLessonsList extends StatelessWidget {
-  const CoureLessonsList({
+class CourseLessonsList extends StatelessWidget {
+  final List< LessonModel> lessons;
+  const CourseLessonsList({
     super.key,
+    required this.lessons,
   });
 
   @override
@@ -12,11 +15,11 @@ class CoureLessonsList extends StatelessWidget {
       physics:
           const NeverScrollableScrollPhysics(), // Disable ListView's scroll
 
-      itemCount: 20,
+      itemCount: lessons.length,
       itemBuilder: (BuildContext context, int index) {
         return ListTile(
           onTap: () {},
-          title: Text('$index'),
+          title: Text(lessons[index].name),
           trailing: const Icon(Icons.play_circle_outline_rounded),
           contentPadding: const EdgeInsets.symmetric(horizontal: 5),
         );

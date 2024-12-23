@@ -1,17 +1,38 @@
 import 'package:atef_physics/core/models/course_model.dart';
+import 'package:atef_physics/core/models/lesson_model.dart';
 import 'package:atef_physics/core/widgets/custom_appbar.dart';
-import 'package:atef_physics/features/courses/presentation/course_details/widgets/coure_lessons_list.dart';
-import 'package:atef_physics/features/courses/presentation/course_details/widgets/enrolled_users_list.dart';
+import 'package:atef_physics/features/courses/presentation/course/cubit/course_cubit.dart';
 import 'package:atef_physics/features/courses/presentation/course_details/widgets/enrolled_users_page_view.dart';
 import 'package:atef_physics/features/courses/presentation/course_details/widgets/lessons_page_view.dart';
+import 'package:atef_physics/features/courses/presentation/course_lessons/cubit/course_lessons_cubit.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CourseDetails extends StatelessWidget {
+class CourseDetails extends StatefulWidget {
   static const String id = '/CourseDetails';
   final CourseModel courses;
 
-  CourseDetails({super.key, required this.courses});
+
+  const CourseDetails({
+    super.key,
+    required this.courses,
+  });
+
+  @override
+  State<CourseDetails> createState() => _CourseDetailsState();
+}
+
+class _CourseDetailsState extends State<CourseDetails> {
+  late CourseLessonsCubit courseCubit;
+  List<LessonModel> lessons = [];
+  @override
+  void initState() {
+    super.initState();
+    courseCubit = BlocProvider.of<CourseLessonsCubit>(context);
+    courseCubit.getCourseLessons(widget.courses);
+    
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +42,7 @@ class CourseDetails extends StatelessWidget {
         child: const Icon(Icons.edit),
       ),
       appBar: CustomAppBars(
-        text: courses.title,
+        text: widget.courses.title,
         backbutton: true,
       ),
       body: SafeArea(
@@ -33,7 +54,7 @@ class CourseDetails extends StatelessWidget {
               children: [
                 // Background image
                 CachedNetworkImage(
-                  imageUrl: courses.photo,
+                  imageUrl: widget.courses.photo,
                   height: 200,
                   width: double.infinity,
                   fit: BoxFit.cover,
@@ -76,7 +97,7 @@ class CourseDetails extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: CachedNetworkImage(
-                          imageUrl: courses.photo,
+                          imageUrl: widget.courses.photo,
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -85,7 +106,7 @@ class CourseDetails extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            courses.title,
+                            widget.courses.title,
                             style: const TextStyle(
                               color: Colors.black,
                               fontSize: 20,
@@ -94,16 +115,16 @@ class CourseDetails extends StatelessWidget {
                           ),
                           const SizedBox(height: 5),
                           Text(
-                            '${courses.price} \$',
+                            '${widget.courses.price} \$',
                             style: const TextStyle(
                               color: Colors.black,
                               fontSize: 16,
                             ),
                           ),
                           const SizedBox(height: 5),
-                          const Text(
-                            'Enrolled: 50',
-                            style: TextStyle(
+                          Text(
+                            'Enrolled: ${widget.courses.users.length}',
+                            style: const TextStyle(
                               color: Colors.black,
                               fontSize: 16,
                             ),
@@ -122,9 +143,13 @@ class CourseDetails extends StatelessWidget {
                 child: PageView(
                   children: [
                     // First page with lessons
-                    LessonsPageView(courses: courses),
+                    LessonsPageView(
+                      courses: widget.courses,
+                      lessons: lessons,
+                    ),
                     // Second page with users
-                    const EnrolledUsersPageView(),
+                     EnrolledUsersPageView(),
+
                   ],
                 ),
               ),

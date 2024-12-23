@@ -1,4 +1,4 @@
-import 'package:atef_physics/features/courses/presentation/course_details/widgets/enrolled_users_list.dart';
+import 'package:atef_physics/features/courses/presentation/course_users/screens/enrolled_users_list.dart';
 import 'package:flutter/material.dart';
 
 class EnrolledUsersPageView extends StatelessWidget {
