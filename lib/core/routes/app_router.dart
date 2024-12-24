@@ -7,6 +7,8 @@ import 'package:atef_physics/features/courses/course_lessons/cubit/course_lesson
 import 'package:atef_physics/features/courses/course_lessons/presentation/screens/course_add_lesson.dart';
 import 'package:atef_physics/features/courses/course_users/cubit/course_users_cubit.dart';
 import 'package:atef_physics/features/courses/course_users/screens/course_add_user.dart';
+import 'package:atef_physics/features/header/presentation/cubit/header_cubit.dart';
+import 'package:atef_physics/features/header/presentation/widgets/add_header_screen.dart';
 import 'package:atef_physics/features/onboarding/widgets/terms_and_conditions.dart';
 import 'package:atef_physics/features/vedio/screens/vedio_screen.dart';
 import 'package:go_router/go_router.dart';
@@ -65,10 +67,14 @@ abstract class AppRouter {
       GoRoute(
         path: HomeScreen.id,
         name: HomeScreen.id,
-        builder: (context, state) => BlocProvider(
-          create: (context) => CourseCubit(),
-          child: const HomeScreen(),
-        ),
+        builder: (context, state) => MultiBlocProvider(providers: [
+          BlocProvider(
+            create: (context) => CourseCubit(),
+          ),
+          BlocProvider(
+            create: (context) => HeaderCubit(),
+          )
+        ], child: const HomeScreen()),
       ),
       GoRoute(
         path: ProfileScreen.id,
@@ -144,7 +150,7 @@ abstract class AppRouter {
         builder: (context, state) {
           final extra = state.extra as Map<String, dynamic>? ?? {};
           final lesson = extra['lesson'] as LessonModel;
-          return VedioScreen(lesson: lesson);
+          return VedioScreen(lesson: lesson.video);
         },
       ),
       GoRoute(
@@ -159,6 +165,20 @@ abstract class AppRouter {
             value: cubit ?? CourseUsersCubit(),
             // create: (context) => SubjectBloc(),
             child: CourseAddUser(course: model),
+          );
+        },
+      ),
+      GoRoute(
+        path: AddHeaderScreen.id,
+        name: AddHeaderScreen.id,
+        builder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>? ?? {};
+          final HeaderCubit? cubit = extra['cubit'];
+
+          return BlocProvider.value(
+            value: cubit ?? HeaderCubit(),
+            // create: (context) => SubjectBloc(),
+            child: AddHeaderScreen(),
           );
         },
       ),

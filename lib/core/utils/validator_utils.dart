@@ -103,4 +103,14 @@ class Validators {
     } else {}
     return null;
   }
+
+  static String? videoLink(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'Phone Number is required';
+    }
+    if (!value.startsWith("https://streamable.com/")) {
+      return 'Enter A valid Link';
+    }
+    return null;
+  }
 }
