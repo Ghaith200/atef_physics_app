@@ -114,7 +114,7 @@ class _AddHeaderScreenState extends State<AddHeaderScreen>
                               data = data.substring(0, data.length - 1);
                             }
                             cubit.addHeader(
-                                path: titleController.text, isVideo: true);
+                                path: data, isVideo: true);
                           }
                         }
                       },
