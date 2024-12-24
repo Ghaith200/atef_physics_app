@@ -9,12 +9,15 @@ class LessonModel {
   final String name;
   final String video;
   final int watchCount;
+  final int userWatchCount;
 
-  LessonModel(
-      {required this.id,
-      required this.name,
-      required this.video,
-      required this.watchCount});
+  LessonModel({
+    required this.id,
+    required this.name,
+    required this.video,
+    required this.watchCount,
+    this.userWatchCount = 0,
+  });
 
   factory LessonModel.fromJson(Map<String, dynamic> json) =>
       _$LessonModelFromJson(json);
@@ -26,7 +29,8 @@ class LessonModel {
       'id': id,
       'name': name,
       'video': video,
-      'watchCount': watchCount
+      'watchCount': watchCount,
+      "userWatchCount": userWatchCount
     };
   }
 
@@ -36,20 +40,21 @@ class LessonModel {
       name: map['name'] as String,
       video: map['video'] as String,
       watchCount: map['video'] as int,
+      userWatchCount: map['userWatchCount'] as int,
     );
   }
 
-  LessonModel copyWith({
-    String? id,
-    String? name,
-    String? video,
-    int? watchCount,
-  }) {
+  LessonModel copyWith(
+      {String? id,
+      String? name,
+      String? video,
+      int? watchCount,
+      int? userWatchCount}) {
     return LessonModel(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      video: video ?? this.video,
-      watchCount: watchCount ?? this.watchCount,
-    );
+        id: id ?? this.id,
+        name: name ?? this.name,
+        video: video ?? this.video,
+        watchCount: watchCount ?? this.watchCount,
+        userWatchCount: userWatchCount ?? this.userWatchCount);
   }
 }

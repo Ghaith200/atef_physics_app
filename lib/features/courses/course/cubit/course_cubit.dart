@@ -1,5 +1,6 @@
 import 'package:atef_physics/core/models/course_model.dart';
 import 'package:atef_physics/core/network/api_error_handler.dart';
+import 'package:atef_physics/features/courses/course/course_api_services/course_api_services.dart';
 import 'package:atef_physics/features/courses/courses_api_services/courses_api_firebase_imp.dart';
 import 'package:atef_physics/features/courses/courses_api_services/courses_api_services.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -10,7 +11,7 @@ part 'course_cubit.freezed.dart';
 class CourseCubit extends Cubit<CourseState> {
   CourseCubit() : super(const CourseState.initial());
   final loading = const CourseState.load();
-  final CoursesApiServices apiServices = CoursesApiFirebaseImp();
+  final CourseApiServices apiServices = CourseApiServices();
 
   Future<void> getCourses() async {
     emit(loading);
@@ -43,6 +44,16 @@ class CourseCubit extends Cubit<CourseState> {
         model: model, title: title, price: price, photo: photo);
     data.when(
       success: (data) => emit(CourseState.update(data)),
+      failure: (error) => emit(CourseState.error(error)),
+    );
+  }
+
+  Future<void> removeCourses({
+    required CourseModel model,
+  }) async {
+    final data = await apiServices.removeCourse(model);
+    data.when(
+      success: (_) => emit(CourseState.remove(model)),
       failure: (error) => emit(CourseState.error(error)),
     );
   }

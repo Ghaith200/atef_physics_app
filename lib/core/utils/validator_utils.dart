@@ -92,4 +92,15 @@ class Validators {
 
     return null; // Return null if the phone number is valid
   }
+
+  static String? multiPhoneNumber(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'Phone Number is required';
+    }
+    List<int?> p = value.split("\n").map((e) => int.tryParse(e)).toList();
+    if (p.contains(null)) {
+      return 'Enter a valid number';
+    } else {}
+    return null;
+  }
 }

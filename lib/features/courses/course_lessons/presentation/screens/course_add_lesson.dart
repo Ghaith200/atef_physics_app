@@ -3,10 +3,11 @@ import 'package:atef_physics/core/models/lesson_model.dart';
 import 'package:atef_physics/core/utils/app_snack_bar.dart';
 import 'package:atef_physics/core/widgets/custom_appbar.dart';
 import 'package:atef_physics/core/widgets/custom_button.dart';
-import 'package:atef_physics/features/courses/presentation/course_lessons/cubit/course_lessons_cubit.dart';
+import 'package:atef_physics/features/courses/course_lessons/cubit/course_lessons_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class CourseAddLesson extends StatefulWidget {
   static const String id = "/CourseAddLesson";
@@ -123,24 +124,27 @@ class _CourseAddLessonState extends State<CourseAddLesson> {
                   return state.maybeWhen<Widget>(
                       load: () => const CircularProgressIndicator(),
                       orElse: () => CustomButton(
-                            onTap: () {
+                            onTap: () async {
                               if (formKey.currentState!.validate()) {
                                 // Process form data here
                                 model == null
-                                    ? cubit.addLesson(
+                                    ? await cubit.addLesson(
                                         course: widget.courses,
                                         name: titleController.text,
                                         video: videoController.text,
                                         watchCount: int.parse(
                                             watchCountController.text),
                                       )
-                                    : cubit.updateLesson(
+                                    : await cubit.updateLesson(
                                         lesson: model!,
                                         name: titleController.text,
                                         video: videoController.text,
                                         watchCount: int.parse(
                                             watchCountController.text),
                                       );
+                                if (context.mounted && context.canPop()) {
+                                  context.pop();
+                                }
                               }
                             },
                             boarderRadius: 30,

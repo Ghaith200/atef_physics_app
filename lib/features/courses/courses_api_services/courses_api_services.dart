@@ -1,30 +1,30 @@
-import 'package:atef_physics/core/models/course_model.dart';
-import 'package:atef_physics/core/models/lesson_model.dart';
-import 'package:atef_physics/core/models/user_model.dart';
-import 'package:atef_physics/core/network/api_result.dart';
+// import 'package:atef_physics/core/models/course_model.dart';
+// import 'package:atef_physics/core/models/lesson_model.dart';
+// import 'package:atef_physics/core/models/user_model.dart';
+// import 'package:atef_physics/core/network/api_result.dart';
 
-abstract class CoursesApiServices {
-  Future<ApiResult<List<CourseModel>>> coursesList();
-  Future<ApiResult<CourseModel>> course(String id);
-  Future<ApiResult<CourseModel>> addCourse(
-      {required String title, required String photo, required int price});
-  Future<ApiResult<CourseModel>> updateCourse(
-      {required CourseModel model, String? title, String? photo, int? price});
-  Future<ApiResult<Map<String, List>>> addUser(
-      CourseModel model, List<String> phoneNumber);
-  Future<ApiResult<void>> removeUser(CourseModel model, String id);
-  Future<ApiResult<List<UserModel>>> courseUsers(CourseModel model);
-  Future<ApiResult<LessonModel>> addLesson({
-    required CourseModel model,
-    required String name,
-    required String video,
-    required int watchCount,
-  });
-  Future<ApiResult<void>> removeLesson(CourseModel model, String lessonId);
-  Future<ApiResult<List<LessonModel>>> courseLessons(CourseModel model);
-  Future<ApiResult<LessonModel>> updateLesson(
-      {required LessonModel lesson,
-      required String? name,
-      required String? video,
-      required int? watchCount});
-}
+// abstract class CoursesApiServices {
+//   Future<ApiResult<List<CourseModel>>> coursesList();
+//   Future<ApiResult<CourseModel>> course(String id);
+//   Future<ApiResult<CourseModel>> addCourse(
+//       {required String title, required String photo, required int price});
+//   Future<ApiResult<CourseModel>> updateCourse(
+//       {required CourseModel model, String? title, String? photo, int? price});
+//   Future<ApiResult<Map<String, List>>> addUser(
+//       CourseModel model, List<String> phoneNumber);
+//   Future<ApiResult<void>> removeUser(CourseModel model, String id);
+//   Future<ApiResult<List<UserModel>>> courseUsers(CourseModel model);
+//   Future<ApiResult<LessonModel>> addLesson({
+//     required CourseModel model,
+//     required String name,
+//     required String video,
+//     required int watchCount,
+//   });
+//   Future<ApiResult<void>> removeLesson(CourseModel model, String lessonId);
+//   Future<ApiResult<List<LessonModel>>> courseLessons(CourseModel model);
+//   Future<ApiResult<LessonModel>> updateLesson(
+//       {required LessonModel lesson,
+//       required String? name,
+//       required String? video,
+//       required int? watchCount});
+// }

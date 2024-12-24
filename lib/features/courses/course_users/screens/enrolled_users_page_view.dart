@@ -1,8 +1,9 @@
 import 'package:atef_physics/core/constants/app_text_styles.dart';
 import 'package:atef_physics/core/models/course_model.dart';
 import 'package:atef_physics/core/models/user_model.dart';
-import 'package:atef_physics/features/courses/presentation/course_users/cubit/course_users_cubit.dart';
-import 'package:atef_physics/features/courses/presentation/course_users/screens/course_users_item.dart';
+import 'package:atef_physics/core/utils/app_snack_bar.dart';
+import 'package:atef_physics/features/courses/course_users/cubit/course_users_cubit.dart';
+import 'package:atef_physics/features/courses/course_users/screens/course_users_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -33,6 +34,11 @@ class _EnrolledUsersPageViewState extends State<EnrolledUsersPageView> {
       listener: (context, state) => state.whenOrNull(
         error: (error) => error.showError(context),
         successAll: (models) => users.addAll(models),
+        remove: (model) {
+          AppSnackBar.showSnackBar(context, "${model.name} \n Removed");
+          users.removeWhere((test) => test.uid == model.uid);
+        },
+        add: (addedUsers, notfound, enrolled) => users.addAll(addedUsers),
       ),
       builder: (context, state) => state.maybeWhen<Widget>(
         load: () => const Center(child: CircularProgressIndicator()),
@@ -50,7 +56,10 @@ class _EnrolledUsersPageViewState extends State<EnrolledUsersPageView> {
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: users.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return CourseUserItem(user: users[index]);
+                    return CourseUserItem(
+                      user: users[index],
+                      courseModel: widget.model,
+                    );
                   },
                 ),
               ),
