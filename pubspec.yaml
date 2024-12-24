@@ -36,8 +36,6 @@ dependencies:
   freezed_annotation: ^2.4.4
   #Video
   video_player: ^2.9.2
-  vimeo_player_flutter: ^0.1.0
-  vimeo_video_player: ^1.0.0
   webview_flutter: ^4.10.0
 
 dev_dependencies:
