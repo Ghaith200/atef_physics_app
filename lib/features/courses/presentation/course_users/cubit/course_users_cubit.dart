@@ -1,3 +1,4 @@
+import 'package:atef_physics/core/constants/firebase_strings.dart';
 import 'package:atef_physics/core/models/course_model.dart';
 import 'package:atef_physics/core/models/user_model.dart';
 import 'package:atef_physics/core/network/api_error_handler.dart';
@@ -30,5 +31,18 @@ class CourseUsersCubit extends Cubit<CourseUsersState> {
       success: (d) => emit(CourseUsersState.remove(userId)),
       failure: (e) => emit(CourseUsersState.error(e)),
     );
+  }
+
+  Future<void> addUsers(
+      {required CourseModel model, required List<String> phoneNumbers}) async {
+    final data = await apiServices.addUser(model, phoneNumbers);
+    data.when(
+        success: (success) => emit(CourseUsersState.add(
+              addedUsers:
+              success[FirebaseStrings.addedUsers]! as List<UserModel>,
+              enrolled: success[FirebaseStrings.enrolledUsers]! as List<String>,
+              notfound: success[FirebaseStrings.notFoundUsers]! as List<String>,
+            )),
+        failure: (e) => emit(CourseUsersState.error(e)));
   }
 }

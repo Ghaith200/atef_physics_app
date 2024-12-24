@@ -5,6 +5,7 @@ class CourseState with _$CourseState {
   const factory CourseState.initial() = _Initial;
   const factory CourseState.load() = CoursesLoading;
   const factory CourseState.successAll(List<CourseModel> models) = AllCourses;
-  const factory CourseState.success(CourseModel model) = Courses;
+  const factory CourseState.add(CourseModel model) = AddCourses;
+  const factory CourseState.update(CourseModel model) = UpdateCourses;
   const factory CourseState.error(ApiErrorHandler error) = CoursesError;
 }

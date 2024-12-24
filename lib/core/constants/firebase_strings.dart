@@ -15,4 +15,11 @@ class FirebaseStrings {
   static const String lessons = "lessons";
   static const String watchCount = "watchCount";
   static const String users = "users";
+
+
+    static const String addedUsers = "addedUsers";
+        static const String enrolledUsers = "enrolledUsers";
+    static const String notFoundUsers = "notFoundUsers";
+
+
 }
