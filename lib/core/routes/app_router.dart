@@ -9,6 +9,8 @@ import 'package:atef_physics/features/courses/course_users/cubit/course_users_cu
 import 'package:atef_physics/features/courses/course_users/screens/course_add_user.dart';
 import 'package:atef_physics/features/header/presentation/cubit/header_cubit.dart';
 import 'package:atef_physics/features/header/presentation/widgets/add_header_screen.dart';
+import 'package:atef_physics/features/offline_handler/offline_handler.dart';
+
 import 'package:atef_physics/features/onboarding/widgets/terms_and_conditions.dart';
 import 'package:atef_physics/features/vedio/screens/vedio_screen.dart';
 import 'package:go_router/go_router.dart';
@@ -27,7 +29,7 @@ import 'package:atef_physics/features/Auth/presentation/cubit/auth_cubit.dart';
 abstract class AppRouter {
   static String get intialRoute {
     if (!BackDoorServices.status) {
-      return HomeScreen.id;
+      return OfflineScreen.id;
     }
 
     if (Storage.instance.isFirstTime) {
@@ -182,6 +184,10 @@ abstract class AppRouter {
           );
         },
       ),
+      GoRoute(
+          path: OfflineScreen.id,
+          name: OfflineScreen.id,
+          builder: (context, state) => const OfflineScreen()),
     ],
   );
 }

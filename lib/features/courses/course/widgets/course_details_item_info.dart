@@ -1,6 +1,8 @@
+import 'package:atef_physics/core/constants/app_text_styles.dart';
 import 'package:atef_physics/core/models/course_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CourseDetailsItemInfo extends StatelessWidget {
   const CourseDetailsItemInfo({
@@ -67,12 +69,16 @@ class CourseDetailsItemInfo extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    course.title,
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                  Container(
+                    width: 150.sp,
+                    child: Text(
+                      course.title,
+                      style: TextStyle(
+                        overflow: TextOverflow.ellipsis,
+                        color: Colors.black,
+                        fontSize: 19.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 5),
