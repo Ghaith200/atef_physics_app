@@ -1,6 +1,7 @@
 import 'package:atef_physics/core/models/course_model.dart';
 import 'package:atef_physics/core/models/lesson_model.dart';
 import 'package:atef_physics/core/utils/app_snack_bar.dart';
+import 'package:atef_physics/core/utils/validator_utils.dart';
 import 'package:atef_physics/core/widgets/custom_appbar.dart';
 import 'package:atef_physics/core/widgets/custom_button.dart';
 import 'package:atef_physics/features/courses/course_lessons/cubit/course_lessons_cubit.dart';
@@ -88,12 +89,7 @@ class _CourseAddLessonState extends State<CourseAddLesson> {
                       decoration: const InputDecoration(
                         labelText: 'Video Link',
                       ),
-                      validator: (value) {
-                        if (value == null || value.trim().isEmpty) {
-                          return 'Video Lisnk is required';
-                        }
-                        return null;
-                      },
+                      validator: (value) => Validators.videoLink(value),
                     ),
                     const SizedBox(height: 20),
                     TextFormField(
@@ -127,6 +123,10 @@ class _CourseAddLessonState extends State<CourseAddLesson> {
                             onTap: () async {
                               if (formKey.currentState!.validate()) {
                                 // Process form data here
+                                String data = videoController.text;
+                                if (data.endsWith("/")) {
+                                  data = data.substring(0, data.length - 1);
+                                }
                                 model == null
                                     ? await cubit.addLesson(
                                         course: widget.courses,

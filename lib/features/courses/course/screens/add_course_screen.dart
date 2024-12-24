@@ -146,6 +146,7 @@ class _AddCourseScreenState extends State<AddCourseScreen> {
                                 // Process form data here
                                 return;
                               }
+                              
                               model == null
                                   ? await cubit.addCourse(
                                       title: titleController.text,
