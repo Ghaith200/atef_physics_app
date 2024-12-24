@@ -1,9 +1,15 @@
+import 'package:atef_physics/core/models/course_model.dart';
 import 'package:atef_physics/core/models/user_model.dart';
+import 'package:atef_physics/features/courses/course_users/cubit/course_users_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CourseUserItem extends StatelessWidget {
   final UserModel user;
-  const CourseUserItem({super.key, required this.user});
+  final CourseModel courseModel;
+
+  const CourseUserItem(
+      {super.key, required this.user, required this.courseModel});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +22,11 @@ class CourseUserItem extends StatelessWidget {
       title: Text(user.name),
       subtitle: Text(user.phoneNumber),
       trailing: IconButton(
-          onPressed: () {},
+          onPressed: () =>
+              BlocProvider.of<CourseUsersCubit>(context).removeUser(
+                userId: user,
+                course: courseModel,
+              ),
           icon: const Icon(
             Icons.delete,
             color: Colors.blue,

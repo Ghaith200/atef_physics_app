@@ -1,10 +1,13 @@
 import 'package:atef_physics/core/models/course_model.dart';
 import 'package:atef_physics/core/utils/app_colors.dart';
+import 'package:atef_physics/core/utils/validator_utils.dart';
 import 'package:atef_physics/core/widgets/custom_appbar.dart';
 import 'package:atef_physics/core/widgets/custom_button.dart';
-import 'package:atef_physics/features/courses/presentation/course_users/cubit/course_users_cubit.dart';
+import 'package:atef_physics/features/courses/course_users/cubit/course_users_cubit.dart';
+import 'package:atef_physics/features/courses/course_users/screens/enrolled_users_tabbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CourseAddUser extends StatefulWidget {
@@ -71,8 +74,9 @@ class _CourseUserFormState extends State<CourseUserForm> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Expanded(
+        Flexible(
           child: Form(
             key: formKey,
             child: SingleChildScrollView(
@@ -84,30 +88,17 @@ class _CourseUserFormState extends State<CourseUserForm> {
                     decoration:
                         BoxDecoration(color: AppColors.grey.withOpacity(.5)),
                     child: TextFormField(
-                      maxLines: 20,
+                      maxLines: null,
                       keyboardType: TextInputType.multiline,
                       controller: phoneController,
                       decoration: const InputDecoration(
                         labelText: 'Phone Number',
                       ),
                       inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly,
+                        FilteringTextInputFormatter.allow(
+                            RegExp(r'[\d\n]')), // Allow digits and newline
                       ],
-                      validator: (value) {
-                        if (value == null || value.trim().isEmpty) {
-                          return 'Phone Number is required';
-                        }
-                        List<int?> p = phoneController.text
-                            .split("\n")
-                            .map((e) => int.tryParse(e))
-                            .toList();
-                        if (p.contains(null)) {
-                          return 'Enter a valid number';
-                        } else {
-                          phoneNumbers = phoneController.text.split("\n");
-                        }
-                        return null;
-                      },
+                      validator: (value) => Validators.multiPhoneNumber(value),
                     ),
                   ),
                 ],
@@ -120,13 +111,25 @@ class _CourseUserFormState extends State<CourseUserForm> {
           builder: (context, state) {
             return state.maybeWhen<Widget>(
               load: () => const CircularProgressIndicator(),
+              add: (addedUsers, notfound, enrolled) => Expanded(
+                child: EnrolledUsersTabbar(
+                    model: widget.course,
+                    addedUsers: addedUsers,
+                    enrolledUsers: enrolled,
+                    notFoundUsers: notfound),
+              ),
               orElse: () => CustomButton(
-                onTap: () {
+                onTap: () async {
                   if (formKey.currentState!.validate()) {
-                    cubit.addUsers(
+                    phoneNumbers = phoneController.text.split("\n");
+
+                    await cubit.addUsers(
                       model: widget.course,
                       phoneNumbers: phoneNumbers,
                     );
+                    // if (context.mounted && context.canPop()) {
+                    //   context.pop();
+                    // }
                   }
                 },
                 boarderRadius: 30,

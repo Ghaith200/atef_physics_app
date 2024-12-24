@@ -5,9 +5,9 @@ import 'package:atef_physics/core/models/course_model.dart';
 import 'package:atef_physics/core/utils/app_colors.dart';
 import 'package:atef_physics/core/utils/app_snack_bar.dart';
 import 'package:atef_physics/core/widgets/custom_appdrawer.dart';
-import 'package:atef_physics/features/courses/presentation/course/screens/add_course_screen.dart';
-import 'package:atef_physics/features/courses/presentation/course/cubit/course_cubit.dart';
-import 'package:atef_physics/features/courses/presentation/course_lessons/presentation/widgets/course_widget.dart';
+import 'package:atef_physics/features/courses/course/screens/add_course_screen.dart';
+import 'package:atef_physics/features/courses/course/cubit/course_cubit.dart';
+import 'package:atef_physics/features/courses/course/widgets/course_widget.dart';
 import 'package:atef_physics/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -104,6 +104,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   final e = courses.indexWhere((e) => e.id == model.id);
                   courses[e] = model;
                 },
+                remove: (model) =>
+                    courses.removeWhere((test) => test.id == model.id),
               ),
               builder: (context, state) {
                 log("Home Screen ${state.runtimeType} ");

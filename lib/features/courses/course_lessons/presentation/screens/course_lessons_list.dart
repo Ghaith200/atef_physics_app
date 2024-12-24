@@ -1,8 +1,9 @@
 import 'package:atef_physics/core/models/course_model.dart';
 import 'package:atef_physics/core/models/lesson_model.dart';
 import 'package:atef_physics/core/utils/app_snack_bar.dart';
-import 'package:atef_physics/features/courses/presentation/course_lessons/cubit/course_lessons_cubit.dart';
-import 'package:atef_physics/features/courses/presentation/course_lessons/presentation/screens/course_add_lesson.dart';
+import 'package:atef_physics/features/courses/course_lessons/cubit/course_lessons_cubit.dart';
+import 'package:atef_physics/features/courses/course_lessons/presentation/screens/course_add_lesson.dart';
+import 'package:atef_physics/features/courses/course_lessons/presentation/widgets/course_lesson_widget.dart';
 import 'package:atef_physics/features/vedio/screens/vedio_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -50,15 +51,6 @@ class _CourseLessonsListState extends State<CourseLessonsList> {
         );
       },
       builder: (context, state) {
-        // state.whenOrNull(
-        //   successAll: (models) => lesson = models,
-        //   add: (models) => lesson.add(models),
-        //   remove: (model) => lesson.remove(model),
-        //   update: (model) {
-        //     final e = lesson.indexWhere((e) => e.id == model.id);
-        //     lesson[e] = model;
-        //   },
-        // );
         return state.maybeWhen<Widget>(
             orElse: () => lesson.isEmpty
                 ? const Center(
@@ -75,31 +67,8 @@ class _CourseLessonsListState extends State<CourseLessonsList> {
 
                     itemCount: lesson.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return ListTile(
-                        onTap: () {
-                          context.pushNamed(VedioScreen.id,
-                              extra: {'lesson': lesson[index]});
-                        },
-                        title: Text(lesson[index].name),
-                        trailing: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            IconButton(
-                                onPressed: () => context
-                                        .pushNamed(CourseAddLesson.id, extra: {
-                                      "course": widget.course,
-                                      "lesson": lesson[index],
-                                      "cubit":
-                                          BlocProvider.of<CourseLessonsCubit>(
-                                              context)
-                                    }),
-                                icon: Icon(Icons.edit)),
-                            const Icon(Icons.play_circle_outline_rounded),
-                          ],
-                        ),
-                        contentPadding:
-                            const EdgeInsets.symmetric(horizontal: 5),
-                      );
+                      return CourseLessonWidget(
+                          lesson: lesson[index], model: widget.course);
                     },
                   ),
             load: () => const Center(

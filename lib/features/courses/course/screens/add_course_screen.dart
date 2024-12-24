@@ -3,11 +3,12 @@ import 'package:atef_physics/core/utils/app_snack_bar.dart';
 import 'package:atef_physics/core/widgets/custom_appbar.dart';
 import 'package:atef_physics/core/widgets/custom_button.dart';
 import 'package:atef_physics/core/widgets/custom_image_picker.dart';
-import 'package:atef_physics/features/courses/presentation/course/cubit/course_cubit.dart';
+import 'package:atef_physics/features/courses/course/cubit/course_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:go_router/go_router.dart';
 
 class AddCourseScreen extends StatefulWidget {
   static const String id = "/AddCourseScreen";
@@ -128,7 +129,7 @@ class _AddCourseScreenState extends State<AddCourseScreen> {
                   return state.maybeWhen<Widget>(
                       load: () => const CircularProgressIndicator(),
                       orElse: () => CustomButton(
-                            onTap: () {
+                            onTap: () async {
                               if (photo == null && model == null) {
                                 AppSnackBar.showSnackBar(
                                   context,
@@ -141,17 +142,20 @@ class _AddCourseScreenState extends State<AddCourseScreen> {
                                 return;
                               }
                               model == null
-                                  ? cubit.addCourse(
+                                  ? await cubit.addCourse(
                                       title: titleController.text,
                                       price: int.parse(priceController.text),
                                       photo: photo!,
                                     )
-                                  : cubit.updateCOurse(
+                                  : await cubit.updateCOurse(
                                       model: model!,
                                       title: titleController.text,
                                       price: int.parse(priceController.text),
                                       photo: photo ?? model!.photo,
                                     );
+                              if (context.mounted && context.canPop()) {
+                                context.pop();
+                              }
                             },
                             boarderRadius: 30,
                             title:

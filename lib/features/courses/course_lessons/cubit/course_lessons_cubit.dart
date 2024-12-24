@@ -1,8 +1,7 @@
 import 'package:atef_physics/core/models/course_model.dart';
 import 'package:atef_physics/core/models/lesson_model.dart';
 import 'package:atef_physics/core/network/api_error_handler.dart';
-import 'package:atef_physics/features/courses/courses_api_services/courses_api_firebase_imp.dart';
-import 'package:atef_physics/features/courses/courses_api_services/courses_api_services.dart';
+import 'package:atef_physics/features/courses/course_lessons/course_lessons_api_services/course_lessons_api_services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -12,7 +11,7 @@ part 'course_lessons_cubit.freezed.dart';
 class CourseLessonsCubit extends Cubit<CourseLessonsState> {
   CourseLessonsCubit() : super(const CourseLessonsState.initial());
   final loading = const CourseLessonsState.load();
-  final CoursesApiServices apiServices = CoursesApiFirebaseImp();
+  final CourseLessonsApiServices apiServices = CourseLessonsApiServices();
 
   Future<void> getCourseLessons(CourseModel model) async {
     emit(loading);
