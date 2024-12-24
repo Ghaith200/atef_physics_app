@@ -46,6 +46,16 @@ class _CourseDetailsState extends State<CourseDetails>
 
   @override
   Widget build(BuildContext context) {
+    void deleteCourse() async {
+      await BlocProvider.of<CourseCubit>(context)
+          .removeCourses(model: widget.courses);
+      if (context.mounted && context.canPop()) {
+        AppSnackBar.showSnackBar(
+            context, "course ${widget.courses.title} \n Removed");
+        context.pop();
+      }
+    }
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () => controller.index == 0
@@ -57,7 +67,7 @@ class _CourseDetailsState extends State<CourseDetails>
                 "model": widget.courses,
                 "cubit": BlocProvider.of<CourseUsersCubit>(context)
               }),
-        child: const Icon(Icons.edit),
+        child: const Icon(Icons.add),
       ),
       appBar: CustomAppBars(
         text: widget.courses.title,
@@ -65,15 +75,34 @@ class _CourseDetailsState extends State<CourseDetails>
         actions: [
           IconButton(
             onPressed: () async {
-              await BlocProvider.of<CourseCubit>(context)
-                  .removeCourses(model: widget.courses);
-              if (context.mounted && context.canPop()) {
-              AppSnackBar.showSnackBar(
-                  context, "course ${widget.courses.title} \n Removed");
-                context.pop();
-              }
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    title: const Text("Delete"),
+                    content: const Text(
+                        "Are you sure you want to delete this Course?"),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: const Text("Cancel",
+                            style: TextStyle(color: AppColors.blue)),
+                      ),
+                      TextButton(
+                        onPressed: () async {
+                          Navigator.pop(context);
+                          deleteCourse();
+                          Navigator.pop(context);
+                        },
+                        child: const Text("Delete",
+                            style: TextStyle(color: AppColors.red)),
+                      ),
+                    ],
+                  );
+                },
+              );
             },
-            icon: const Icon(Icons.close),
+            icon: const Icon(Icons.delete),
             color: AppColors.red,
           ),
         ],

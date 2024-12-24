@@ -8,6 +8,7 @@ import 'package:atef_physics/features/courses/course/screens/course_details.dart
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 class CourseWidget extends StatelessWidget {
@@ -63,12 +64,19 @@ class CourseWidget extends StatelessWidget {
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    Text(
-                      course.title,
-                      style: AppTextStyles.hevoLight20WhiteBlackW700,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                      textAlign: TextAlign.center,
+                    Container(
+                      width: 60.sp,
+                      child: Text(
+                        course.title,
+                        style: TextStyle(
+                            overflow: TextOverflow.ellipsis,
+                            color: Colors.black,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                     const Spacer(),
                     course.users.contains(Storage.instance.user.uid)

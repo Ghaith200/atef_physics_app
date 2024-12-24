@@ -68,7 +68,10 @@ class CustomAppBars extends StatelessWidget implements PreferredSizeWidget {
           SizedBox(width: 10.w),
           Text(
             text,
-            style: AppTextStyles.hevoLight25WhiteBlackW900,
+            style: TextStyle(
+                color: Colors.black,
+                fontSize: 20.sp,
+                fontWeight: FontWeight.w900),
           ),
           const Spacer(),
           if (actions != null)

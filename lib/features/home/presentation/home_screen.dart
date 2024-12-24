@@ -8,9 +8,11 @@ import 'package:atef_physics/core/widgets/custom_appdrawer.dart';
 import 'package:atef_physics/features/courses/course/screens/add_course_screen.dart';
 import 'package:atef_physics/features/courses/course/cubit/course_cubit.dart';
 import 'package:atef_physics/features/courses/course/widgets/course_widget.dart';
+import 'package:atef_physics/features/offline_handler/offline_handler.dart';
 import 'package:atef_physics/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_offline/flutter_offline.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:atef_physics/core/widgets/custom_appbar.dart';
 import 'package:go_router/go_router.dart';
@@ -40,100 +42,121 @@ class _HomeScreenState extends State<HomeScreen> {
       onRefresh: () async {
         await cubit.getCourses();
       },
-      child: Scaffold(
-        floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              context.pushNamed(AddCourseScreen.id, extra: {"cubit": cubit});
-            },
-            child: const Icon(Icons.add)),
-        drawer: const CustomAppdrawer(),
-        appBar: CustomAppBars(
-          text: "Atef Physics",
-          actions: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: CircleAvatar(
-                backgroundImage: AssetImage(Assets.images.icon.path),
-                radius: 20.sp,
+      child: OfflineBuilder(
+        connectivityBuilder: (
+          BuildContext context,
+          List<ConnectivityResult> connectivity,
+          Widget child,
+        ) {
+          final bool connected =
+              !connectivity.contains(ConnectivityResult.none);
+          if (connected) {
+            return Scaffold(
+              floatingActionButton: FloatingActionButton(
+                  onPressed: () {
+                    context
+                        .pushNamed(AddCourseScreen.id, extra: {"cubit": cubit});
+                  },
+                  child: const Icon(Icons.add)),
+              drawer: const CustomAppdrawer(),
+              appBar: CustomAppBars(
+                text: "Atef Physics",
+                actions: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: CircleAvatar(
+                      backgroundImage: AssetImage(Assets.images.icon.path),
+                      radius: 20.sp,
+                    ),
+                  ),
+                ],
               ),
-            ),
-          ],
-        ),
-        body: NestedScrollView(
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            return [
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Colors.grey,
-                          borderRadius: BorderRadius.circular(20),
+              body: NestedScrollView(
+                headerSliverBuilder:
+                    (BuildContext context, bool innerBoxIsScrolled) {
+                  return [
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 15, vertical: 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.grey,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              height: 200.sp,
+                            ),
+                            const SizedBox(height: 20),
+                            const Text(
+                              'الاضافات الاخيره',
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: AppColors.blue,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                          ],
                         ),
-                        height: 200.sp,
                       ),
-                      const SizedBox(height: 20),
-                      const Text(
-                        'الاضافات الاخيره',
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: AppColors.blue,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                    ],
+                    ),
+                  ];
+                },
+                body: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: BlocConsumer<CourseCubit, CourseState>(
+                    listener: (context, state) => state.whenOrNull(
+                      error: (error) => error.showError(context),
+                      successAll: (models) => courses.addAll(models),
+                      add: (model) => courses.add(model),
+                      update: (model) {
+                        AppSnackBar.showSnackBar(
+                            context, "${model.title} Updated");
+                        final e = courses.indexWhere((e) => e.id == model.id);
+                        courses[e] = model;
+                      },
+                      remove: (model) =>
+                          courses.removeWhere((test) => test.id == model.id),
+                    ),
+                    builder: (context, state) {
+                      log("Home Screen ${state.runtimeType} ");
+
+                      return state.maybeWhen<Widget>(
+                        load: () =>
+                            const Center(child: CircularProgressIndicator()),
+                        orElse: () => courses.isEmpty
+                            ? Text(
+                                "لا يوجد كورسات حاليا",
+                                style: AppTextStyles.hevoLight20BlackWhiteW900,
+                              )
+                            : GridView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  mainAxisSpacing: 20,
+                                  crossAxisSpacing: 20,
+                                ),
+                                itemCount: courses.length,
+                                itemBuilder: (context, index) {
+                                  return CourseWidget(course: courses[index]);
+                                },
+                              ),
+                      );
+                    },
                   ),
                 ),
               ),
-            ];
-          },
-          body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: BlocConsumer<CourseCubit, CourseState>(
-              listener: (context, state) => state.whenOrNull(
-                error: (error) => error.showError(context),
-                successAll: (models) => courses.addAll(models),
-                add: (model) => courses.add(model),
-                update: (model) {
-                  AppSnackBar.showSnackBar(context, "${model.title} Updated");
-                  final e = courses.indexWhere((e) => e.id == model.id);
-                  courses[e] = model;
-                },
-                remove: (model) =>
-                    courses.removeWhere((test) => test.id == model.id),
-              ),
-              builder: (context, state) {
-                log("Home Screen ${state.runtimeType} ");
-
-                return state.maybeWhen<Widget>(
-                  load: () => const Center(child: CircularProgressIndicator()),
-                  orElse: () => courses.isEmpty
-                      ? Text(
-                          "لا يوجد كورسات حاليا",
-                          style: AppTextStyles.hevoLight20BlackWhiteW900,
-                        )
-                      : GridView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            mainAxisSpacing: 20,
-                            crossAxisSpacing: 20,
-                          ),
-                          itemCount: courses.length,
-                          itemBuilder: (context, index) {
-                            return CourseWidget(course: courses[index]);
-                          },
-                        ),
-                );
-              },
-            ),
-          ),
+            );
+          } else {
+            return OfflineScreen();
+          }
+        },
+        child: const Center(
+          child: CircularProgressIndicator(),
         ),
       ),
     );
