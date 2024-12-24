@@ -97,7 +97,7 @@ class _AddCourseScreenState extends State<AddCourseScreen> {
                       controller: priceController,
                       decoration: const InputDecoration(
                         labelText: 'Course Price',
-                        suffixText: 'EGP',
+                        suffixText: 'ريال',
                       ),
                       keyboardType: TextInputType.number,
                       inputFormatters: [
@@ -127,8 +127,13 @@ class _AddCourseScreenState extends State<AddCourseScreen> {
                 ),
                 builder: (context, state) {
                   return state.maybeWhen<Widget>(
-                      load: () => const CircularProgressIndicator(),
+                      load: () => CustomButton(
+                          height: 50,
+                          boarderRadius: 30,
+                          onTap: () {},
+                          child: const CircularProgressIndicator()),
                       orElse: () => CustomButton(
+                            height: 50,
                             onTap: () async {
                               if (photo == null && model == null) {
                                 AppSnackBar.showSnackBar(

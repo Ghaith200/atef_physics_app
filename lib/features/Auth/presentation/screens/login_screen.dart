@@ -123,7 +123,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       boarderRadius: 25.sp,
                       child: const Center(
                           child: CircularProgressIndicator(
-                        color: Color(0xff082a3a),
+                        color: Colors.white,
                       )),
                     );
                   }

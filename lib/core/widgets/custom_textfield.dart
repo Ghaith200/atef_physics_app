@@ -130,7 +130,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
             cursorColor: AppColors.whiteBlack,
             keyboardType: widget.keyboardType,
             decoration: InputDecoration(
-              filled: true,
+              filled: false,
               fillColor:
                   Theme.of(context).colorScheme.onSurface.withOpacity(.3),
               errorStyle: const TextStyle(fontSize: 0),
@@ -221,8 +221,10 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
             height: 30.h,
             alignment: Alignment.center, // Center the icon
             child: isObsecured
-                ? Assets.images.icons.eyeDisabled.svg(height: 20.h, width: 20.w)
-                : Assets.images.icons.eyeEnabled.svg(height: 20.h, width: 20.w),
+                ? Assets.images.icons.eyeDisabled
+                    .svg(height: 20.h, width: 20.w, color: Colors.black)
+                : Assets.images.icons.eyeEnabled
+                    .svg(height: 20.h, width: 20.w, color: Colors.blue),
           ),
         ),
       );
