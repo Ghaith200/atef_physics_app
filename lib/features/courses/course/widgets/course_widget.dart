@@ -1,4 +1,3 @@
-import 'package:atef_physics/core/constants/app_text_styles.dart';
 import 'package:atef_physics/core/models/course_model.dart';
 import 'package:atef_physics/core/utils/app_colors.dart';
 import 'package:atef_physics/core/utils/storage.dart';
@@ -8,7 +7,6 @@ import 'package:atef_physics/features/courses/course/screens/course_details.dart
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 class CourseWidget extends StatelessWidget {
@@ -24,6 +22,7 @@ class CourseWidget extends StatelessWidget {
             extra: {'courses': course, "cubit": cubit});
       },
       child: Container(
+        margin: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
@@ -42,19 +41,21 @@ class CourseWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
           ),
           child: GridTile(
-            header: Container(
-              padding: const EdgeInsetsDirectional.symmetric(
-                  horizontal: 15, vertical: 10),
-              alignment: Alignment.topRight,
-              child: GestureDetector(
-                onTap: () => context.pushNamed(AddCourseScreen.id,
-                    extra: {"course": course, "cubit": cubit}),
-                child: CircleAvatar(
-                  backgroundColor: Colors.white.withOpacity(.6),
-                  child: const Icon(Icons.edit),
-                ),
-              ),
-            ),
+            header: Storage.instance.isAdmin
+                ? Container(
+                    padding: const EdgeInsetsDirectional.symmetric(
+                        horizontal: 15, vertical: 10),
+                    alignment: Alignment.topRight,
+                    child: GestureDetector(
+                      onTap: () => context.pushNamed(AddCourseScreen.id,
+                          extra: {"course": course, "cubit": cubit}),
+                      child: CircleAvatar(
+                        backgroundColor: Colors.white.withOpacity(.6),
+                        child: const Icon(Icons.edit),
+                      ),
+                    ),
+                  )
+                : null,
             footer: Container(
                 width: double.infinity,
                 padding: const EdgeInsetsDirectional.symmetric(
@@ -64,17 +65,21 @@ class CourseWidget extends StatelessWidget {
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   children: [
+
                     Expanded(
+
                       // width: 60.sp,
                       child: Text(
                         course.title,
-                        style: TextStyle(
+                        style: const TextStyle(
                             overflow: TextOverflow.ellipsis,
                             color: Colors.black,
                             fontSize: 15,
                             fontWeight: FontWeight.bold),
                         overflow: TextOverflow.visible,
+
                         maxLines: 2,
+
                         textAlign: TextAlign.center,
                       ),
                     ),

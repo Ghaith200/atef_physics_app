@@ -1,19 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:atef_physics/features/vedio/video_widget.dart';
-import 'package:atef_physics/core/models/lesson_model.dart';
-import 'package:atef_physics/core/widgets/custom_appbar.dart';
+
 import 'package:flutter/services.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'dart:convert';
 
 class VedioScreen extends StatefulWidget {
   static const id = '/VideoScreen';
-  final LessonModel lesson;
-
-  const VedioScreen({
-    super.key,
-    required this.lesson,
-  });
+  final String lesson;
+  final bool loans;
+  const VedioScreen({super.key, required this.lesson, this.loans = true});
 
   @override
   State<VedioScreen> createState() => _VedioScreenState();
@@ -26,8 +21,10 @@ class _VedioScreenState extends State<VedioScreen> {
   @override
   void initState() {
     super.initState();
-    SystemChrome.setPreferredOrientations(
-        [DeviceOrientation.landscapeRight, DeviceOrientation.landscapeLeft]);
+    if (widget.loans) {
+      SystemChrome.setPreferredOrientations(
+          [DeviceOrientation.landscapeRight, DeviceOrientation.landscapeLeft]);
+    }
     controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setNavigationDelegate(
@@ -46,9 +43,9 @@ class _VedioScreenState extends State<VedioScreen> {
       );
 
     // Example of how Streamable video URL might look
-    if (RegExp(r'https://streamable.com/').hasMatch(widget.lesson.video)) {
+    if (RegExp(r'https://streamable.com/').hasMatch(widget.lesson)) {
       // Extract the video ID from Streamable URL
-      videoId = widget.lesson.video.split('/').last;
+      videoId = widget.lesson.split('/').last;
     }
 
     // Prepare the embed code using the Streamable video URL
@@ -60,7 +57,7 @@ class _VedioScreenState extends State<VedioScreen> {
             allow="fullscreen" 
             allowfullscreen 
             height="100%" 
-            src="https://streamable.com/e/${videoId}?"
+            src="https://streamable.com/e/$videoId?"
             width="100%" 
             style="border:none; width:100%; height:100%; position:absolute; left:0px; top:0px; overflow:hidden;">
           </iframe>

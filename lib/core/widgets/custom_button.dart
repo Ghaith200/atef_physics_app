@@ -18,6 +18,7 @@ class CustomButton extends StatelessWidget {
     this.child,
     this.radius,
     this.titleTextStyle,
+    this.boxShadow,
   });
 
   final void Function()? onTap;
@@ -32,6 +33,7 @@ class CustomButton extends StatelessWidget {
   final bool isCircle;
   final Widget? child;
   final TextStyle? titleTextStyle;
+  final List<BoxShadow>? boxShadow;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -40,6 +42,7 @@ class CustomButton extends StatelessWidget {
         clipBehavior: Clip.hardEdge,
         alignment: Alignment.center,
         decoration: BoxDecoration(
+          boxShadow: boxShadow,
           shape: isCircle ? BoxShape.circle : BoxShape.rectangle,
           color: filled ? color : AppColors.blue,
           borderRadius:

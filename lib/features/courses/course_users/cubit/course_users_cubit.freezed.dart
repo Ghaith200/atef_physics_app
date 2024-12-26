@@ -22,7 +22,7 @@ mixin _$CourseUsersState {
     required TResult Function() load,
     required TResult Function(List<UserModel> models) successAll,
     required TResult Function(List<UserModel> addedUsers, List<String> notfound,
-            List<String> enrolled)
+            List<UserModel> enrolled)
         add,
     required TResult Function(UserModel model) remove,
     required TResult Function(ApiErrorHandler error) error,
@@ -34,7 +34,7 @@ mixin _$CourseUsersState {
     TResult? Function()? load,
     TResult? Function(List<UserModel> models)? successAll,
     TResult? Function(List<UserModel> addedUsers, List<String> notfound,
-            List<String> enrolled)?
+            List<UserModel> enrolled)?
         add,
     TResult? Function(UserModel model)? remove,
     TResult? Function(ApiErrorHandler error)? error,
@@ -46,7 +46,7 @@ mixin _$CourseUsersState {
     TResult Function()? load,
     TResult Function(List<UserModel> models)? successAll,
     TResult Function(List<UserModel> addedUsers, List<String> notfound,
-            List<String> enrolled)?
+            List<UserModel> enrolled)?
         add,
     TResult Function(UserModel model)? remove,
     TResult Function(ApiErrorHandler error)? error,
@@ -152,7 +152,7 @@ class _$InitialImpl implements _Initial {
     required TResult Function() load,
     required TResult Function(List<UserModel> models) successAll,
     required TResult Function(List<UserModel> addedUsers, List<String> notfound,
-            List<String> enrolled)
+            List<UserModel> enrolled)
         add,
     required TResult Function(UserModel model) remove,
     required TResult Function(ApiErrorHandler error) error,
@@ -167,7 +167,7 @@ class _$InitialImpl implements _Initial {
     TResult? Function()? load,
     TResult? Function(List<UserModel> models)? successAll,
     TResult? Function(List<UserModel> addedUsers, List<String> notfound,
-            List<String> enrolled)?
+            List<UserModel> enrolled)?
         add,
     TResult? Function(UserModel model)? remove,
     TResult? Function(ApiErrorHandler error)? error,
@@ -182,7 +182,7 @@ class _$InitialImpl implements _Initial {
     TResult Function()? load,
     TResult Function(List<UserModel> models)? successAll,
     TResult Function(List<UserModel> addedUsers, List<String> notfound,
-            List<String> enrolled)?
+            List<UserModel> enrolled)?
         add,
     TResult Function(UserModel model)? remove,
     TResult Function(ApiErrorHandler error)? error,
@@ -287,7 +287,7 @@ class _$CourseUsersLoadingImpl implements CourseUsersLoading {
     required TResult Function() load,
     required TResult Function(List<UserModel> models) successAll,
     required TResult Function(List<UserModel> addedUsers, List<String> notfound,
-            List<String> enrolled)
+            List<UserModel> enrolled)
         add,
     required TResult Function(UserModel model) remove,
     required TResult Function(ApiErrorHandler error) error,
@@ -302,7 +302,7 @@ class _$CourseUsersLoadingImpl implements CourseUsersLoading {
     TResult? Function()? load,
     TResult? Function(List<UserModel> models)? successAll,
     TResult? Function(List<UserModel> addedUsers, List<String> notfound,
-            List<String> enrolled)?
+            List<UserModel> enrolled)?
         add,
     TResult? Function(UserModel model)? remove,
     TResult? Function(ApiErrorHandler error)? error,
@@ -317,7 +317,7 @@ class _$CourseUsersLoadingImpl implements CourseUsersLoading {
     TResult Function()? load,
     TResult Function(List<UserModel> models)? successAll,
     TResult Function(List<UserModel> addedUsers, List<String> notfound,
-            List<String> enrolled)?
+            List<UserModel> enrolled)?
         add,
     TResult Function(UserModel model)? remove,
     TResult Function(ApiErrorHandler error)? error,
@@ -456,7 +456,7 @@ class _$AllCourseUsersImpl implements AllCourseUsers {
     required TResult Function() load,
     required TResult Function(List<UserModel> models) successAll,
     required TResult Function(List<UserModel> addedUsers, List<String> notfound,
-            List<String> enrolled)
+            List<UserModel> enrolled)
         add,
     required TResult Function(UserModel model) remove,
     required TResult Function(ApiErrorHandler error) error,
@@ -471,7 +471,7 @@ class _$AllCourseUsersImpl implements AllCourseUsers {
     TResult? Function()? load,
     TResult? Function(List<UserModel> models)? successAll,
     TResult? Function(List<UserModel> addedUsers, List<String> notfound,
-            List<String> enrolled)?
+            List<UserModel> enrolled)?
         add,
     TResult? Function(UserModel model)? remove,
     TResult? Function(ApiErrorHandler error)? error,
@@ -486,7 +486,7 @@ class _$AllCourseUsersImpl implements AllCourseUsers {
     TResult Function()? load,
     TResult Function(List<UserModel> models)? successAll,
     TResult Function(List<UserModel> addedUsers, List<String> notfound,
-            List<String> enrolled)?
+            List<UserModel> enrolled)?
         add,
     TResult Function(UserModel model)? remove,
     TResult Function(ApiErrorHandler error)? error,
@@ -564,7 +564,7 @@ abstract class _$$CourseAddUsersImplCopyWith<$Res> {
   $Res call(
       {List<UserModel> addedUsers,
       List<String> notfound,
-      List<String> enrolled});
+      List<UserModel> enrolled});
 }
 
 /// @nodoc
@@ -596,7 +596,7 @@ class __$$CourseAddUsersImplCopyWithImpl<$Res>
       enrolled: null == enrolled
           ? _value._enrolled
           : enrolled // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as List<UserModel>,
     ));
   }
 }
@@ -607,7 +607,7 @@ class _$CourseAddUsersImpl implements CourseAddUsers {
   const _$CourseAddUsersImpl(
       {required final List<UserModel> addedUsers,
       required final List<String> notfound,
-      required final List<String> enrolled})
+      required final List<UserModel> enrolled})
       : _addedUsers = addedUsers,
         _notfound = notfound,
         _enrolled = enrolled;
@@ -628,9 +628,9 @@ class _$CourseAddUsersImpl implements CourseAddUsers {
     return EqualUnmodifiableListView(_notfound);
   }
 
-  final List<String> _enrolled;
+  final List<UserModel> _enrolled;
   @override
-  List<String> get enrolled {
+  List<UserModel> get enrolled {
     if (_enrolled is EqualUnmodifiableListView) return _enrolled;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_enrolled);
@@ -675,7 +675,7 @@ class _$CourseAddUsersImpl implements CourseAddUsers {
     required TResult Function() load,
     required TResult Function(List<UserModel> models) successAll,
     required TResult Function(List<UserModel> addedUsers, List<String> notfound,
-            List<String> enrolled)
+            List<UserModel> enrolled)
         add,
     required TResult Function(UserModel model) remove,
     required TResult Function(ApiErrorHandler error) error,
@@ -690,7 +690,7 @@ class _$CourseAddUsersImpl implements CourseAddUsers {
     TResult? Function()? load,
     TResult? Function(List<UserModel> models)? successAll,
     TResult? Function(List<UserModel> addedUsers, List<String> notfound,
-            List<String> enrolled)?
+            List<UserModel> enrolled)?
         add,
     TResult? Function(UserModel model)? remove,
     TResult? Function(ApiErrorHandler error)? error,
@@ -705,7 +705,7 @@ class _$CourseAddUsersImpl implements CourseAddUsers {
     TResult Function()? load,
     TResult Function(List<UserModel> models)? successAll,
     TResult Function(List<UserModel> addedUsers, List<String> notfound,
-            List<String> enrolled)?
+            List<UserModel> enrolled)?
         add,
     TResult Function(UserModel model)? remove,
     TResult Function(ApiErrorHandler error)? error,
@@ -765,11 +765,11 @@ abstract class CourseAddUsers implements CourseUsersState {
   const factory CourseAddUsers(
       {required final List<UserModel> addedUsers,
       required final List<String> notfound,
-      required final List<String> enrolled}) = _$CourseAddUsersImpl;
+      required final List<UserModel> enrolled}) = _$CourseAddUsersImpl;
 
   List<UserModel> get addedUsers;
   List<String> get notfound;
-  List<String> get enrolled;
+  List<UserModel> get enrolled;
 
   /// Create a copy of CourseUsersState
   /// with the given fields replaced by the non-null parameter values.
@@ -851,7 +851,7 @@ class _$CourseUserRemovedImpl implements CourseUserRemoved {
     required TResult Function() load,
     required TResult Function(List<UserModel> models) successAll,
     required TResult Function(List<UserModel> addedUsers, List<String> notfound,
-            List<String> enrolled)
+            List<UserModel> enrolled)
         add,
     required TResult Function(UserModel model) remove,
     required TResult Function(ApiErrorHandler error) error,
@@ -866,7 +866,7 @@ class _$CourseUserRemovedImpl implements CourseUserRemoved {
     TResult? Function()? load,
     TResult? Function(List<UserModel> models)? successAll,
     TResult? Function(List<UserModel> addedUsers, List<String> notfound,
-            List<String> enrolled)?
+            List<UserModel> enrolled)?
         add,
     TResult? Function(UserModel model)? remove,
     TResult? Function(ApiErrorHandler error)? error,
@@ -881,7 +881,7 @@ class _$CourseUserRemovedImpl implements CourseUserRemoved {
     TResult Function()? load,
     TResult Function(List<UserModel> models)? successAll,
     TResult Function(List<UserModel> addedUsers, List<String> notfound,
-            List<String> enrolled)?
+            List<UserModel> enrolled)?
         add,
     TResult Function(UserModel model)? remove,
     TResult Function(ApiErrorHandler error)? error,
@@ -1023,7 +1023,7 @@ class _$CourseUsersErrorImpl implements CourseUsersError {
     required TResult Function() load,
     required TResult Function(List<UserModel> models) successAll,
     required TResult Function(List<UserModel> addedUsers, List<String> notfound,
-            List<String> enrolled)
+            List<UserModel> enrolled)
         add,
     required TResult Function(UserModel model) remove,
     required TResult Function(ApiErrorHandler error) error,
@@ -1038,7 +1038,7 @@ class _$CourseUsersErrorImpl implements CourseUsersError {
     TResult? Function()? load,
     TResult? Function(List<UserModel> models)? successAll,
     TResult? Function(List<UserModel> addedUsers, List<String> notfound,
-            List<String> enrolled)?
+            List<UserModel> enrolled)?
         add,
     TResult? Function(UserModel model)? remove,
     TResult? Function(ApiErrorHandler error)? error,
@@ -1053,7 +1053,7 @@ class _$CourseUsersErrorImpl implements CourseUsersError {
     TResult Function()? load,
     TResult Function(List<UserModel> models)? successAll,
     TResult Function(List<UserModel> addedUsers, List<String> notfound,
-            List<String> enrolled)?
+            List<UserModel> enrolled)?
         add,
     TResult Function(UserModel model)? remove,
     TResult Function(ApiErrorHandler error)? error,

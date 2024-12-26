@@ -38,8 +38,9 @@ class CourseUsersCubit extends Cubit<CourseUsersState> {
     data.when(
         success: (success) => emit(CourseUsersState.add(
               addedUsers:
-              success[FirebaseStrings.addedUsers]! as List<UserModel>,
-              enrolled: success[FirebaseStrings.enrolledUsers]! as List<String>,
+                  success[FirebaseStrings.addedUsers]! as List<UserModel>,
+              enrolled:
+                  success[FirebaseStrings.enrolledUsers]! as List<UserModel>,
               notfound: success[FirebaseStrings.notFoundUsers]! as List<String>,
             )),
         failure: (e) => emit(CourseUsersState.error(e)));

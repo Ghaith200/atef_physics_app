@@ -8,7 +8,9 @@ import 'package:atef_physics/features/courses/course/cubit/course_cubit.dart';
 import 'package:atef_physics/features/courses/course/widgets/course_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 
 class CourseListWidget extends StatefulWidget {
   const CourseListWidget({
@@ -60,10 +62,12 @@ class _CourseListWidgetState extends State<CourseListWidget> {
                 )
               : GridView.builder(
                   physics: const NeverScrollableScrollPhysics(),
+
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     mainAxisSpacing: 5.sp,
                     crossAxisSpacing: 5.sp,
+
                   ),
                   itemCount: courses.length,
                   itemBuilder: (context, index) {

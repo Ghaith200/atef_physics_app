@@ -7,7 +7,6 @@ import 'package:atef_physics/features/courses/course_users/cubit/course_users_cu
 import 'package:atef_physics/features/courses/course_users/screens/enrolled_users_tabbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CourseAddUser extends StatefulWidget {
@@ -36,7 +35,7 @@ class _CourseAddUserState extends State<CourseAddUser> {
         backbutton: true,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
         child: CourseUserForm(course: widget.course),
       ),
     );
@@ -76,47 +75,60 @@ class _CourseUserFormState extends State<CourseUserForm> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Flexible(
-          child: Form(
-            key: formKey,
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: [
-                  const SizedBox(height: 20),
-                  Container(
-                    decoration:
-                        BoxDecoration(color: AppColors.grey.withOpacity(.5)),
-                    child: TextFormField(
-                      maxLines: null,
-                      keyboardType: TextInputType.multiline,
-                      controller: phoneController,
-                      decoration: const InputDecoration(
-                        labelText: 'Phone Number',
-                      ),
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(
-                            RegExp(r'[\d\n]')), // Allow digits and newline
-                      ],
-                      validator: (value) => Validators.multiPhoneNumber(value),
-                    ),
-                  ),
-                ],
+        Form(
+          key: formKey,
+          child: Container(
+            decoration: BoxDecoration(color: AppColors.grey.withOpacity(.5)),
+            child: TextFormField(
+              maxLines: null,
+              keyboardType: TextInputType.multiline,
+              controller: phoneController,
+              decoration: const InputDecoration(
+                labelText: 'Phone Number',
               ),
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(
+                    RegExp(r'[\d\n]')), // Allow digits and newline
+              ],
+              validator: (value) => Validators.multiPhoneNumber(value),
             ),
           ),
         ),
-        const SizedBox(height: 10),
+        // const SizedBox(height: 10),
         BlocConsumer<CourseUsersCubit, CourseUsersState>(
           builder: (context, state) {
             return state.maybeWhen<Widget>(
               load: () => const CircularProgressIndicator(),
               add: (addedUsers, notfound, enrolled) => Expanded(
-                child: EnrolledUsersTabbar(
-                    model: widget.course,
-                    addedUsers: addedUsers,
-                    enrolledUsers: enrolled,
-                    notFoundUsers: notfound),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      child: EnrolledUsersTabbar(
+                          model: widget.course,
+                          addedUsers: addedUsers,
+                          enrolledUsers: enrolled,
+                          notFoundUsers: notfound),
+                    ),
+                    CustomButton(
+                      onTap: () async {
+                        if (formKey.currentState!.validate()) {
+                          phoneNumbers = phoneController.text.split("\n");
+
+                          await cubit.addUsers(
+                            model: widget.course,
+                            phoneNumbers: phoneNumbers,
+                          );
+                          // if (context.mounted && context.canPop()) {
+                          //   context.pop();
+                          // }
+                        }
+                      },
+                      boarderRadius: 30,
+                      title: "Add User",
+                    ),
+                  ],
+                ),
               ),
               orElse: () => CustomButton(
                 onTap: () async {

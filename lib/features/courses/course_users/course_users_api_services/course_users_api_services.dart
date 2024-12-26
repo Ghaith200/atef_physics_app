@@ -51,50 +51,81 @@ class CourseUsersApiServices {
       CourseModel model, List<String> phoneNumbers) async {
     try {
       List<UserModel> addedUsers = [];
-      List<String> notfoundUSers = [], enrolledUseres = [];
+      List<UserModel> enrolledUsers = [];
+      List<String> notFoundUsers = [];
+      Set<String> courseUsers = model.users.toSet(); // Optimize lookups
 
       final coursedoc = FirebaseFirestore.instance
           .collection(FirebaseStrings.coures)
           .doc(model.id);
-      final userInfo = await FirebaseFirestore.instance
-          .collection(FirebaseStrings.users)
-          .where(FirebaseStrings.phoneNumber, whereIn: phoneNumbers)
-          .get();
-      for (QueryDocumentSnapshot<Map<String, dynamic>> element
-          in userInfo.docs) {
-        final number = element.data()[FirebaseStrings.phoneNumber];
-        if (!phoneNumbers.contains(number)) {
-          notfoundUSers.add(number);
-        } else if (model.users.contains(element.id)) {
-          enrolledUseres.add(number);
-        } else {
-          coursedoc.update({
-            FirebaseStrings.users: FieldValue.arrayUnion([element.id])
-          });
-          final data = await FirebaseFirestore.instance
-              .collection(FirebaseStrings.users)
-              .doc(element.id)
-              .get();
-          addedUsers.add(UserModel(
-            uid: data.id,
-            name: data.data()![FirebaseStrings.name],
-            phoneNumber: data.data()![FirebaseStrings.phoneNumber],
-            email: "",
-            fcmToken: data.data()![FirebaseStrings.fcmToken],
-            userType: UserTypeEnum.values
-                .byName(data.data()![FirebaseStrings.userType]),
-          ));
+
+      // Chunking phoneNumbers to handle Firestore's limit
+      for (var chunk in phoneNumbers.chunked(10)) {
+        final userInfo = await FirebaseFirestore.instance
+            .collection(FirebaseStrings.users)
+            .where(FirebaseStrings.phoneNumber, whereIn: chunk)
+            .get();
+
+        // Process found users
+        for (var element in userInfo.docs) {
+          final data = element.data();
+          final number = data[FirebaseStrings.phoneNumber];
+
+          if (courseUsers.contains(element.id)) {
+            enrolledUsers.add(UserModel(
+              uid: element.id,
+              name: data[FirebaseStrings.name],
+              phoneNumber: number,
+              email: "", // Add email if available
+              fcmToken: data[FirebaseStrings.fcmToken],
+              userType:
+                  UserTypeEnum.values.byName(data[FirebaseStrings.userType]),
+            ));
+          } else {
+            await coursedoc.update({
+              FirebaseStrings.users: FieldValue.arrayUnion([element.id])
+            });
+
+            addedUsers.add(UserModel(
+              uid: element.id,
+              name: data[FirebaseStrings.name],
+              phoneNumber: number,
+              email: "", // Add email if available
+              fcmToken: data[FirebaseStrings.fcmToken],
+              userType:
+                  UserTypeEnum.values.byName(data[FirebaseStrings.userType]),
+            ));
+          }
         }
+
+        // Determine not found users
+        final foundNumbers = userInfo.docs
+            .map((e) => e.data()[FirebaseStrings.phoneNumber])
+            .toSet();
+        notFoundUsers
+            .addAll(chunk.where((number) => !foundNumbers.contains(number)));
       }
+
       return ApiResult.success({
         FirebaseStrings.addedUsers: addedUsers,
-        FirebaseStrings.enrolledUsers: enrolledUseres,
-        FirebaseStrings.notFoundUsers: notfoundUSers
+        FirebaseStrings.enrolledUsers: enrolledUsers,
+        FirebaseStrings.notFoundUsers: notFoundUsers,
       });
     } catch (e) {
       return ApiResult.failure(ApiErrorHandler(
-          statusCode: 00, statusMessage: e.toString(), success: false));
+          statusCode: 500, // Use a meaningful status code
+          statusMessage: e.toString(),
+          success: false));
     }
   }
-  
+}
+
+extension ListChunking<E> on List<E> {
+  List<List<E>> chunked(int chunkSize) {
+    List<List<E>> chunks = [];
+    for (var i = 0; i < length; i += chunkSize) {
+      chunks.add(sublist(i, i + chunkSize > length ? length : i + chunkSize));
+    }
+    return chunks;
+  }
 }

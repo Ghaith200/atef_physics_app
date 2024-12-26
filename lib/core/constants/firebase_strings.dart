@@ -20,6 +20,9 @@ class FirebaseStrings {
     static const String addedUsers = "addedUsers";
         static const String enrolledUsers = "enrolledUsers";
     static const String notFoundUsers = "notFoundUsers";
+    static const String header = "header";
+    static const String path = "path";
+    static const String isVideo = "isVideo";
 
 
 }

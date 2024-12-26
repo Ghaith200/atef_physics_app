@@ -117,7 +117,7 @@ class CourseApiServices {
         id: data.id,
         title: data.data()![FirebaseStrings.name],
         photo: data.data()![FirebaseStrings.photo],
-        price: 0,
+        price: data.data()![FirebaseStrings.price],
         lessons: data.data()![FirebaseStrings.lessons],
         users: data.data()![FirebaseStrings.users],
       );
@@ -138,7 +138,7 @@ class CourseApiServices {
           .doc(model.id)
           .delete();
       await FirebaseStorage.instance.refFromURL(model.photo).delete();
-      return  ApiResult.success(model);
+      return ApiResult.success(model);
     } catch (e) {
       return ApiResult.failure(ApiErrorHandler(
         statusCode: 00,

@@ -9,7 +9,7 @@ class CourseUsersState with _$CourseUsersState {
   const factory CourseUsersState.add(
       {required List<UserModel> addedUsers,
       required List<String> notfound,
-      required List<String> enrolled}) = CourseAddUsers;
+      required List<UserModel> enrolled}) = CourseAddUsers;
 
   const factory CourseUsersState.remove(UserModel model) = CourseUserRemoved;
   const factory CourseUsersState.error(ApiErrorHandler error) =

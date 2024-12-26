@@ -68,7 +68,6 @@ class UsersApiServices {
           .collection(FirebaseStrings.users)
           .doc(user.uid);
       await doc.delete();
-
       return ApiResult.success(user);
     } catch (e) {
       return ApiResult.failure(ApiErrorHandler(
