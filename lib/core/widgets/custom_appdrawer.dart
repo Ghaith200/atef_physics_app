@@ -1,5 +1,7 @@
 import 'package:atef_physics/core/constants/app_text_styles.dart';
+
 import 'package:atef_physics/core/utils/app_colors.dart';
+import 'package:atef_physics/core/utils/app_snack_bar.dart';
 import 'package:atef_physics/core/utils/storage.dart';
 import 'package:atef_physics/core/models/user_model.dart';
 import 'package:atef_physics/features/Auth/presentation/screens/login_screen.dart';
@@ -14,8 +16,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class CustomAppdrawer extends StatelessWidget {
+class CustomAppdrawer extends StatefulWidget {
   const CustomAppdrawer({super.key});
+
+  @override
+  State<CustomAppdrawer> createState() => _CustomAppdrawerState();
+}
+
+class _CustomAppdrawerState extends State<CustomAppdrawer> {
   @override
   Widget build(BuildContext context) {
     final CourseCubit courseCubit = BlocProvider.of<CourseCubit>(context);
@@ -142,25 +150,51 @@ class CustomAppdrawer extends StatelessWidget {
   }
 
   void _launchWhatsApp(String phoneNumber) async {
-    final Uri whatsappUri = Uri.parse("https://wa.me/$phoneNumber");
+    try {
+      // WhatsApp URL scheme for direct chat
+      final Uri whatsappUri = Uri.parse("whatsapp://send?phone=$phoneNumber");
 
-    if (await canLaunchUrl(whatsappUri)) {
-      await launchUrl(whatsappUri, mode: LaunchMode.externalApplication);
-    } else {
-      throw 'Could not launch WhatsApp for $phoneNumber';
+      // Check if the WhatsApp URI can be launched
+      if (await canLaunchUrl(whatsappUri)) {
+        // Launch WhatsApp
+        await launchUrl(whatsappUri, mode: LaunchMode.externalApplication);
+        context.pop();
+      } else {
+        // If WhatsApp is not installed or cannot handle the URL, show a message
+        context.pop();
+        AppSnackBar.showSnackBar(
+            context, 'WhatsApp is not installed on your device.');
+      }
+    } catch (e) {
+      context.pop();
+      AppSnackBar.showSnackBar(context, 'Error launching WhatsApp');
     }
   }
 
   void _callPhoneNumber(String phoneNumber) async {
-    final Uri phoneUri = Uri(scheme: 'tel', path: phoneNumber);
     try {
-      if (await canLaunchUrl(phoneUri)) {
-        await launchUrl(phoneUri, mode: LaunchMode.externalApplication);
+      // Ensure the phone number is formatted correctly with '+'
+      String formattedPhoneNumber = phoneNumber.startsWith('00')
+          ? phoneNumber.replaceFirst('00', '+')
+          : phoneNumber;
+
+      // Create a URI for the tel scheme
+      Uri uri = Uri(scheme: 'tel', path: formattedPhoneNumber);
+
+      // Check if the device can handle the tel scheme
+      if (await canLaunchUrl(uri)) {
+        // Launch the phone dialer
+        await launchUrl(uri, mode: LaunchMode.externalApplication);
+        context.pop();
       } else {
-        throw 'Could not launch $phoneNumber';
+        // Notify the user if no dialer is available
+        context.pop();
+        AppSnackBar.showSnackBar(context, 'Failed launching phone dialer');
       }
     } catch (e) {
-      debugPrint('Error: $e');
+      // Handle any errors that occur
+      context.pop();
+      AppSnackBar.showSnackBar(context, 'Failed launching phone dialer');
     }
   }
 }

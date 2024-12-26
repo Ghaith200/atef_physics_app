@@ -65,7 +65,9 @@ class CourseWidget extends StatelessWidget {
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    Flexible(
+
+                    Expanded(
+
                       // width: 60.sp,
                       child: Text(
                         course.title,
@@ -75,11 +77,13 @@ class CourseWidget extends StatelessWidget {
                             fontSize: 15,
                             fontWeight: FontWeight.bold),
                         overflow: TextOverflow.visible,
-                        maxLines: 3,
+
+                        maxLines: 2,
+
                         textAlign: TextAlign.center,
                       ),
                     ),
-                    const Spacer(),
+                    const SizedBox(width: 5),
                     course.users.contains(Storage.instance.user.uid)
                         ? const Icon(Icons.lock_open_rounded,
                             color: AppColors.blue)
