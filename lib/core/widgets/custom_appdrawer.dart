@@ -154,7 +154,6 @@ class _CustomAppdrawerState extends State<CustomAppdrawer> {
   }
 
   void _launchWhatsApp(String phoneNumber) async {
-
     try {
       // WhatsApp URL scheme for direct chat
       final Uri whatsappUri = Uri.parse("whatsapp://send?phone=$phoneNumber");
@@ -173,12 +172,10 @@ class _CustomAppdrawerState extends State<CustomAppdrawer> {
     } catch (e) {
       context.pop();
       AppSnackBar.showSnackBar(context, 'Error launching WhatsApp');
-
     }
   }
 
   void _callPhoneNumber(String phoneNumber) async {
-
     try {
       // Ensure the phone number is formatted correctly with '+'
       String formattedPhoneNumber = phoneNumber.startsWith('00')
@@ -202,7 +199,6 @@ class _CustomAppdrawerState extends State<CustomAppdrawer> {
       // Handle any errors that occur
       context.pop();
       AppSnackBar.showSnackBar(context, 'Failed launching phone dialer');
-
     }
   }
 }
