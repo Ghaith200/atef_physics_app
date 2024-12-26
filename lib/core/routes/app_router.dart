@@ -3,6 +3,7 @@ import 'package:atef_physics/core/models/lesson_model.dart';
 import 'package:atef_physics/features/courses/course/screens/add_course_screen.dart';
 import 'package:atef_physics/features/courses/course/screens/course_details.dart';
 import 'package:atef_physics/features/courses/course/cubit/course_cubit.dart';
+import 'package:atef_physics/features/courses/course/screens/my_courses_screen.dart';
 import 'package:atef_physics/features/courses/course_lessons/cubit/course_lessons_cubit.dart';
 import 'package:atef_physics/features/courses/course_lessons/presentation/screens/course_add_lesson.dart';
 import 'package:atef_physics/features/courses/course_users/cubit/course_users_cubit.dart';
@@ -12,6 +13,8 @@ import 'package:atef_physics/features/header/presentation/widgets/add_header_scr
 import 'package:atef_physics/features/offline_handler/offline_handler.dart';
 
 import 'package:atef_physics/features/onboarding/widgets/terms_and_conditions.dart';
+import 'package:atef_physics/features/users/presentation/cubit/user_cubit.dart';
+import 'package:atef_physics/features/users/presentation/screens/users_screen.dart';
 import 'package:atef_physics/features/vedio/screens/vedio_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:atef_physics/core/utils/storage.dart';
@@ -69,14 +72,48 @@ abstract class AppRouter {
       GoRoute(
         path: HomeScreen.id,
         name: HomeScreen.id,
-        builder: (context, state) => MultiBlocProvider(providers: [
-          BlocProvider(
-            create: (context) => CourseCubit(),
-          ),
-          BlocProvider(
-            create: (context) => HeaderCubit(),
-          )
-        ], child: const HomeScreen()),
+        builder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>? ?? {};
+          final CourseCubit? course = extra['cubit'] as CourseCubit?;
+          return MultiBlocProvider(providers: [
+            BlocProvider.value(
+              value: course ?? CourseCubit(),
+            ),
+            BlocProvider(
+              create: (context) => HeaderCubit(),
+            )
+          ], child: const HomeScreen());
+        },
+      ),
+      GoRoute(
+        path: MyCoursesScreen.id,
+        name: MyCoursesScreen.id,
+        builder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>? ?? {};
+          final CourseCubit? course = extra['cubit'] as CourseCubit?;
+          return MultiBlocProvider(providers: [
+            BlocProvider.value(
+              value: course ?? CourseCubit(),
+            ),
+            // BlocProvider(
+            //   create: (context) => HeaderCubit(),
+            // )
+          ], child: const MyCoursesScreen());
+        },
+      ),
+      GoRoute(
+        path: UsersScreen.id,
+        name: UsersScreen.id,
+        builder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>? ?? {};
+          final CourseCubit? course = extra['cubit'] as CourseCubit?;
+          return MultiBlocProvider(providers: [
+            BlocProvider(
+              create: (context) => UserCubit(),
+            ),
+            BlocProvider.value(value: course ?? CourseCubit())
+          ], child: const UsersScreen());
+        },
       ),
       GoRoute(
         path: ProfileScreen.id,
@@ -180,7 +217,7 @@ abstract class AppRouter {
           return BlocProvider.value(
             value: cubit ?? HeaderCubit(),
             // create: (context) => SubjectBloc(),
-            child: AddHeaderScreen(),
+            child: const AddHeaderScreen(),
           );
         },
       ),

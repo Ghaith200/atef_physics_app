@@ -4,7 +4,7 @@ import 'package:atef_physics/core/widgets/custom_appbar.dart';
 import 'package:atef_physics/core/widgets/custom_button.dart';
 import 'package:atef_physics/core/widgets/custom_image_picker.dart';
 import 'package:atef_physics/features/header/presentation/cubit/header_cubit.dart';
-
+import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -56,7 +56,7 @@ class _AddHeaderScreenState extends State<AddHeaderScreen>
                   children: [
                     TabBar(
                       controller: pageController,
-                      tabs: [
+                      tabs: const [
                         Tab(text: "Photo"),
                         Tab(text: "Video"),
                       ],
@@ -95,31 +95,24 @@ class _AddHeaderScreenState extends State<AddHeaderScreen>
                         ],
                       ),
                     ),
-                    CustomButton(
-                      onTap: () async {
-                        final HeaderCubit cubit =
-                            BlocProvider.of<HeaderCubit>(context);
-                        if (pageController.index == 0) {
-                          if (path == null) {
-                            AppSnackBar.showSnackBar(
-                                context, "Please Chose A Photo");
-                            return;
-                          }
-                          cubit.addHeader(path: path!, isVideo: false);
-                        } else if (pageController.index == 1) {
-                          if (formKey.currentState!.validate()) {
-                            // Process form data here
-                            String data = titleController.text;
-                            if (data.endsWith("/")) {
-                              data = data.substring(0, data.length - 1);
-                            }
-                            cubit.addHeader(
-                                path: data, isVideo: true);
-                          }
-                        }
-                      },
-                      boarderRadius: 20,
-                      title: "Add Announcment",
+                    BlocConsumer<HeaderCubit, HeaderState>(
+                      builder: (context, state) => state.maybeWhen(
+                        orElse: () => CustomButton(
+                          onTap: () => addHeader(),
+                          boarderRadius: 20,
+                          title: "Add Announcment",
+                        ),
+                        load: () => const Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      ),
+                      listener: (context, state) => state.mapOrNull<void>(
+                        add: (model) {
+                          AppSnackBar.showSnackBar(
+                              context, "Announcement added");
+                          context.pop();
+                        },
+                      ),
                     )
                   ],
                 ),
@@ -129,5 +122,25 @@ class _AddHeaderScreenState extends State<AddHeaderScreen>
         ),
       ),
     );
+  }
+
+  void addHeader() async {
+    final HeaderCubit cubit = BlocProvider.of<HeaderCubit>(context);
+    if (pageController.index == 0) {
+      if (path == null) {
+        AppSnackBar.showSnackBar(context, "Please Chose A Photo");
+        return;
+      }
+      cubit.addHeader(path: path!, isVideo: false);
+    } else if (pageController.index == 1) {
+      if (formKey.currentState!.validate()) {
+        // Process form data here
+        String data = titleController.text;
+        if (data.endsWith("/")) {
+          data = data.substring(0, data.length - 1);
+        }
+        cubit.addHeader(path: data, isVideo: true);
+      }
+    }
   }
 }

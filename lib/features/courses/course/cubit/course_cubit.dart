@@ -1,8 +1,6 @@
 import 'package:atef_physics/core/models/course_model.dart';
 import 'package:atef_physics/core/network/api_error_handler.dart';
 import 'package:atef_physics/features/courses/course/course_api_services/course_api_services.dart';
-import 'package:atef_physics/features/courses/courses_api_services/courses_api_firebase_imp.dart';
-import 'package:atef_physics/features/courses/courses_api_services/courses_api_services.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 part 'course_state.dart';
@@ -18,6 +16,14 @@ class CourseCubit extends Cubit<CourseState> {
     final data = await apiServices.coursesList();
     data.when(
         success: (data) => emit(CourseState.successAll(data)),
+        failure: (e) => emit(CourseState.error(e)));
+  }
+
+  Future<void> getCourse(CourseModel model) async {
+    emit(loading);
+    final data = await apiServices.course(model.id);
+    data.when(
+        success: (data) => emit(CourseState.update(model = data)),
         failure: (e) => emit(CourseState.error(e)));
   }
 

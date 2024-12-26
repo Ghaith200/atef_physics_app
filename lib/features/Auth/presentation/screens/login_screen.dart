@@ -59,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
             const Spacer(),
             const SizedBox(height: 20),
             Padding(
-              padding: EdgeInsets.symmetric(vertical: 20),
+              padding:const EdgeInsets.symmetric(vertical: 20),
               child: Text(
                 'Welcome Back',
                 style: AppTextStyles.hevoLight25WhiteBlackW900,
