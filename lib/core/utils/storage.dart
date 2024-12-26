@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:atef_physics/core/constants/firebase_strings.dart';
 import 'package:atef_physics/core/models/user_model.dart';
 import 'package:atef_physics/core/utils/user_type_enum.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:atef_physics/core/constants/storage_keys.dart';
 
@@ -18,6 +20,17 @@ class Storage {
   /// Initialize SharedPreferences
   Future<void> initStorage() async {
     prefs = await SharedPreferences.getInstance();
+    if (prefs.getString(StorageKeys.user) == null) {
+      return;
+    }
+    final data = await FirebaseFirestore.instance
+        .collection(FirebaseStrings.users)
+        .doc(user.uid)
+        .get();
+    if (data.exists == false) {
+      logout();
+    }
+    user = UserModel.fromJson({"uid": data.id,"email":user.email, ...data.data()!});
   }
 
   /// Getter and Setter for Dark Mode Preference

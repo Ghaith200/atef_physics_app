@@ -35,7 +35,9 @@ class AuthApiFirebaseImp implements AuthApiServices {
         .collection(FirebaseStrings.userCollection)
         .doc(user.uid)
         .get();
-
+    if (!data.exists) {
+      throw "User Not Found";
+    }
     return ApiResult.success(UserModel(
       uid: user.uid,
       name: data.data()![FirebaseStrings.name],

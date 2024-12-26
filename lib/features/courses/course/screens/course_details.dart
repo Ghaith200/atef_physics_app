@@ -49,38 +49,38 @@ class _CourseDetailsState extends State<CourseDetails>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: Storage.instance.isAdmin
-          ? FloatingActionButton(
-              onPressed: () => controller.index == 0
-                  ? context.pushNamed(CourseAddLesson.id, extra: {
-                      "course": widget.courses,
-                      "cubit": BlocProvider.of<CourseLessonsCubit>(context)
-                    })
-                  : context.pushNamed(CourseAddUser.id, extra: {
-                      "model": widget.courses,
-                      "cubit": BlocProvider.of<CourseUsersCubit>(context)
-                    }),
-              child: const Icon(Icons.add),
-            )
-          : null,
-      appBar: CustomAppBars(
-        text: widget.courses.title,
-        backbutton: true,
-        actions: Storage.instance.isAdmin
-            ? [
-                IconButton(
-                  onPressed: () => remove(),
-                  icon: const Icon(Icons.delete),
-                  color: AppColors.red,
-                ),
-              ]
+    return RefreshIndicator(
+      onRefresh: () =>
+          BlocProvider.of<CourseCubit>(context).getCourse(widget.courses),
+      child: Scaffold(
+        floatingActionButton: Storage.instance.isAdmin
+            ? FloatingActionButton(
+                onPressed: () => controller.index == 0
+                    ? context.pushNamed(CourseAddLesson.id, extra: {
+                        "course": widget.courses,
+                        "cubit": BlocProvider.of<CourseLessonsCubit>(context)
+                      })
+                    : context.pushNamed(CourseAddUser.id, extra: {
+                        "model": widget.courses,
+                        "cubit": BlocProvider.of<CourseUsersCubit>(context)
+                      }),
+                child: const Icon(Icons.add),
+              )
             : null,
-      ),
-      body: RefreshIndicator(
-        onRefresh: () =>
-            BlocProvider.of<CourseCubit>(context).getCourse(widget.courses),
-        child: SafeArea(
+        appBar: CustomAppBars(
+          text: widget.courses.title,
+          backbutton: true,
+          actions: Storage.instance.isAdmin
+              ? [
+                  IconButton(
+                    onPressed: () => remove(),
+                    icon: const Icon(Icons.delete),
+                    color: AppColors.red,
+                  ),
+                ]
+              : null,
+        ),
+        body: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

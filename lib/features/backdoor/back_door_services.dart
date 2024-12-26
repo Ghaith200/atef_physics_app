@@ -21,6 +21,7 @@ class BackDoorServices {
       log("App Status is ${data.runtimeType} $data");
       status = data;
     }, failure: (ApiErrorHandler error) {
+      status = false;
       log("error is ${error.statusMessage}");
     });
   }
