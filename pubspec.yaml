@@ -35,7 +35,7 @@ dependencies:
   cloud_firestore: ^5.6.0
   freezed_annotation: ^2.4.4
   #Video
-  video_player: ^2.9.2
+  # video_player: ^2.9.2
   webview_flutter: ^4.10.0
   flutter_offline: ^4.0.0
   url_launcher: ^6.3.1

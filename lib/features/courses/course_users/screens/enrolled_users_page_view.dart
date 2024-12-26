@@ -31,7 +31,7 @@ class _EnrolledUsersPageViewState extends State<EnrolledUsersPageView> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<CourseUsersCubit, CourseUsersState>(
-      listener: (context, state) => state.whenOrNull(
+      listener: (context, state) => state.whenOrNull<void>(
         error: (error) => error.showError(context),
         successAll: (models) => users.addAll(models),
         remove: (model) {

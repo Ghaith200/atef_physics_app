@@ -1,6 +1,5 @@
 import 'package:atef_physics/core/models/course_model.dart';
 import 'package:atef_physics/core/models/user_model.dart';
-import 'package:atef_physics/core/utils/app_utils.dart';
 import 'package:atef_physics/features/courses/course_users/screens/course_users_item.dart';
 import 'package:flutter/material.dart';
 

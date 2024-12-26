@@ -7,6 +7,7 @@ flutter_native_splash:
   web: true 
   color: "#ffffff"  # Background color
   color_dark: "#000000"
+  icon_background_color: "#ffffff"  # Icon background color
   image: assets/images/splash.png  # Your splash image path
   android_gravity: center  # Stretch the image to fill the screen
    # Configeration for The Splash screen for Android 12+ 

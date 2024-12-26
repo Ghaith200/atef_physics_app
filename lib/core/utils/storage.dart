@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:atef_physics/core/models/user_model.dart';
+import 'package:atef_physics/core/utils/user_type_enum.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:atef_physics/core/constants/storage_keys.dart';
 
@@ -47,5 +48,6 @@ class Storage {
   set user(UserModel user) =>
       prefs.setString(StorageKeys.user, json.encode(user.toJson()));
 
-  Future<void> logout()async =>await prefs.remove(StorageKeys.user);
+  Future<void> logout() async => await prefs.remove(StorageKeys.user);
+  bool get isAdmin => user.userType == UserTypeEnum.admin;
 }

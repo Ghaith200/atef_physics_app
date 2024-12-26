@@ -148,6 +148,10 @@ class $AssetsImagesGen {
 class $AssetsImagesIconsGen {
   const $AssetsImagesIconsGen();
 
+  /// File path: assets/images/icons/admin-with-cogwheels.png
+  AssetGenImage get adminWithCogwheels =>
+      const AssetGenImage('assets/images/icons/admin-with-cogwheels.png');
+
   /// File path: assets/images/icons/camera_icon.svg
   SvgGenImage get cameraIcon =>
       const SvgGenImage('assets/images/icons/camera_icon.svg');
@@ -172,6 +176,10 @@ class $AssetsImagesIconsGen {
   SvgGenImage get eyeEnabled =>
       const SvgGenImage('assets/images/icons/eye_enabled.svg');
 
+  /// File path: assets/images/icons/learning.png
+  AssetGenImage get learning =>
+      const AssetGenImage('assets/images/icons/learning.png');
+
   /// File path: assets/images/icons/lock_icon.png
   AssetGenImage get lockIcon =>
       const AssetGenImage('assets/images/icons/lock_icon.png');
@@ -183,6 +191,10 @@ class $AssetsImagesIconsGen {
   /// File path: assets/images/icons/message_seen.svg
   SvgGenImage get messageSeen =>
       const SvgGenImage('assets/images/icons/message_seen.svg');
+
+  /// File path: assets/images/icons/multiple-users-silhouette.png
+  AssetGenImage get multipleUsersSilhouette =>
+      const AssetGenImage('assets/images/icons/multiple-users-silhouette.png');
 
   /// File path: assets/images/icons/password_icon.svg
   SvgGenImage get passwordIcon =>
@@ -196,20 +208,27 @@ class $AssetsImagesIconsGen {
   SvgGenImage get phoneIcon =>
       const SvgGenImage('assets/images/icons/phone_icon.svg');
 
+  /// File path: assets/images/icons/user.png
+  AssetGenImage get user => const AssetGenImage('assets/images/icons/user.png');
+
   /// List of all assets
   List<dynamic> get values => [
+        adminWithCogwheels,
         cameraIcon,
         darkMoodIcon,
         editIcon,
         emailIcon,
         eyeDisabled,
         eyeEnabled,
+        learning,
         lockIcon,
         messageNotSeen,
         messageSeen,
+        multipleUsersSilhouette,
         passwordIcon,
         personIcon,
-        phoneIcon
+        phoneIcon,
+        user
       ];
 }
 

@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class OfflineScreen extends StatelessWidget {
   static const String id = "/OfflineScreen";
-  const OfflineScreen({Key? key}) : super(key: key);
+  const OfflineScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

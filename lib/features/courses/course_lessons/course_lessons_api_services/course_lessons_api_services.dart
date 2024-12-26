@@ -11,7 +11,7 @@ class CourseLessonsApiServices {
     try {
       List<LessonModel> lessonsModel = [];
       for (String lesson in model.lessons) {
-        final lessonDoc = await FirebaseFirestore.instance
+        final lessonDoc =  FirebaseFirestore.instance
             .collection(FirebaseStrings.lessons)
             .doc(lesson);
         final data = await lessonDoc.get();
