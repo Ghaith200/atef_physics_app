@@ -2,7 +2,6 @@ import 'package:atef_physics/core/models/course_model.dart';
 import 'package:atef_physics/core/widgets/custom_button.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CourseDetailsItemInfo extends StatelessWidget {
   const CourseDetailsItemInfo({
@@ -54,9 +53,9 @@ class CourseDetailsItemInfo extends StatelessWidget {
                     maxLines: 3,
                     overflow: TextOverflow.visible,
                     textAlign: TextAlign.end,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.black,
-                      fontSize: 19.sp,
+                      fontSize: 19,
                       fontWeight: FontWeight.bold,
                     ),
                   ),

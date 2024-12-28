@@ -152,7 +152,8 @@ class _CustomAppdrawerState extends State<CustomAppdrawer> {
   void _launchWhatsApp(String phoneNumber) async {
     try {
       // WhatsApp URL scheme for direct chat
-      final Uri whatsappUri = Uri.parse("whatsapp://send?phone=$phoneNumber");
+      final Uri whatsappUri =
+          Uri.parse("https://api.whatsapp.com/send?phone=$phoneNumber");
 
       // Check if the WhatsApp URI can be launched
       if (await canLaunchUrl(whatsappUri)) {

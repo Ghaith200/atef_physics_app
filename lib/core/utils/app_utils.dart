@@ -6,8 +6,8 @@ class AppScreenUtils {
   static bool isTablet = false;
 
   static void initUtils(BuildContext context) {
-    h = MediaQuery.of(context).size.height;
-    w = MediaQuery.of(context).size.width;
-    isTablet = MediaQuery.of(context).size.shortestSide >= 600;
+    h = MediaQuery.sizeOf(context).height;
+    w = MediaQuery.sizeOf(context).width;
+    isTablet = MediaQuery.sizeOf(context).shortestSide >= 600;
   }
 }

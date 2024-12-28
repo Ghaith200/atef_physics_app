@@ -65,10 +65,8 @@ class CourseWidget extends StatelessWidget {
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   children: [
-
                     Expanded(
-
-                      // width: 60.sp,
+                      // width: 60 ,
                       child: Text(
                         course.title,
                         style: const TextStyle(
@@ -77,9 +75,7 @@ class CourseWidget extends StatelessWidget {
                             fontSize: 15,
                             fontWeight: FontWeight.bold),
                         overflow: TextOverflow.visible,
-
                         maxLines: 2,
-
                         textAlign: TextAlign.center,
                       ),
                     ),

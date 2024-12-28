@@ -4,6 +4,7 @@ import 'package:atef_physics/core/constants/firebase_strings.dart';
 import 'package:atef_physics/core/models/course_model.dart';
 import 'package:atef_physics/core/network/api_error_handler.dart';
 import 'package:atef_physics/core/network/api_result.dart';
+import 'package:atef_physics/features/courses/course_lessons/course_lessons_api_services/course_lessons_api_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
@@ -133,6 +134,20 @@ class CourseApiServices {
 
   Future<ApiResult<CourseModel>> removeCourse(CourseModel model) async {
     try {
+      for (var element in model.lessons) {
+        final res = await CourseLessonsApiServices().removeLesson(
+          model,
+          element,
+          l: true,
+        );
+        
+        //  res.whenOrNull(
+        //   failure: (error) {
+        //     return ApiResult.failure(error);
+        //   },
+        // );
+      }
+
       await FirebaseFirestore.instance
           .collection(FirebaseStrings.coures)
           .doc(model.id)

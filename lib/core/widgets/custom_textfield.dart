@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:atef_physics/core/utils/app_colors.dart';
 import '../../gen/assets.gen.dart';
 import '../constants/app_text_styles.dart';
@@ -89,13 +88,13 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       children: [
         Container(
           padding: EdgeInsetsDirectional.only(
-            top: widget.top ?? (AppScreenUtils.isTablet ? 8.h : 4.h),
-            end: widget.end ?? 23.w,
-            bottom: widget.bottom ?? (AppScreenUtils.isTablet ? 8.h : 4.h),
-            start: widget.start ?? 11.w,
+            top: widget.top ?? (AppScreenUtils.isTablet ? 8 : 4),
+            end: widget.end ?? 23,
+            bottom: widget.bottom ?? (AppScreenUtils.isTablet ? 8 : 4),
+            start: widget.start ?? 11,
           ),
           child: TextFormField(
-            cursorHeight: 22.sp,
+            cursorHeight: 22,
             readOnly: widget.isReadOnly ?? false,
             onTap: () {
               setState(() {
@@ -135,17 +134,17 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                   Theme.of(context).colorScheme.onSurface.withOpacity(.3),
               errorStyle: const TextStyle(fontSize: 0),
               prefixIconConstraints: widget.prexixIconConstraints ??
-                  BoxConstraints(
-                    minWidth: 30.w,
-                    minHeight: 30.h,
-                    maxWidth: 50.w,
-                    maxHeight: 50.h,
+                  const BoxConstraints(
+                    minWidth: 30,
+                    minHeight: 30,
+                    maxWidth: 50,
+                    maxHeight: 50,
                   ),
               contentPadding: EdgeInsetsDirectional.only(
-                start: widget.start ?? 15.w,
-                end: widget.end ?? 15.w,
-                top: widget.top ?? (AppScreenUtils.isTablet ? 8.h : 4.h),
-                bottom: widget.bottom ?? (AppScreenUtils.isTablet ? 8.h : 4.h),
+                start: widget.start ?? 15,
+                end: widget.end ?? 15,
+                top: widget.top ?? (AppScreenUtils.isTablet ? 8 : 4),
+                bottom: widget.bottom ?? (AppScreenUtils.isTablet ? 8 : 4),
               ),
               labelText: _focusNode.hasFocus ? widget.label : widget.hintText,
               labelStyle: _focusNode.hasFocus
@@ -153,7 +152,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                   : AppTextStyles.hevoLight15WhiteBlackW500,
               hintText: widget.hintText,
               prefixIcon: Padding(
-                padding: EdgeInsets.all(10.0.sp),
+                padding:const EdgeInsets.all(10.0),
                 child: widget.prefixIcon,
               ),
               hintStyle: widget.hintTextStyle ??
@@ -183,10 +182,10 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
               ),
               suffixIconConstraints: widget.suffixIconConstraints ??
                   BoxConstraints(
-                    minWidth: AppScreenUtils.isTablet ? 20.w : 20.w,
-                    minHeight: AppScreenUtils.isTablet ? 25.h : 25.h,
-                    maxWidth: AppScreenUtils.isTablet ? 20.w : 20.w,
-                    maxHeight: AppScreenUtils.isTablet ? 25.h : 25.h,
+                    minWidth: AppScreenUtils.isTablet ? 20 : 20,
+                    minHeight: AppScreenUtils.isTablet ? 25 : 25,
+                    maxWidth: AppScreenUtils.isTablet ? 20 : 20,
+                    maxHeight: AppScreenUtils.isTablet ? 25 : 25,
                   ),
               suffixIcon: checkAboutSuffixIcon(),
             ),
@@ -194,7 +193,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         ),
         if (_hasValidationError && _errorMessage != null)
           Padding(
-            padding: EdgeInsets.only(top: 4.h),
+            padding: const EdgeInsets.only(top: 4),
             child: Text(
               _errorMessage!,
               style: AppTextStyles.hevoLight11redw400,
@@ -215,16 +214,16 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         },
         child: Padding(
           padding:
-              EdgeInsets.only(right: 20.w), // Add 20 spacing from the border
+         const     EdgeInsets.only(right: 20), // Add 20 spacing from the border
           child: Container(
-            width: 30.w, // Ensure the icon retains its size
-            height: 30.h,
+            width: 30, // Ensure the icon retains its size
+            height: 30,
             alignment: Alignment.center, // Center the icon
             child: isObsecured
                 ? Assets.images.icons.eyeDisabled
-                    .svg(height: 20.h, width: 20.w, color: Colors.black)
+                    .svg(height: 20, width: 20, color: Colors.black)
                 : Assets.images.icons.eyeEnabled
-                    .svg(height: 20.h, width: 20.w, color: Colors.blue),
+                    .svg(height: 20, width: 20, color: Colors.blue),
           ),
         ),
       );

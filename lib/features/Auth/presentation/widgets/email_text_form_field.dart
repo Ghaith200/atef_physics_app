@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:atef_physics/core/utils/app_colors.dart';
 import 'package:atef_physics/core/utils/validator_utils.dart';
 import 'package:atef_physics/core/widgets/custom_textfield.dart';
@@ -21,7 +20,7 @@ class _EmailTextFormFieldState extends State<EmailTextFormField> {
         textEditingController: _emailTextEditingController,
         validator: (p0) => Validators.emailValidator(p0!),
         keyboardType: TextInputType.emailAddress,
-        inputTextStyle: TextStyle(fontSize: 10.sp, color: Colors.white),
+        inputTextStyle: const TextStyle(fontSize: 10, color: Colors.white),
         hintText: 'Enter your email',
         prefixIcon:
             Assets.images.icons.emailIcon.image(color: AppColors.whiteBlack),

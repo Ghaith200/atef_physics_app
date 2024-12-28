@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-class CourseLessonWidget extends StatelessWidget {
+class CourseLessonWidget extends StatefulWidget {
   const CourseLessonWidget({
     super.key,
     required this.lesson,
@@ -21,18 +21,38 @@ class CourseLessonWidget extends StatelessWidget {
   final CourseModel model;
 
   @override
+  State<CourseLessonWidget> createState() => _CourseLessonWidgetState();
+}
+
+class _CourseLessonWidgetState extends State<CourseLessonWidget> {
+  late LessonModel lesson = LessonModel.fromJson(widget.lesson.toJson());
+  @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () {
-        if (lesson.watchCount == lesson.watchCount) {
+      onTap: () async {
+        if (lesson.userWatchCount >= lesson.watchCount &&
+            !Storage.instance.isAdmin) {
           AppSnackBar.showSnackBar(context, "lesson Watch count ended ");
           return;
         }
-        BlocProvider.of<CourseLessonsCubit>(context)
-            .updateLesson(lesson: lesson, watchCount: lesson.watchCount + 1);
-        context.pushNamed(VedioScreen.id, extra: {'lesson': lesson});
+        final i = lesson.watchCount + 1;
+        final cubit = BlocProvider.of<CourseLessonsCubit>(context);
+        await cubit.updateLesson(lesson: lesson, userWatchCount: i);
+        if (context.mounted) {
+          cubit.state.mapOrNull(
+            update: (value) {
+              if (lesson.id == value.model.id) {
+                lesson = value.model;
+                if (value.model.userWatchCount <= value.model.watchCount) {
+                  // context
+                  //     .pushNamed(VedioScreen.id, extra: {'lesson': lesson.id});
+                }
+              }
+            },
+          );
+        }
       },
-      title: Text(lesson.name),
+      title: Text(widget.lesson.name),
       subtitle: Text("${lesson.userWatchCount} / ${lesson.watchCount} "),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
@@ -44,7 +64,7 @@ class CourseLessonWidget extends StatelessWidget {
                 IconButton(
                     onPressed: () =>
                         context.pushNamed(CourseAddLesson.id, extra: {
-                          "course": model,
+                          "course": widget.model,
                           "lesson": lesson,
                           "cubit": BlocProvider.of<CourseLessonsCubit>(context)
                         }),
@@ -53,7 +73,7 @@ class CourseLessonWidget extends StatelessWidget {
                     onPressed: () =>
                         BlocProvider.of<CourseLessonsCubit>(context)
                             .removeLesson(
-                          course: model,
+                          course: widget.model,
                           lesson: lesson,
                         ),
                     color: AppColors.red,

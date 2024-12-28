@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:atef_physics/core/constants/app_text_styles.dart';
 import 'package:atef_physics/core/utils/storage.dart';
 import 'package:atef_physics/core/widgets/custom_button.dart';
@@ -19,12 +18,12 @@ class OnboardingScreen extends StatelessWidget {
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.only(top: 80.sp),
+              padding: const EdgeInsets.only(top: 80),
               child: Align(
                 alignment: Alignment.center,
                 child: Assets.images.logoPng.image(
-                  width: 250.sp,
-                  height: 250.sp,
+                  width: 250,
+                  height: 250,
                   fit: BoxFit.contain,
                 ),
               ),
@@ -37,14 +36,14 @@ class OnboardingScreen extends StatelessWidget {
             const Spacer(),
             const SizedBox(height: 25),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 25.sp),
+              padding: const EdgeInsets.symmetric(horizontal: 25),
               child: CustomButton(
                 onTap: () async {
                   Storage.instance.isFirstTime = false;
                   context.pushReplacementNamed(LoginScreen.id);
                 },
                 filled: true,
-                boarderRadius: 25.sp,
+                boarderRadius: 25,
                 title: 'Get Started',
               ),
             ),

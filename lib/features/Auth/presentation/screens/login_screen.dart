@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:atef_physics/core/constants/app_text_styles.dart';
 import 'package:atef_physics/core/utils/app_colors.dart';
@@ -47,13 +46,13 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20.sp, vertical: 20.sp),
+        padding: const EdgeInsets.symmetric(horizontal: 20 , vertical: 20 ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // Assets.images.logoPng.image(
-            //   width: 200.sp,
-            //   height: 200.sp,
+            //   width: 200 ,
+            //   height: 200 ,
             //   // fit: BoxFit.contain,
             // ),
             const Spacer(),
@@ -76,13 +75,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     validator: (p0) => Validators.emailValidator(p0!),
                     keyboardType: TextInputType.emailAddress,
                     inputTextStyle:
-                        TextStyle(fontSize: 10.sp, color: Colors.white),
+                        const TextStyle(fontSize: 10 , color: Colors.white),
                     hintText: 'Enter your email',
                     prefixIcon: Assets.images.icons.emailIcon
                         .image(color: AppColors.whiteBlack),
                     label: 'Email',
                   ),
-                  SizedBox(height: 10.sp),
+                  const SizedBox(height: 10 ),
 
                   // Password Text Form Field
                   CustomTextFormField(
@@ -96,21 +95,21 @@ class _LoginScreenState extends State<LoginScreen> {
                         .image(color: AppColors.whiteBlack),
                     label: 'Password',
                   ),
-                  SizedBox(height: 20.sp),
+                  const SizedBox(height: 20 ),
                 ],
               ),
             ),
             const Spacer(),
             // Login Button
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 25.sp),
+              padding: const EdgeInsets.symmetric(horizontal: 25 ),
               child: BlocConsumer<AuthCubit, AuthState>(
                 listener: (context, state) => state.whenOrNull(
                   error: (error) => error.showError(context),
                   success: (userModel) {
                     AppSnackBar.showSnackBar(
                         context, "Welcome ${userModel.name}");
-                    context.pushNamed(HomeScreen.id);
+                    context.pushReplacementNamed(HomeScreen.id);
                     return null;
                   },
                 ),
@@ -120,7 +119,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: 55,
                       onTap: () async {},
                       filled: true,
-                      boarderRadius: 25.sp,
+                      boarderRadius: 25 ,
                       child: const Center(
                           child: CircularProgressIndicator(
                         color: Colors.white,
@@ -138,14 +137,14 @@ class _LoginScreenState extends State<LoginScreen> {
                               )
                             : null,
                     filled: true,
-                    boarderRadius: 25.sp,
+                    boarderRadius: 25 ,
                     title: 'Login',
                   );
                 },
               ),
             ),
 
-            SizedBox(height: 50.sp),
+            const SizedBox(height: 50 ),
             GestureDetector(
               onTap: () {
                 context.push(SignUpScreen.id);

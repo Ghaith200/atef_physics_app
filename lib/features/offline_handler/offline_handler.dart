@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class OfflineScreen extends StatelessWidget {
   static const String id = "/OfflineScreen";
@@ -11,50 +10,51 @@ class OfflineScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       body: Center(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.w),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
                 Icons.wifi_off_rounded,
-                size: 100.sp,
+                size: 100,
                 color: Colors.grey.shade400,
               ),
-              SizedBox(height: 20.h),
+              const SizedBox(height: 20),
               Text(
                 "You are offline",
                 style: TextStyle(
-                  fontSize: 24.sp,
+                  fontSize: 24,
                   fontWeight: FontWeight.bold,
                   color: Colors.grey.shade700,
                 ),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: 10.h),
+              const SizedBox(height: 10),
               Text(
                 "Please check your internet connection and try again.",
                 style: TextStyle(
-                  fontSize: 16.sp,
+                  fontSize: 16,
                   color: Colors.grey.shade500,
                 ),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: 30.h),
+            const  SizedBox(height: 30),
               ElevatedButton(
                 onPressed: () {
                   // Add functionality to retry or refresh
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue,
-                  padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 12.h),
+                  padding:
+                    const  EdgeInsets.symmetric(horizontal: 30, vertical: 12),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.r),
+                    borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                child: Text(
+                child: const Text(
                   "Retry",
                   style: TextStyle(
-                    fontSize: 18.sp,
+                    fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),

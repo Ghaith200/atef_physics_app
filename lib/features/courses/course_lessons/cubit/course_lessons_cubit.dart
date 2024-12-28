@@ -48,9 +48,10 @@ class CourseLessonsCubit extends Cubit<CourseLessonsState> {
       {required LessonModel lesson,
       String? name,
       String? video,
-      int? watchCount}) async {
+      int? watchCount,
+      int? userWatchCount}) async {
     final data = await apiServices.updateLesson(
-        lesson: lesson, name: name, video: video, watchCount: watchCount);
+        lesson: lesson, name: name, video: video, watchCount: watchCount , userWatchCount: userWatchCount);
     data.when(
       success: (d) => emit(CourseLessonsState.update(d)),
       failure: (e) => emit(CourseLessonsState.error(e)),

@@ -11,7 +11,7 @@ class CourseLessonsApiServices {
     try {
       List<LessonModel> lessonsModel = [];
       for (String lesson in model.lessons) {
-        final lessonDoc =  FirebaseFirestore.instance
+        final lessonDoc = FirebaseFirestore.instance
             .collection(FirebaseStrings.lessons)
             .doc(lesson);
         final data = await lessonDoc.get();
@@ -67,23 +67,35 @@ class CourseLessonsApiServices {
       return ApiResult.success(lessonModel);
     } catch (e) {
       return ApiResult.failure(ApiErrorHandler(
-          statusCode: 00, statusMessage: e.toString(), success: false));
+        statusCode: 00,
+        statusMessage: e.toString(),
+        success: false,
+      ));
     }
   }
 
-  Future<ApiResult<void>> removeLesson(
-      CourseModel model, String lessonId) async {
+  Future<ApiResult<void>> removeLesson(CourseModel model, String lessonId,
+      {bool l = false}) async {
     try {
+      if (l) {
+        await FirebaseFirestore.instance
+            .collection(FirebaseStrings.coures)
+            .doc(model.id)
+            .update({
+          FirebaseStrings.lessons: FieldValue.arrayRemove([lessonId])
+        });
+      }
       await FirebaseFirestore.instance
-          .collection(FirebaseStrings.coures)
+          .collection(FirebaseStrings.lessons)
           .doc(model.id)
-          .update({
-        FirebaseStrings.lessons: FieldValue.arrayRemove([lessonId])
-      });
+          .delete();
       return const ApiResult.success(null);
     } catch (e) {
       return ApiResult.failure(ApiErrorHandler(
-          statusCode: 00, statusMessage: e.toString(), success: false));
+        statusCode: 00,
+        statusMessage: e.toString(),
+        success: false,
+      ));
     }
   }
 
@@ -91,16 +103,28 @@ class CourseLessonsApiServices {
       {required LessonModel lesson,
       required String? name,
       required String? video,
-      required int? watchCount}) async {
+      required int? watchCount,
+      required int? userWatchCount}) async {
     try {
       final doc = FirebaseFirestore.instance
           .collection(FirebaseStrings.lessons)
           .doc(lesson.id);
-      doc.update({
+      await doc.update({
         FirebaseStrings.name: name ?? lesson.name,
         FirebaseStrings.video: video ?? lesson.video,
         FirebaseStrings.watchCount: watchCount ?? lesson.watchCount,
       });
+      if (lesson.userWatchCount == 0) {
+        await doc
+            .collection(FirebaseStrings.users)
+            .doc(Storage.instance.user.uid)
+            .set({FirebaseStrings.watchCount: userWatchCount});
+      } else {
+        await doc
+            .collection(FirebaseStrings.users)
+            .doc(Storage.instance.user.uid)
+            .update({FirebaseStrings.watchCount: userWatchCount});
+      }
       lesson =
           lesson.copyWith(name: name, video: video, watchCount: watchCount);
       return ApiResult.success(lesson);
