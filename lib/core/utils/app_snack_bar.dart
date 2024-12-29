@@ -39,6 +39,7 @@ class AppSnackBar {
   }) {
     showDialog(
       context: context,
+      // useRootNavigator: false,
       builder: (context) {
         return AlertDialog(
           title: Text(title),
@@ -51,9 +52,8 @@ class AppSnackBar {
             ),
             TextButton(
               onPressed: () async {
-                Navigator.pop(context);
                 fun();
-                Navigator.pop(context);
+                Navigator.of(context).pop();
               },
               child:
                   const Text("Delete", style: TextStyle(color: AppColors.red)),

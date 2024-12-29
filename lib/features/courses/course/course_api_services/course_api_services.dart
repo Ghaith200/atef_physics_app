@@ -4,7 +4,6 @@ import 'package:atef_physics/core/constants/firebase_strings.dart';
 import 'package:atef_physics/core/models/course_model.dart';
 import 'package:atef_physics/core/network/api_error_handler.dart';
 import 'package:atef_physics/core/network/api_result.dart';
-import 'package:atef_physics/features/courses/course_lessons/course_lessons_api_services/course_lessons_api_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
