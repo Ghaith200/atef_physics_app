@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 
 class CustomFilePicker extends StatefulWidget {
-  const CustomFilePicker({super.key});
+  final Function(File? file, String? fileName, int? fileSize) onFilePicked; // Callback
+
+  const CustomFilePicker({super.key, required this.onFilePicked});
 
   @override
   _CustomFilePickerState createState() => _CustomFilePickerState();
@@ -27,13 +29,13 @@ class _CustomFilePickerState extends State<CustomFilePicker> {
           _fileName = result.files.single.name; // File name
           _fileSize = result.files.single.size; // File size in bytes
         });
-      } else {
-        // User canceled the picker
-        AppSnackBar.showSnackBar(context, "File picking was canceled.");
+
+        // Trigger the callback and send file data to the parent widget
+        widget.onFilePicked(file, _fileName, _fileSize);
       }
     } catch (e) {
       // Handle errors
-      AppSnackBar.showSnackBar(context, "Failed to pick file: $e");
+      AppSnackBar.showSnackBar(context, "Failed to pick file");
     }
   }
 

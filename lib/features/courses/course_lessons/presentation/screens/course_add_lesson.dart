@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'dart:io';
 
 class CourseAddLesson extends StatefulWidget {
   static const String id = "/CourseAddLesson";
@@ -32,7 +33,9 @@ class _CourseAddLessonState extends State<CourseAddLesson> {
   late TextEditingController watchCountController;
   late LessonModel? model = widget.lesson;
   String? photo;
+  File? selectedFile; // Store selected file here
   late CourseLessonsCubit cubit;
+
   @override
   void initState() {
     super.initState();
@@ -52,6 +55,14 @@ class _CourseAddLessonState extends State<CourseAddLesson> {
     titleController.dispose();
     videoController.dispose();
     super.dispose();
+  }
+
+  // Callback function to handle selected file
+  void _onFilePicked(File? file, String? fileName, int? fileSize) {
+    setState(() {
+      selectedFile = file;
+    });
+    print('Selected file: $fileName, Size: $fileSize bytes');
   }
 
   @override
@@ -113,8 +124,8 @@ class _CourseAddLessonState extends State<CourseAddLesson> {
                       },
                     ),
                     const SizedBox(height: 20),
-                    // File Picker
-                    CustomFilePicker(),
+                    // Pass the callback to the CustomFilePicker widget
+                    CustomFilePicker(onFilePicked: _onFilePicked),
                   ],
                 ),
               ),
@@ -126,7 +137,6 @@ class _CourseAddLessonState extends State<CourseAddLesson> {
                       orElse: () => CustomButton(
                             onTap: () async {
                               if (formKey.currentState!.validate()) {
-                                // Process form data here
                                 String data = videoController.text;
                                 if (data.endsWith("/")) {
                                   data = data.substring(0, data.length - 1);
@@ -136,13 +146,18 @@ class _CourseAddLessonState extends State<CourseAddLesson> {
                                         course: widget.courses,
                                         name: titleController.text,
                                         video: videoController.text,
+                                        file: selectedFile,
                                         watchCount: int.parse(
-                                            watchCountController.text),
+                                            watchCountController.text,
+
+                                            ),
                                       )
                                     : await cubit.updateLesson(
+                                      model: widget.courses,
                                         lesson: model!,
                                         name: titleController.text,
                                         video: videoController.text,
+                                        file: selectedFile,
                                         watchCount: int.parse(
                                             watchCountController.text),
                                       );
@@ -161,7 +176,7 @@ class _CourseAddLessonState extends State<CourseAddLesson> {
                   add: (value) => AppSnackBar.showSnackBar(
                       context, "${value.models.name} \n created Successfully"),
                 ),
-              )
+              ),
             ],
           ),
         ),

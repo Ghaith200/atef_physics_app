@@ -37,7 +37,7 @@ class _CourseLessonWidgetState extends State<CourseLessonWidget> {
         }
         final i = lesson.watchCount + 1;
         final cubit = BlocProvider.of<CourseLessonsCubit>(context);
-        await cubit.updateLesson(lesson: lesson, userWatchCount: i);
+        await cubit.updateLesson(lesson: lesson, userWatchCount: i,model: widget.model);
         if (context.mounted) {
           cubit.state.mapOrNull(
             update: (value) {

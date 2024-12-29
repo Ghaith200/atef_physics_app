@@ -132,6 +132,7 @@ class _UsersScreenState extends State<UsersScreen> {
                                       IconButton(
                                         onPressed: () =>
                                             AppSnackBar.showConfirmDialog(
+                                                title: 'Delete',
                                                 context: context,
                                                 fun: () => BlocProvider.of<
                                                         UserCubit>(context)
@@ -140,7 +141,7 @@ class _UsersScreenState extends State<UsersScreen> {
                                                             "Removed Devices",
                                                         user: item,
                                                         fcmToken: ""),
-                                                lable:
+                                                label:
                                                     "Remove user ${item.name} Device?"),
                                         icon: const Icon(
                                           Icons.logout_rounded,
@@ -150,8 +151,9 @@ class _UsersScreenState extends State<UsersScreen> {
                                       IconButton(
                                         onPressed: () =>
                                             AppSnackBar.showConfirmDialog(
+                                          title: 'Delete',
                                           context: context,
-                                          lable: "Remove User ? ",
+                                          label: "Remove User ? ",
                                           fun: () => BlocProvider.of<UserCubit>(
                                                   context)
                                               .removeUser(item),

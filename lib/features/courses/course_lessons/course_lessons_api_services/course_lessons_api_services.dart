@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:atef_physics/core/constants/firebase_strings.dart';
 import 'package:atef_physics/core/models/course_model.dart';
 import 'package:atef_physics/core/models/lesson_model.dart';
@@ -5,33 +7,22 @@ import 'package:atef_physics/core/network/api_error_handler.dart';
 import 'package:atef_physics/core/network/api_result.dart';
 import 'package:atef_physics/core/utils/storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class CourseLessonsApiServices {
   Future<ApiResult<List<LessonModel>>> courseLessons(CourseModel model) async {
     try {
-      List<LessonModel> lessonsModel = [];
-      for (String lesson in model.lessons) {
-        final lessonDoc = FirebaseFirestore.instance
-            .collection(FirebaseStrings.lessons)
-            .doc(lesson);
-        final data = await lessonDoc.get();
-        final lessonUser = await lessonDoc
-            .collection(FirebaseStrings.users)
-            .doc(Storage.instance.user.uid)
-            .get();
+      final lessonDoc = await FirebaseFirestore.instance
+          .collection(FirebaseStrings.coures)
+          .doc(model.id)
+          .collection(FirebaseStrings.lessons)
+          .get();
 
-        // final userdata =data.
-        lessonsModel.add(LessonModel(
-          id: data.id,
-          name: data.data()![FirebaseStrings.name],
-          video: data.data()![FirebaseStrings.video],
-          watchCount: 5,
-          userWatchCount: lessonUser.exists
-              ? lessonUser.data()![FirebaseStrings.watchCount]
-              : 0,
-        ));
-      }
-      return ApiResult.success(lessonsModel);
+      // final userdata =data.
+      List<LessonModel> data = lessonDoc.docs
+          .map((e) => LessonModel.fromJson({"id": e.id, ...e.data()}))
+          .toList();
+      return ApiResult.success(data);
     } catch (e) {
       return ApiResult.failure(ApiErrorHandler(
           statusCode: 00, statusMessage: e.toString(), success: false));
@@ -43,26 +34,36 @@ class CourseLessonsApiServices {
     required String name,
     required String video,
     required int watchCount,
+    String? file,
   }) async {
     try {
-      final data =
-          FirebaseFirestore.instance.collection(FirebaseStrings.lessons).doc();
+      String? lessonFileURL;
+      if (file != null) {
+        final lessonFile = FirebaseStorage.instance.ref(
+            '${FirebaseStrings.lessonFile}/${model.title}-${model.id}/${DateTime.now().millisecondsSinceEpoch}_$name');
+        await lessonFile.putFile(File(file));
+        lessonFileURL = await lessonFile.getDownloadURL();
+      }
+
+      final data = FirebaseFirestore.instance
+          .collection(FirebaseStrings.coures)
+          .doc(model.id)
+          .collection(FirebaseStrings.lessons)
+          .doc();
+
       data.set({
         FirebaseStrings.name: name,
         FirebaseStrings.video: video,
-        FirebaseStrings.watchCount: watchCount
+        FirebaseStrings.watchCount: watchCount,
+        FirebaseStrings.file: lessonFileURL,
       });
-      await FirebaseFirestore.instance
-          .collection(FirebaseStrings.coures)
-          .doc(model.id)
-          .update({
-        FirebaseStrings.lessons: FieldValue.arrayUnion([data.id])
-      });
+
       final LessonModel lessonModel = LessonModel(
         id: data.id,
         name: name,
         video: video,
         watchCount: watchCount,
+        file: lessonFileURL,
       );
       return ApiResult.success(lessonModel);
     } catch (e) {
@@ -74,20 +75,20 @@ class CourseLessonsApiServices {
     }
   }
 
-  Future<ApiResult<void>> removeLesson(CourseModel model, String lessonId,
-      {bool l = false}) async {
+  Future<ApiResult<void>> removeLesson(
+    CourseModel model,
+    LessonModel lesson,
+  ) async {
     try {
-      if (l) {
-        await FirebaseFirestore.instance
-            .collection(FirebaseStrings.coures)
-            .doc(model.id)
-            .update({
-          FirebaseStrings.lessons: FieldValue.arrayRemove([lessonId])
-        });
+      if (lesson.file != null) {
+        await FirebaseStorage.instance.refFromURL(lesson.file!).delete();
       }
+
       await FirebaseFirestore.instance
-          .collection(FirebaseStrings.lessons)
+          .collection(FirebaseStrings.coures)
           .doc(model.id)
+          .collection(FirebaseStrings.lessons)
+          .doc(lesson.id)
           .delete();
       return const ApiResult.success(null);
     } catch (e) {
@@ -101,12 +102,15 @@ class CourseLessonsApiServices {
 
   Future<ApiResult<LessonModel>> updateLesson(
       {required LessonModel lesson,
+      required CourseModel model,
       required String? name,
       required String? video,
       required int? watchCount,
       required int? userWatchCount}) async {
     try {
       final doc = FirebaseFirestore.instance
+          .collection(FirebaseStrings.coures)
+          .doc(model.id)
           .collection(FirebaseStrings.lessons)
           .doc(lesson.id);
       await doc.update({

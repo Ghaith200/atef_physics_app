@@ -33,15 +33,16 @@ class AppSnackBar {
 
   static void showConfirmDialog({
     required BuildContext context,
-    required String lable,
+    required String label,
+    required String title,
     required Function() fun,
   }) {
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text("Delete"),
-          content: const Text("Are you sure you want to delete this Course?"),
+          title: Text(title),
+          content: Text(label),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
