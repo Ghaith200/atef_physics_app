@@ -13,6 +13,7 @@ abstract class AuthApiServices {
     required String fcmToken,
   });
   Future<ApiResult<UserModel>> update({
+    required UserModel user,
     String? mail,
     String? pass,
     String? name,

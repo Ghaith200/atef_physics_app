@@ -67,9 +67,9 @@ class _UsersScreenState extends State<UsersScreen> {
                   remove: (model) =>
                       users.removeWhere((test) => test.uid == model.uid),
                   error: (error) => error.showError(context),
-                  update: (user) {
+                  update: (user, update) {
                     AppSnackBar.showSnackBar(
-                        context, "${user.name}\n is ${user.userType.name}");
+                        context, "${user.name}\n $update updated");
                     final e = users.indexWhere((e) => e.uid == user.uid);
                     users[e] = user;
                   },
@@ -102,6 +102,7 @@ class _UsersScreenState extends State<UsersScreen> {
                                                 context)
                                             .updateUser(
                                                 user: item,
+                                                update: "user",
                                                 userTypeEnum:
                                                     UserTypeEnum.user);
                                       } else {
@@ -109,6 +110,7 @@ class _UsersScreenState extends State<UsersScreen> {
                                                 context)
                                             .updateUser(
                                                 user: item,
+                                                update: "admin",
                                                 userTypeEnum:
                                                     UserTypeEnum.admin);
                                       }
@@ -124,14 +126,43 @@ class _UsersScreenState extends State<UsersScreen> {
                                   ),
                                   title: Text(item.name),
                                   subtitle: Text(item.phoneNumber),
-                                  trailing: IconButton(
-                                      onPressed: () =>
-                                          BlocProvider.of<UserCubit>(context)
+                                  trailing: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      IconButton(
+                                        onPressed: () =>
+                                            AppSnackBar.showConfirmDialog(
+                                                context: context,
+                                                fun: () => BlocProvider.of<
+                                                        UserCubit>(context)
+                                                    .updateUser(
+                                                        update:
+                                                            "Removed Devices",
+                                                        user: item,
+                                                        fcmToken: ""),
+                                                lable:
+                                                    "Remove user ${item.name} Device?"),
+                                        icon: const Icon(
+                                          Icons.logout_rounded,
+                                          color: Colors.blue,
+                                        ),
+                                      ),
+                                      IconButton(
+                                        onPressed: () =>
+                                            AppSnackBar.showConfirmDialog(
+                                          context: context,
+                                          lable: "Remove User ? ",
+                                          fun: () => BlocProvider.of<UserCubit>(
+                                                  context)
                                               .removeUser(item),
-                                      icon: const Icon(
-                                        Icons.delete,
-                                        color: Colors.blue,
-                                      )),
+                                        ),
+                                        icon: const Icon(
+                                          Icons.delete,
+                                          color: Colors.blue,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 );
                               },
                             ));
@@ -141,69 +172,6 @@ class _UsersScreenState extends State<UsersScreen> {
           ],
         ),
       ),
-    );
-  }
-}
-
-class UserRowWidget extends DataRow {
-  UserRowWidget({required UserModel user})
-      : super(
-          cells: [
-            DataCell(Text(user.name)),
-            DataCell(Text(user.phoneNumber)),
-            DataCell(Text(user.userType.toString())),
-            DataCell(UserActionsWidget(user: user)),
-          ],
-        );
-}
-
-// DataTable(
-//                             columns: const [
-//                               DataColumn(label: Text('Name')),
-//                               DataColumn(label: Text('Phone Number')),
-//                               DataColumn(label: Text('User Type')),
-//                               DataColumn(label: Text('Actions')),
-//                             ],
-//                             rows: filteredUsers
-//                                 .map((user) => UserRowWidget(user: user))
-//                                 .toList(),
-//                           ),
-
-class UserActionsWidget extends StatelessWidget {
-  final UserModel user;
-
-  const UserActionsWidget({super.key, required this.user});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        DropdownButton<UserTypeEnum>(
-          value: user.userType,
-          items: UserTypeEnum.values
-              .map(
-                (type) => DropdownMenuItem(
-                  value: type,
-                  child: Text(type.toString().split('.').last),
-                ),
-              )
-              .toList(),
-          onChanged: (value) {
-            if (value != null) {
-              context
-                  .read<UserCubit>()
-                  .updateUser(user: user.copyWith(userType: value));
-            }
-          },
-          hint: const Text('Actions'),
-        ),
-        IconButton(
-          icon: const Icon(Icons.delete, color: Colors.red),
-          onPressed: () {
-            context.read<UserCubit>().removeUser(user);
-          },
-        ),
-      ],
     );
   }
 }

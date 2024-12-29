@@ -24,9 +24,11 @@ class UserCubit extends Cubit<UserState> {
 
   Future<void> updateUser({
     required UserModel user,
+    required String update,
     String? name,
     String? phoneNumber,
     String? fcmToken,
+
     UserTypeEnum? userTypeEnum,
   }) async {
     emit(const UserState.load());
@@ -39,6 +41,7 @@ class UserCubit extends Cubit<UserState> {
     );
     data.when(
       success: (updatedUser) => emit(UserState.update(
+        update: update,
         user: updatedUser,
       )),
       failure: (error) => emit(UserState.error(error)),

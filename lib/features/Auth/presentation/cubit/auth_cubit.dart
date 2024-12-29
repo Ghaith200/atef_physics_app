@@ -1,4 +1,3 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,24 +25,50 @@ class AuthCubit extends Cubit<AuthState> {
   static AuthCubit get(BuildContext context) =>
       BlocProvider.of<AuthCubit>(context);
   final loading = const AuthState.loading();
+
   Future<void> login({required String email, required String pass}) async {
-    emit(loading);
-    final ApiResult<UserModel> user = await api.login(mail: email, pass: pass);
-    final fcm = await FirebaseMessaging.instance.getToken() ?? "";
-    
-    user.when(success: (UserModel user) {
-      if (fcm != user.uid) {
-        return ApiResult.failure(ApiErrorHandler(
+    emit(AuthState.loading());
+
+    final ApiResult<UserModel> result =
+        await api.login(mail: email, pass: pass);
+    final String fcmToken = await FirebaseMessaging.instance.getToken() ?? "";
+
+    result.when(
+      success: (UserModel user) async {
+        // Check FCM token
+        if (user.fcmToken.isNotEmpty &&
+            fcmToken != user.fcmToken &&
+            user.userType != UserTypeEnum.admin) {
+          emit(AuthState.error(ApiErrorHandler(
             statusCode: 00,
-            statusMessage: "Please Use Your phone",
-            success: true));
-      }
-      Storage.instance.user = user;
-      Storage.instance.isAuth;
-      emit(AuthState.success(user));
-    }, failure: (ApiErrorHandler error) {
-      emit(AuthState.error(error));
-    });
+            statusMessage: "Please Use Your Phone",
+            success: true,
+          )));
+          return;
+        }
+
+        // Update FCM token if empty
+        if (user.fcmToken.isEmpty) {
+          final updateResult = await api.update(user: user, fcmToken: fcmToken);
+          updateResult.when(
+            success: (UserModel updatedUser) {
+              Storage.instance.user = updatedUser;
+              emit(AuthState.success(updatedUser));
+            },
+            failure: (ApiErrorHandler error) {
+              emit(AuthState.error(error));
+            },
+          );
+        } else {
+          // Directly store user and emit success if FCM token is valid
+          Storage.instance.user = user;
+          emit(AuthState.success(user));
+        }
+      },
+      failure: (ApiErrorHandler error) {
+        emit(AuthState.error(error));
+      },
+    );
   }
 
   Future<void> register({
