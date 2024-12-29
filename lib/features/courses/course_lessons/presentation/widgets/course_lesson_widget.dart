@@ -37,7 +37,8 @@ class _CourseLessonWidgetState extends State<CourseLessonWidget> {
         }
         final i = lesson.watchCount + 1;
         final cubit = BlocProvider.of<CourseLessonsCubit>(context);
-        await cubit.updateLesson(lesson: lesson, userWatchCount: i,model: widget.model);
+        await cubit.updateLesson(
+            lesson: lesson, userWatchCount: i, model: widget.model);
         if (context.mounted) {
           cubit.state.mapOrNull(
             update: (value) {
@@ -80,7 +81,12 @@ class _CourseLessonWidgetState extends State<CourseLessonWidget> {
                     icon: const Icon(Icons.close)),
               ],
             ),
-          const Icon(Icons.play_circle_outline_rounded),
+          IconButton(
+            icon: const Icon(Icons.download),
+            onPressed: () {
+              print(lesson.file);
+            },
+          ),
         ],
       ),
       contentPadding: const EdgeInsets.symmetric(horizontal: 5),
