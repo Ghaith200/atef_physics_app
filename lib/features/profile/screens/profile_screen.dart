@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:atef_physics/core/constants/app_text_styles.dart';
 import 'package:atef_physics/features/profile/widgets/custom_list_tile.dart';
 import 'package:atef_physics/features/profile/widgets/dark_mode_list_tile.dart';
@@ -19,7 +18,7 @@ class ProfileScreen extends StatelessWidget {
         scrollDirection: Axis.vertical,
         children: [
           Padding(
-            padding: EdgeInsets.symmetric(vertical: 20.sp),
+            padding: const EdgeInsets.symmetric(vertical: 20),
             child: SizedBox(
               height: 200,
               width: MediaQuery.sizeOf(context).width,
@@ -35,7 +34,7 @@ class ProfileScreen extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(top: 25.sp),
+                    padding: const EdgeInsets.only(top: 25),
                     child: Center(
                       child: Text(
                         'Abdullah Ghaith',
@@ -47,31 +46,31 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 10.sp),
+          const SizedBox(height: 10),
           const DarkmodeListTile(),
-          SizedBox(height: 5.sp),
+          const SizedBox(height: 5),
           CustomListTile(
             image: Assets.images.activeStatus.path,
             title: 'Active Status',
             label: 'ON',
           ),
-          SizedBox(height: 5.sp),
+          const SizedBox(height: 5),
           CustomListTile(
             image: Assets.images.userName.path,
             title: 'Username',
             label: 'user.name',
           ),
-          SizedBox(height: 5.sp),
+          const SizedBox(height: 5),
           CustomListTile(
             image: Assets.images.notification.path,
             title: 'Notifications & Sounds',
           ),
-          SizedBox(height: 5.sp),
+          const SizedBox(height: 5),
           CustomListTile(
             image: Assets.images.people.path,
             title: 'People',
           ),
-          SizedBox(height: 5.sp),
+          const SizedBox(height: 5),
           CustomListTile(
             image: Assets.images.people.path,
             title: 'Phone Contacts',

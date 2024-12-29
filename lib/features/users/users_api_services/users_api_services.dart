@@ -64,9 +64,19 @@ class UsersApiServices {
     required UserModel user,
   }) async {
     try {
+      // await FirebaseAuth.instance.currentUser?.delete();
       final doc = FirebaseFirestore.instance
           .collection(FirebaseStrings.users)
           .doc(user.uid);
+      final cor = await FirebaseFirestore.instance
+          .collection(FirebaseStrings.coures)
+          .where(FirebaseStrings.users, whereIn: [user.uid]).get();
+      for (var course in cor.docs) {
+        //remove user form courses
+        await course.reference.update({
+          FirebaseStrings.users: FieldValue.arrayRemove([user.uid])
+        });
+      }
       await doc.delete();
       return ApiResult.success(user);
     } catch (e) {

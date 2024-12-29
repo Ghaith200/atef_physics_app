@@ -1,4 +1,5 @@
-
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -28,7 +29,15 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> login({required String email, required String pass}) async {
     emit(loading);
     final ApiResult<UserModel> user = await api.login(mail: email, pass: pass);
+    final fcm = await FirebaseMessaging.instance.getToken() ?? "";
+    
     user.when(success: (UserModel user) {
+      if (fcm != user.uid) {
+        return ApiResult.failure(ApiErrorHandler(
+            statusCode: 00,
+            statusMessage: "Please Use Your phone",
+            success: true));
+      }
       Storage.instance.user = user;
       Storage.instance.isAuth;
       emit(AuthState.success(user));
@@ -53,7 +62,7 @@ class AuthCubit extends Cubit<AuthState> {
     );
     user.when(success: (UserModel user) {
       Storage.instance.user = user;
-            Storage.instance.isAuth;
+      Storage.instance.isAuth;
 
       emit(AuthState.success(user));
     }, failure: (ApiErrorHandler error) {
@@ -62,7 +71,7 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> logout() async {
-   await Storage.instance.logout();
+    await Storage.instance.logout();
     api.logout();
   }
 }

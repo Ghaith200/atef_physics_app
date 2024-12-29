@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomListTile extends StatelessWidget {
   const CustomListTile(
@@ -14,8 +13,8 @@ class CustomListTile extends StatelessWidget {
       leading: Image.asset(
         image,
         fit: BoxFit.cover,
-        width: 40.sp,
-        height: 40.sp,
+        width: 40,
+        height: 40,
       ),
       title: Text(title),
       trailing: Row(

@@ -41,13 +41,20 @@ class _CourseLessonsListState extends State<CourseLessonsList> {
             lesson.removeWhere((e) => e.id == model.id);
           },
           update: (model) {
-            AppSnackBar.showSnackBar(context, "${model.name}\n Updated");
-            final e = lesson.indexWhere((e) => e.id == model.id);
-            lesson[e] = model;
+            final index = lesson.indexWhere((e) => e.id == model.id);
+            if (index != -1) {
+              lesson[index] = model;
+              AppSnackBar.showSnackBar(context, "${model.name}\n Updated");
+            } else {
+              // Optionally handle the case where the model is not found
+              AppSnackBar.showSnackBar(
+                  context, "Failed to update: ${model.name} not found");
+            }
           },
         );
       },
       builder: (context, state) {
+        
         return state.maybeWhen<Widget>(
             orElse: () => lesson.isEmpty
                 ? const Center(

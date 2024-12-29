@@ -1,6 +1,7 @@
 import 'package:atef_physics/core/models/course_model.dart';
 import 'package:atef_physics/core/models/lesson_model.dart';
 import 'package:atef_physics/core/utils/app_colors.dart';
+import 'package:atef_physics/core/utils/app_snack_bar.dart';
 import 'package:atef_physics/core/utils/storage.dart';
 import 'package:atef_physics/features/courses/course_lessons/cubit/course_lessons_cubit.dart';
 import 'package:atef_physics/features/courses/course_lessons/presentation/screens/course_add_lesson.dart';
@@ -9,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-class CourseLessonWidget extends StatelessWidget {
+class CourseLessonWidget extends StatefulWidget {
   const CourseLessonWidget({
     super.key,
     required this.lesson,
@@ -20,12 +21,38 @@ class CourseLessonWidget extends StatelessWidget {
   final CourseModel model;
 
   @override
+  State<CourseLessonWidget> createState() => _CourseLessonWidgetState();
+}
+
+class _CourseLessonWidgetState extends State<CourseLessonWidget> {
+  late LessonModel lesson = LessonModel.fromJson(widget.lesson.toJson());
+  @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () {
-        context.pushNamed(VedioScreen.id, extra: {'lesson': lesson});
+      onTap: () async {
+        if (lesson.userWatchCount >= lesson.watchCount &&
+            !Storage.instance.isAdmin) {
+          AppSnackBar.showSnackBar(context, "lesson Watch count ended ");
+          return;
+        }
+        final i = lesson.watchCount + 1;
+        final cubit = BlocProvider.of<CourseLessonsCubit>(context);
+        await cubit.updateLesson(lesson: lesson, userWatchCount: i);
+        if (context.mounted) {
+          cubit.state.mapOrNull(
+            update: (value) {
+              if (lesson.id == value.model.id) {
+                lesson = value.model;
+                if (value.model.userWatchCount <= value.model.watchCount) {
+                  // context
+                  //     .pushNamed(VedioScreen.id, extra: {'lesson': lesson.id});
+                }
+              }
+            },
+          );
+        }
       },
-      title: Text(lesson.name),
+      title: Text(widget.lesson.name),
       subtitle: Text("${lesson.userWatchCount} / ${lesson.watchCount} "),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
@@ -37,7 +64,7 @@ class CourseLessonWidget extends StatelessWidget {
                 IconButton(
                     onPressed: () =>
                         context.pushNamed(CourseAddLesson.id, extra: {
-                          "course": model,
+                          "course": widget.model,
                           "lesson": lesson,
                           "cubit": BlocProvider.of<CourseLessonsCubit>(context)
                         }),
@@ -46,7 +73,7 @@ class CourseLessonWidget extends StatelessWidget {
                     onPressed: () =>
                         BlocProvider.of<CourseLessonsCubit>(context)
                             .removeLesson(
-                          course: model,
+                          course: widget.model,
                           lesson: lesson,
                         ),
                     color: AppColors.red,

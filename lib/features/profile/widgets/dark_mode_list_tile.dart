@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:atef_physics/core/utils/app_colors.dart';
 import 'package:atef_physics/gen/assets.gen.dart';
 
@@ -20,8 +19,8 @@ class _DarkmodeListTileState extends State<DarkmodeListTile> {
               ? Assets.images.darkModeOnIcon.path
               : Assets.images.darkModeOffIcon.path,
           fit: BoxFit.cover,
-          width: 40.sp,
-          height: 40.sp,
+          width: 40,
+          height: 40,
         ),
         trailing: Switch(
           value: AppColors.isDarkMode, // Replace with your boolean state

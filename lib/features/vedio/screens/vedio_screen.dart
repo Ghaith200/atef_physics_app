@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter/services.dart';
@@ -46,6 +48,8 @@ class _VedioScreenState extends State<VedioScreen> {
     if (RegExp(r'https://streamable.com/').hasMatch(widget.lesson)) {
       // Extract the video ID from Streamable URL
       videoId = widget.lesson.split('/').last;
+    } else {
+      videoId = widget.lesson;
     }
 
     // Prepare the embed code using the Streamable video URL
@@ -57,7 +61,7 @@ class _VedioScreenState extends State<VedioScreen> {
             allow="fullscreen" 
             allowfullscreen 
             height="100%" 
-            src="https://streamable.com/e/$videoId?"
+            src="https://streamable.com/e/$videoId"
             width="100%" 
             style="border:none; width:100%; height:100%; position:absolute; left:0px; top:0px; overflow:hidden;">
           </iframe>
@@ -65,7 +69,7 @@ class _VedioScreenState extends State<VedioScreen> {
       </body>
     </html>
     """;
-
+    log("final Lesson \n $embedHtml");
     // Load the HTML content into the WebView
     final uri = Uri.dataFromString(
       embedHtml,

@@ -12,7 +12,6 @@ import 'package:atef_physics/features/courses/course/widgets/course_widget.dart'
 import 'package:atef_physics/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 class OnlineHomeScreen extends StatefulWidget {
@@ -48,7 +47,7 @@ class _OnlineHomeScreenState extends State<OnlineHomeScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: CircleAvatar(
               backgroundImage: AssetImage(Assets.images.icon.path),
-              radius: 20.sp,
+              radius: 20,
             ),
           ),
         ],
@@ -68,7 +67,7 @@ class _OnlineHomeScreenState extends State<OnlineHomeScreen> {
                         color: Colors.grey,
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      height: 200.sp,
+                      height: 200,
                     ),
                     const SizedBox(height: 20),
                     const Text(

@@ -2,10 +2,6 @@ import 'package:atef_physics/core/constants/app_text_styles.dart';
 
 import 'package:atef_physics/core/utils/app_colors.dart';
 import 'package:atef_physics/core/utils/app_snack_bar.dart';
-
-import 'package:atef_physics/core/constants/storage_keys.dart';
-import 'package:atef_physics/core/utils/app_colors.dart';
-
 import 'package:atef_physics/core/utils/storage.dart';
 import 'package:atef_physics/core/models/user_model.dart';
 import 'package:atef_physics/features/Auth/presentation/screens/login_screen.dart';
@@ -156,7 +152,8 @@ class _CustomAppdrawerState extends State<CustomAppdrawer> {
   void _launchWhatsApp(String phoneNumber) async {
     try {
       // WhatsApp URL scheme for direct chat
-      final Uri whatsappUri = Uri.parse("whatsapp://send?phone=$phoneNumber");
+      final Uri whatsappUri =
+          Uri.parse("https://api.whatsapp.com/send?phone=$phoneNumber");
 
       // Check if the WhatsApp URI can be launched
       if (await canLaunchUrl(whatsappUri)) {

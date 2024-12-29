@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:atef_physics/core/constants/app_text_styles.dart';
 import 'package:atef_physics/core/utils/app_colors.dart';
 
@@ -59,7 +58,7 @@ class CustomButton extends StatelessWidget {
         width: radius ?? width,
         child: child ??
             Padding(
-              padding: EdgeInsets.symmetric(vertical: 10.w),
+              padding: const EdgeInsets.symmetric(vertical: 10),
               child: Text(
                 title ?? "",
                 style: titleTextStyle ??

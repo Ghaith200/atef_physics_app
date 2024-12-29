@@ -7,7 +7,6 @@ import 'package:atef_physics/features/courses/course/cubit/course_cubit.dart';
 import 'package:atef_physics/features/courses/course/widgets/course_list_widget.dart';
 import 'package:atef_physics/gen/assets.gen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:atef_physics/core/widgets/custom_appbar.dart';
 import 'package:go_router/go_router.dart';
 
@@ -50,7 +49,7 @@ class _MyCoursesScreenState extends State<MyCoursesScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: CircleAvatar(
                 backgroundImage: AssetImage(Assets.images.icon.path),
-                radius: 20.sp,
+                radius: 20,
               ),
             ),
           ],

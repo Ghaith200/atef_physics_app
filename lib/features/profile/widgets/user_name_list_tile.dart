@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:atef_physics/gen/assets.gen.dart';
 
 class UserNameListTile extends StatelessWidget {
@@ -11,8 +10,8 @@ class UserNameListTile extends StatelessWidget {
         leading: Image.asset(
           Assets.images.userName.path,
           fit: BoxFit.cover,
-          width: 40.sp,
-          height: 40.sp,
+          width: 40,
+          height: 40,
         ),
         title: const Text('Username'),
         trailing: const Row(

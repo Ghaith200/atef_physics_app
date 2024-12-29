@@ -5,7 +5,6 @@ edits :
 Add onPressed that is optional paramter for the back button to control to where it will pop
  */
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 class CustomBackButton extends StatelessWidget {
@@ -26,7 +25,7 @@ class CustomBackButton extends StatelessWidget {
       icon: Icon(
         Icons.arrow_back_ios_rounded,
         color: iconColor,
-        size: 24.sp,
+        size: 24,
       ),
     );
   }

@@ -188,8 +188,8 @@ abstract class AppRouter {
         name: VedioScreen.id,
         builder: (context, state) {
           final extra = state.extra as Map<String, dynamic>? ?? {};
-          final lesson = extra['lesson'] as LessonModel;
-          return VedioScreen(lesson: lesson.video);
+          final lesson = extra['lesson'] as String;
+          return VedioScreen(lesson: lesson);
         },
       ),
       GoRoute(

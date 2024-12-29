@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:atef_physics/core/constants/storage_keys.dart';
 import 'package:atef_physics/core/utils/storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:atef_physics/core/utils/app_utils.dart';
 
 import "package:go_router/go_router.dart";
@@ -25,8 +24,8 @@ class CustomAppBars extends StatelessWidget implements PreferredSizeWidget {
       padding: EdgeInsets.only(
         top: MediaQuery.viewPaddingOf(context).top + 5,
         bottom: 5,
-        left: 5.w,
-        right: 5.w,
+        left: 5,
+        right: 5,
       ),
       child: Row(
         mainAxisSize: MainAxisSize.max,
@@ -34,7 +33,7 @@ class CustomAppBars extends StatelessWidget implements PreferredSizeWidget {
         children: [
           if (backbutton)
             Padding(
-              padding: EdgeInsetsDirectional.only(end: 1.w),
+              padding: const EdgeInsetsDirectional.only(end: 1),
               child: IconButton(
                 onPressed: () {
                   //check first if the context can pop or not
@@ -45,7 +44,7 @@ class CustomAppBars extends StatelessWidget implements PreferredSizeWidget {
                 icon: Icon(
                   Icons.arrow_back_ios_rounded,
                   color: Theme.of(context).primaryColor,
-                  size: 24.sp,
+                  size: 24,
                 ),
               ),
             ),
@@ -61,16 +60,14 @@ class CustomAppBars extends StatelessWidget implements PreferredSizeWidget {
               icon: Icon(
                 Icons.menu,
                 color: Theme.of(context).primaryColor,
-                size: 24.sp,
+                size: 24,
               ),
             ),
-          SizedBox(width: 10.w),
+          const SizedBox(width: 10),
           Text(
             text,
-            style: TextStyle(
-                color: Colors.black,
-                fontSize: 20.sp,
-                fontWeight: FontWeight.w900),
+            style: const TextStyle(
+                color: Colors.black, fontSize: 20, fontWeight: FontWeight.w900),
           ),
           const Spacer(),
           if (actions != null)

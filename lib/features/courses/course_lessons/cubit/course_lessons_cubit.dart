@@ -46,11 +46,12 @@ class CourseLessonsCubit extends Cubit<CourseLessonsState> {
 
   Future<void> updateLesson(
       {required LessonModel lesson,
-      required String? name,
-      required String? video,
-      required int? watchCount}) async {
+      String? name,
+      String? video,
+      int? watchCount,
+      int? userWatchCount}) async {
     final data = await apiServices.updateLesson(
-        lesson: lesson, name: name, video: video, watchCount: watchCount);
+        lesson: lesson, name: name, video: video, watchCount: watchCount , userWatchCount: userWatchCount);
     data.when(
       success: (d) => emit(CourseLessonsState.update(d)),
       failure: (e) => emit(CourseLessonsState.error(e)),
