@@ -123,7 +123,7 @@ class _CourseDetailsState extends State<CourseDetails>
                                       )
                                     : const Center(
                                         child: Text(
-                                          "you Aren't Enrolled in this Course",
+                                          "you Aren Not Enrolled in this Course",
                                           style:
                                               TextStyle(color: AppColors.blue),
                                         ),
