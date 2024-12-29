@@ -8,6 +8,7 @@ class LessonModel {
   final String id;
   final String name;
   final String video;
+  final String? file;
   final int watchCount;
   final int userWatchCount;
 
@@ -15,6 +16,7 @@ class LessonModel {
     required this.id,
     required this.name,
     required this.video,
+     this.file,
     required this.watchCount,
     this.userWatchCount = 0,
   });
@@ -34,27 +36,23 @@ class LessonModel {
     };
   }
 
-  factory LessonModel.fromMap(Map<String, dynamic> map) {
-    return LessonModel(
-      id: map['id'] as String,
-      name: map['name'] as String,
-      video: map['video'] as String,
-      watchCount: map['video'] as int,
-      userWatchCount: map['userWatchCount'] as int,
-    );
-  }
+ 
 
-  LessonModel copyWith(
-      {String? id,
-      String? name,
-      String? video,
-      int? watchCount,
-      int? userWatchCount}) {
+  LessonModel copyWith({
+    String? id,
+    String? name,
+    String? video,
+    String? file,
+    int? watchCount,
+    int? userWatchCount,
+  }) {
     return LessonModel(
-        id: id ?? this.id,
-        name: name ?? this.name,
-        video: video ?? this.video,
-        watchCount: watchCount ?? this.watchCount,
-        userWatchCount: userWatchCount ?? this.userWatchCount);
+      id: id ?? this.id,
+      name: name ?? this.name,
+      video: video ?? this.video,
+      file: file ?? this.file,
+      watchCount: watchCount ?? this.watchCount,
+      userWatchCount: userWatchCount ?? this.userWatchCount,
+    );
   }
 }

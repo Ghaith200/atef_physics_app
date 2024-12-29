@@ -23,6 +23,8 @@ class FirebaseStrings {
     static const String header = "header";
     static const String path = "path";
     static const String isVideo = "isVideo";
+    static const String file = "file";
+    static const String lessonFile = "lessonFile";
 
 
 }

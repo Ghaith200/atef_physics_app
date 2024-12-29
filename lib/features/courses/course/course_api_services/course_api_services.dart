@@ -134,20 +134,9 @@ class CourseApiServices {
 
   Future<ApiResult<CourseModel>> removeCourse(CourseModel model) async {
     try {
-      for (var element in model.lessons) {
-        final res = await CourseLessonsApiServices().removeLesson(
-          model,
-          element,
-          l: true,
-        );
-        
-        //  res.whenOrNull(
-        //   failure: (error) {
-        //     return ApiResult.failure(error);
-        //   },
-        // );
-      }
-
+      await FirebaseStorage.instance
+          .ref("${FirebaseStrings.lessonFile}/${model.title}-${model.id}")
+          .delete();
       await FirebaseFirestore.instance
           .collection(FirebaseStrings.coures)
           .doc(model.id)

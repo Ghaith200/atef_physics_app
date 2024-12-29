@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:atef_physics/core/models/course_model.dart';
 import 'package:atef_physics/core/models/lesson_model.dart';
 import 'package:atef_physics/core/network/api_error_handler.dart';
@@ -25,10 +27,15 @@ class CourseLessonsCubit extends Cubit<CourseLessonsState> {
       {required CourseModel course,
       required String name,
       required String video,
-      required int watchCount}) async {
+      required int watchCount,
+      File? file}) async {
     emit(loading);
     final data = await apiServices.addLesson(
-        model: course, name: name, video: video, watchCount: watchCount);
+        model: course,
+        name: name,
+        video: video,
+        watchCount: watchCount,
+        file: file?.path);
     data.when(
         success: (data) => emit(CourseLessonsState.add(data)),
         failure: (e) => emit(CourseLessonsState.error(e)));
@@ -37,7 +44,7 @@ class CourseLessonsCubit extends Cubit<CourseLessonsState> {
   Future<void> removeLesson(
       {required CourseModel course, required LessonModel lesson}) async {
     emit(loading);
-    final data = await apiServices.removeLesson(course, lesson.id);
+    final data = await apiServices.removeLesson(course, lesson);
     data.when(
       success: (d) => emit(CourseLessonsState.remove(lesson)),
       failure: (e) => emit(CourseLessonsState.error(e)),
@@ -49,9 +56,16 @@ class CourseLessonsCubit extends Cubit<CourseLessonsState> {
       String? name,
       String? video,
       int? watchCount,
-      int? userWatchCount}) async {
+      int? userWatchCount,
+      required CourseModel model,
+      File? file}) async {
     final data = await apiServices.updateLesson(
-        lesson: lesson, name: name, video: video, watchCount: watchCount , userWatchCount: userWatchCount);
+        lesson: lesson,
+        name: name,
+        video: video,
+        watchCount: watchCount,
+        userWatchCount: userWatchCount,
+        model: model);
     data.when(
       success: (d) => emit(CourseLessonsState.update(d)),
       failure: (e) => emit(CourseLessonsState.error(e)),
