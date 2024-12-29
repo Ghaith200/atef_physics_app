@@ -29,6 +29,7 @@ class Storage {
         .get();
     if (data.exists == false) {
       logout();
+      return;
     }
     user = UserModel.fromJson({"uid": data.id,"email":user.email, ...data.data()!});
   }

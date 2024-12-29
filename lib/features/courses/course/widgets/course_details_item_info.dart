@@ -15,7 +15,7 @@ class CourseDetailsItemInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       clipBehavior: Clip.hardEdge,
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
       decoration: BoxDecoration(
         image: DecorationImage(
           image: CachedNetworkImageProvider(course.photo),
