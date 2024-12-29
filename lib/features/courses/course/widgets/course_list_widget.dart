@@ -54,9 +54,11 @@ class _CourseListWidgetState extends State<CourseListWidget> {
         return state.maybeWhen<Widget>(
           load: () => const Center(child: CircularProgressIndicator()),
           orElse: () => courses.isEmpty
-              ? Text(
-                  "لا يوجد كورسات حاليا",
-                  style: AppTextStyles.hevoLight20BlackWhiteW900,
+              ? Center(
+                  child: Text(
+                    "لا يوجد كورسات حاليا",
+                    style: AppTextStyles.hevoLight20BlackWhiteW900,
+                  ),
                 )
               : GridView.builder(
                   physics: const NeverScrollableScrollPhysics(),

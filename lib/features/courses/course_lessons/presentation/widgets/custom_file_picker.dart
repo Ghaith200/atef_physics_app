@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 
 class CustomFilePicker extends StatefulWidget {
-  final Function(File? file, String? fileName, int? fileSize) onFilePicked; // Callback
+  final Function(File? file, String? fileName, int? fileSize)
+      onFilePicked; // Callback
 
   const CustomFilePicker({super.key, required this.onFilePicked});
 
@@ -19,7 +20,8 @@ class _CustomFilePickerState extends State<CustomFilePicker> {
 
   Future<void> _pickFile() async {
     try {
-      final result = await FilePicker.platform.pickFiles();
+      final result = await FilePicker.platform
+          .pickFiles(type: FileType.custom, allowedExtensions: ['pdf']);
       if (result != null && result.files.single.path != null) {
         final filePath = result.files.single.path!;
         final file = File(filePath);

@@ -71,4 +71,12 @@ class CourseLessonsCubit extends Cubit<CourseLessonsState> {
       failure: (e) => emit(CourseLessonsState.error(e)),
     );
   }
+  // Future<void> downloadFile(String url) async {
+  //   final data = await apiServices.getLessons();
+  //   data.when(
+  //     success: (d) => emit(CourseLessonsState.download(d)),
+  //     failure: (e) => emit(CourseLessonsState.error(e)),
+  //   );
+  // }
+  
 }

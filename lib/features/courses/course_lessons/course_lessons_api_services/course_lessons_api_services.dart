@@ -40,7 +40,7 @@ class CourseLessonsApiServices {
       String? lessonFileURL;
       if (file != null) {
         final lessonFile = FirebaseStorage.instance.ref(
-            '${FirebaseStrings.lessonFile}/${model.title}-${model.id}/${DateTime.now().millisecondsSinceEpoch}_$name');
+            '${FirebaseStrings.lessonFile}/${model.title}-${model.id}/${DateTime.now().millisecondsSinceEpoch}_$name.pdf');
         await lessonFile.putFile(File(file));
         lessonFileURL = await lessonFile.getDownloadURL();
       }
@@ -132,6 +132,20 @@ class CourseLessonsApiServices {
       lesson =
           lesson.copyWith(name: name, video: video, watchCount: watchCount);
       return ApiResult.success(lesson);
+    } catch (e) {
+      return ApiResult.failure(ApiErrorHandler(
+          statusCode: 00, statusMessage: e.toString(), success: false));
+    }
+  }
+  Future<ApiResult<LessonModel> > getLessons(LessonModel model) async {
+    try {
+      final data = await FirebaseFirestore.instance
+          .collection(FirebaseStrings.coures)
+          .doc(model.id)
+          .collection(FirebaseStrings.lessons)
+          .doc(model.id)
+          .get();
+      return ApiResult.success(LessonModel.fromJson(data.data()!));
     } catch (e) {
       return ApiResult.failure(ApiErrorHandler(
           statusCode: 00, statusMessage: e.toString(), success: false));
