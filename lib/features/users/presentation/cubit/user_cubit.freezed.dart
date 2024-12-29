@@ -21,7 +21,7 @@ mixin _$UserState {
     required TResult Function() initial,
     required TResult Function() load,
     required TResult Function(List<UserModel> models) successAll,
-    required TResult Function(UserModel user) update,
+    required TResult Function(UserModel user, String update) update,
     required TResult Function(UserModel model) remove,
     required TResult Function(ApiErrorHandler error) error,
   }) =>
@@ -31,7 +31,7 @@ mixin _$UserState {
     TResult? Function()? initial,
     TResult? Function()? load,
     TResult? Function(List<UserModel> models)? successAll,
-    TResult? Function(UserModel user)? update,
+    TResult? Function(UserModel user, String update)? update,
     TResult? Function(UserModel model)? remove,
     TResult? Function(ApiErrorHandler error)? error,
   }) =>
@@ -41,7 +41,7 @@ mixin _$UserState {
     TResult Function()? initial,
     TResult Function()? load,
     TResult Function(List<UserModel> models)? successAll,
-    TResult Function(UserModel user)? update,
+    TResult Function(UserModel user, String update)? update,
     TResult Function(UserModel model)? remove,
     TResult Function(ApiErrorHandler error)? error,
     required TResult orElse(),
@@ -144,7 +144,7 @@ class _$InitialImpl implements _Initial {
     required TResult Function() initial,
     required TResult Function() load,
     required TResult Function(List<UserModel> models) successAll,
-    required TResult Function(UserModel user) update,
+    required TResult Function(UserModel user, String update) update,
     required TResult Function(UserModel model) remove,
     required TResult Function(ApiErrorHandler error) error,
   }) {
@@ -157,7 +157,7 @@ class _$InitialImpl implements _Initial {
     TResult? Function()? initial,
     TResult? Function()? load,
     TResult? Function(List<UserModel> models)? successAll,
-    TResult? Function(UserModel user)? update,
+    TResult? Function(UserModel user, String update)? update,
     TResult? Function(UserModel model)? remove,
     TResult? Function(ApiErrorHandler error)? error,
   }) {
@@ -170,7 +170,7 @@ class _$InitialImpl implements _Initial {
     TResult Function()? initial,
     TResult Function()? load,
     TResult Function(List<UserModel> models)? successAll,
-    TResult Function(UserModel user)? update,
+    TResult Function(UserModel user, String update)? update,
     TResult Function(UserModel model)? remove,
     TResult Function(ApiErrorHandler error)? error,
     required TResult orElse(),
@@ -273,7 +273,7 @@ class _$UserLoadingImpl implements UserLoading {
     required TResult Function() initial,
     required TResult Function() load,
     required TResult Function(List<UserModel> models) successAll,
-    required TResult Function(UserModel user) update,
+    required TResult Function(UserModel user, String update) update,
     required TResult Function(UserModel model) remove,
     required TResult Function(ApiErrorHandler error) error,
   }) {
@@ -286,7 +286,7 @@ class _$UserLoadingImpl implements UserLoading {
     TResult? Function()? initial,
     TResult? Function()? load,
     TResult? Function(List<UserModel> models)? successAll,
-    TResult? Function(UserModel user)? update,
+    TResult? Function(UserModel user, String update)? update,
     TResult? Function(UserModel model)? remove,
     TResult? Function(ApiErrorHandler error)? error,
   }) {
@@ -299,7 +299,7 @@ class _$UserLoadingImpl implements UserLoading {
     TResult Function()? initial,
     TResult Function()? load,
     TResult Function(List<UserModel> models)? successAll,
-    TResult Function(UserModel user)? update,
+    TResult Function(UserModel user, String update)? update,
     TResult Function(UserModel model)? remove,
     TResult Function(ApiErrorHandler error)? error,
     required TResult orElse(),
@@ -435,7 +435,7 @@ class _$AllUserImpl implements AllUser {
     required TResult Function() initial,
     required TResult Function() load,
     required TResult Function(List<UserModel> models) successAll,
-    required TResult Function(UserModel user) update,
+    required TResult Function(UserModel user, String update) update,
     required TResult Function(UserModel model) remove,
     required TResult Function(ApiErrorHandler error) error,
   }) {
@@ -448,7 +448,7 @@ class _$AllUserImpl implements AllUser {
     TResult? Function()? initial,
     TResult? Function()? load,
     TResult? Function(List<UserModel> models)? successAll,
-    TResult? Function(UserModel user)? update,
+    TResult? Function(UserModel user, String update)? update,
     TResult? Function(UserModel model)? remove,
     TResult? Function(ApiErrorHandler error)? error,
   }) {
@@ -461,7 +461,7 @@ class _$AllUserImpl implements AllUser {
     TResult Function()? initial,
     TResult Function()? load,
     TResult Function(List<UserModel> models)? successAll,
-    TResult Function(UserModel user)? update,
+    TResult Function(UserModel user, String update)? update,
     TResult Function(UserModel model)? remove,
     TResult Function(ApiErrorHandler error)? error,
     required TResult orElse(),
@@ -534,7 +534,7 @@ abstract class _$$usersUpdateImplCopyWith<$Res> {
           _$usersUpdateImpl value, $Res Function(_$usersUpdateImpl) then) =
       __$$usersUpdateImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({UserModel user});
+  $Res call({UserModel user, String update});
 }
 
 /// @nodoc
@@ -551,12 +551,17 @@ class __$$usersUpdateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? user = null,
+    Object? update = null,
   }) {
     return _then(_$usersUpdateImpl(
       user: null == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as UserModel,
+      update: null == update
+          ? _value.update
+          : update // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -564,14 +569,16 @@ class __$$usersUpdateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$usersUpdateImpl implements usersUpdate {
-  const _$usersUpdateImpl({required this.user});
+  const _$usersUpdateImpl({required this.user, required this.update});
 
   @override
   final UserModel user;
+  @override
+  final String update;
 
   @override
   String toString() {
-    return 'UserState.update(user: $user)';
+    return 'UserState.update(user: $user, update: $update)';
   }
 
   @override
@@ -579,11 +586,12 @@ class _$usersUpdateImpl implements usersUpdate {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$usersUpdateImpl &&
-            (identical(other.user, user) || other.user == user));
+            (identical(other.user, user) || other.user == user) &&
+            (identical(other.update, update) || other.update == update));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, user);
+  int get hashCode => Object.hash(runtimeType, user, update);
 
   /// Create a copy of UserState
   /// with the given fields replaced by the non-null parameter values.
@@ -599,11 +607,11 @@ class _$usersUpdateImpl implements usersUpdate {
     required TResult Function() initial,
     required TResult Function() load,
     required TResult Function(List<UserModel> models) successAll,
-    required TResult Function(UserModel user) update,
+    required TResult Function(UserModel user, String update) update,
     required TResult Function(UserModel model) remove,
     required TResult Function(ApiErrorHandler error) error,
   }) {
-    return update(user);
+    return update(user, this.update);
   }
 
   @override
@@ -612,11 +620,11 @@ class _$usersUpdateImpl implements usersUpdate {
     TResult? Function()? initial,
     TResult? Function()? load,
     TResult? Function(List<UserModel> models)? successAll,
-    TResult? Function(UserModel user)? update,
+    TResult? Function(UserModel user, String update)? update,
     TResult? Function(UserModel model)? remove,
     TResult? Function(ApiErrorHandler error)? error,
   }) {
-    return update?.call(user);
+    return update?.call(user, this.update);
   }
 
   @override
@@ -625,13 +633,13 @@ class _$usersUpdateImpl implements usersUpdate {
     TResult Function()? initial,
     TResult Function()? load,
     TResult Function(List<UserModel> models)? successAll,
-    TResult Function(UserModel user)? update,
+    TResult Function(UserModel user, String update)? update,
     TResult Function(UserModel model)? remove,
     TResult Function(ApiErrorHandler error)? error,
     required TResult orElse(),
   }) {
     if (update != null) {
-      return update(user);
+      return update(user, this.update);
     }
     return orElse();
   }
@@ -681,10 +689,12 @@ class _$usersUpdateImpl implements usersUpdate {
 }
 
 abstract class usersUpdate implements UserState {
-  const factory usersUpdate({required final UserModel user}) =
-      _$usersUpdateImpl;
+  const factory usersUpdate(
+      {required final UserModel user,
+      required final String update}) = _$usersUpdateImpl;
 
   UserModel get user;
+  String get update;
 
   /// Create a copy of UserState
   /// with the given fields replaced by the non-null parameter values.
@@ -764,7 +774,7 @@ class _$UserRemovedImpl implements UserRemoved {
     required TResult Function() initial,
     required TResult Function() load,
     required TResult Function(List<UserModel> models) successAll,
-    required TResult Function(UserModel user) update,
+    required TResult Function(UserModel user, String update) update,
     required TResult Function(UserModel model) remove,
     required TResult Function(ApiErrorHandler error) error,
   }) {
@@ -777,7 +787,7 @@ class _$UserRemovedImpl implements UserRemoved {
     TResult? Function()? initial,
     TResult? Function()? load,
     TResult? Function(List<UserModel> models)? successAll,
-    TResult? Function(UserModel user)? update,
+    TResult? Function(UserModel user, String update)? update,
     TResult? Function(UserModel model)? remove,
     TResult? Function(ApiErrorHandler error)? error,
   }) {
@@ -790,7 +800,7 @@ class _$UserRemovedImpl implements UserRemoved {
     TResult Function()? initial,
     TResult Function()? load,
     TResult Function(List<UserModel> models)? successAll,
-    TResult Function(UserModel user)? update,
+    TResult Function(UserModel user, String update)? update,
     TResult Function(UserModel model)? remove,
     TResult Function(ApiErrorHandler error)? error,
     required TResult orElse(),
@@ -928,7 +938,7 @@ class _$UserErrorImpl implements UserError {
     required TResult Function() initial,
     required TResult Function() load,
     required TResult Function(List<UserModel> models) successAll,
-    required TResult Function(UserModel user) update,
+    required TResult Function(UserModel user, String update) update,
     required TResult Function(UserModel model) remove,
     required TResult Function(ApiErrorHandler error) error,
   }) {
@@ -941,7 +951,7 @@ class _$UserErrorImpl implements UserError {
     TResult? Function()? initial,
     TResult? Function()? load,
     TResult? Function(List<UserModel> models)? successAll,
-    TResult? Function(UserModel user)? update,
+    TResult? Function(UserModel user, String update)? update,
     TResult? Function(UserModel model)? remove,
     TResult? Function(ApiErrorHandler error)? error,
   }) {
@@ -954,7 +964,7 @@ class _$UserErrorImpl implements UserError {
     TResult Function()? initial,
     TResult Function()? load,
     TResult Function(List<UserModel> models)? successAll,
-    TResult Function(UserModel user)? update,
+    TResult Function(UserModel user, String update)? update,
     TResult Function(UserModel model)? remove,
     TResult Function(ApiErrorHandler error)? error,
     required TResult orElse(),

@@ -10,6 +10,7 @@ class UserState with _$UserState {
 
   const factory UserState.update({
     required UserModel user,
+    required String update
   }) = usersUpdate;
 
   const factory UserState.remove(UserModel model) = UserRemoved;

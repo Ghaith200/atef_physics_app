@@ -94,81 +94,34 @@ class AuthApiFirebaseImp implements AuthApiServices {
 
   @override
   Future<ApiResult<UserModel>> update({
+    required UserModel user,
     String? mail,
     String? pass,
     String? name,
     String? phoneNumber,
     String? fcmToken,
   }) async {
+    UserModel model = user;
+    model = model.copyWith(
+      email: mail,
+      name: name,
+      phoneNumber: phoneNumber,
+      fcmToken: fcmToken,
+    );
     try {
-      final user = FirebaseAuth.instance.currentUser;
-
-      if (user == null) {
-        ApiErrorHandler error = ApiErrorHandler(
-            statusCode: 401,
-            statusMessage: "User not logged in",
-            success: false);
-        return ApiResult.failure(error);
-      }
-
-      // Update email if provided
-      if (mail != null && mail.isNotEmpty && mail != user.email) {
-        await user.updateEmail(mail.trim());
-      }
-
-      // Update password if provided
-      if (pass != null && pass.isNotEmpty) {
-        await user.updatePassword(pass.trim());
-      }
-
-      // Prepare data to update in Firestore
-      Map<String, dynamic> updateData = {};
-
-      if (name != null && name.isNotEmpty) {
-        updateData[FirebaseStrings.name] = name;
-      }
-      if (phoneNumber != null && phoneNumber.isNotEmpty) {
-        updateData[FirebaseStrings.phoneNumber] = phoneNumber;
-      }
-      if (fcmToken != null && fcmToken.isNotEmpty) {
-        updateData[FirebaseStrings.fcmToken] = fcmToken;
-      }
-
-      // Update Firestore document
-      if (updateData.isNotEmpty) {
-        await FirebaseFirestore.instance
-            .collection(FirebaseStrings.userCollection)
-            .doc(user.uid)
-            .update(updateData);
-      }
-
-      // Fetch updated user data
-      final updatedDoc = await FirebaseFirestore.instance
+      await FirebaseFirestore.instance
           .collection(FirebaseStrings.userCollection)
-          .doc(user.uid)
-          .get();
-
-      if (!updatedDoc.exists) {
-        ApiErrorHandler error = ApiErrorHandler(
-            statusCode: 404,
-            statusMessage: "User data not found",
-            success: false);
-        return ApiResult.failure(error);
-      }
-
-      // Return updated user model
-      return ApiResult.success(UserModel(
-        uid: user.uid,
-        name: updatedDoc[FirebaseStrings.name],
-        phoneNumber: updatedDoc[FirebaseStrings.phoneNumber],
-        email: mail ?? user.email!,
-        fcmToken: updatedDoc[FirebaseStrings.fcmToken],
-        userType: UserTypeEnum.user, // Assuming userType remains the same
-      ));
+          .doc(model.uid)
+          .update({
+        FirebaseStrings.name: model.name,
+        FirebaseStrings.phoneNumber: model.phoneNumber,
+        FirebaseStrings.fcmToken: model.fcmToken,
+        FirebaseStrings.userType: model.userType.name,
+      });
+      return ApiResult.success(model);
     } catch (e) {
-      ApiErrorHandler error = ApiErrorHandler(
-          statusCode: 500, statusMessage: e.toString(), success: false);
-      return ApiResult.failure(error);
+      return ApiResult.failure(ApiErrorHandler(
+          statusCode: 00, statusMessage: e.toString(), success: false));
     }
   }
 }

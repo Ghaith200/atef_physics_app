@@ -26,7 +26,7 @@ void main() async {
   // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-  await BackDoorServices.main();
+  // await BackDoorServices.main();
   // setupServiceLocator();
 
   await Storage.instance.initStorage();

@@ -119,6 +119,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/splash.png
   AssetGenImage get splash => const AssetGenImage('assets/images/splash.png');
 
+  /// File path: assets/images/splashcopy.jpg
+  AssetGenImage get splashcopy =>
+      const AssetGenImage('assets/images/splashcopy.jpg');
+
   /// File path: assets/images/user_name.png
   AssetGenImage get userName =>
       const AssetGenImage('assets/images/user_name.png');
@@ -141,6 +145,7 @@ class $AssetsImagesGen {
         profileFrame,
         profileImagePlaceholder,
         splash,
+        splashcopy,
         userName
       ];
 }

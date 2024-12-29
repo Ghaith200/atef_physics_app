@@ -18,7 +18,6 @@ import 'package:atef_physics/features/users/presentation/screens/users_screen.da
 import 'package:atef_physics/features/vedio/screens/vedio_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:atef_physics/core/utils/storage.dart';
-import 'package:atef_physics/features/backdoor/Back_door_services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 //Screens
 import 'package:atef_physics/features/Auth/presentation/screens/login_screen.dart';
@@ -31,9 +30,9 @@ import 'package:atef_physics/features/Auth/presentation/cubit/auth_cubit.dart';
 
 abstract class AppRouter {
   static String get intialRoute {
-    if (!BackDoorServices.status) {
-      return OfflineScreen.id;
-    }
+    // if (!BackDoorServices.status) {
+    //   return OfflineScreen.id;
+    // }
 
     if (Storage.instance.isFirstTime) {
       return OnboardingScreen.id;

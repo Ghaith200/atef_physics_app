@@ -30,4 +30,36 @@ class AppSnackBar {
       ),
     );
   }
+
+  static void showConfirmDialog({
+    required BuildContext context,
+    required String lable,
+    required Function() fun,
+  }) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("Delete"),
+          content: const Text("Are you sure you want to delete this Course?"),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child:
+                  const Text("Cancel", style: TextStyle(color: AppColors.blue)),
+            ),
+            TextButton(
+              onPressed: () async {
+                Navigator.pop(context);
+                fun();
+                Navigator.pop(context);
+              },
+              child:
+                  const Text("Delete", style: TextStyle(color: AppColors.red)),
+            ),
+          ],
+        );
+      },
+    );
+  }
 }
