@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:atef_physics/core/models/course_model.dart';
 import 'package:atef_physics/core/models/lesson_model.dart';
 import 'package:atef_physics/core/utils/app_snack_bar.dart';
+import 'package:atef_physics/features/courses/course/cubit/course_cubit.dart';
 import 'package:atef_physics/features/courses/course_lessons/cubit/course_lessons_cubit.dart';
 import 'package:atef_physics/features/courses/course_lessons/presentation/widgets/course_lesson_widget.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +21,8 @@ class CourseLessonsList extends StatefulWidget {
 }
 
 class _CourseLessonsListState extends State<CourseLessonsList> {
-  List<LessonModel> lesson = [];
+  List<LessonModel> lesson = List.empty(growable: true);
+
   @override
   void initState() {
     super.initState();
@@ -34,27 +38,38 @@ class _CourseLessonsListState extends State<CourseLessonsList> {
       listener: (context, state) {
         state.whenOrNull(
           error: (error) => error.showError(context),
-          successAll: (models) => lesson.addAll(models),
-          add: (models) => lesson.add(models),
+          successAll: (models) {
+            lesson.addAll(models);
+            BlocProvider.of<CourseCubit>(context).setCourse(widget.course
+                .copyWith(lessons: models.map((e) => e.id).toList()));
+          },
+          add: (models) {
+            lesson.add(models);
+            BlocProvider.of<CourseCubit>(context).setCourse(widget.course
+                .copyWith(lessons: lesson.map((e) => e.id).toList()));
+          },
           remove: (model) {
             AppSnackBar.showSnackBar(context, "${model.name}\n removed");
             lesson.removeWhere((e) => e.id == model.id);
+            BlocProvider.of<CourseCubit>(context).setCourse(widget.course
+                .copyWith(lessons: lesson.map((e) => e.id).toList()));
           },
           update: (model) {
-            final index = lesson.indexWhere((e) => e.id == model.id);
-            if (index != -1) {
-              lesson[index] = model;
-              AppSnackBar.showSnackBar(context, "${model.name}\n Updated");
-            } else {
-              // Optionally handle the case where the model is not found
-              AppSnackBar.showSnackBar(
-                  context, "Failed to update: ${model.name} not found");
-            }
+            lesson = List.from([
+              ...lesson.map<LessonModel>((e) => e.id == model.id ? model : e)
+            ], growable: true);
+            AppSnackBar.showSnackBar(context, "${model.name}\n Updated");
+            // BlocProvider.of<CourseCubit>(context).setCourse(widget.course
+            //     .copyWith(
+            //         lessons: lesson
+            //             .map((e) => e.id == model.id ? model.id : e.id)
+            //             .toList()));
           },
         );
       },
       builder: (context, state) {
-        
+        log("builder  state ${state.runtimeType}");
+
         return state.maybeWhen<Widget>(
             orElse: () => lesson.isEmpty
                 ? const Center(

@@ -133,7 +133,8 @@ class _CourseAddLessonState extends State<CourseAddLesson> {
               BlocConsumer<CourseLessonsCubit, CourseLessonsState>(
                 builder: (context, state) {
                   return state.maybeWhen<Widget>(
-                      load: () => const CircularProgressIndicator(),
+                      load: () =>
+                          const Center(child: CircularProgressIndicator()),
                       orElse: () => CustomButton(
                             onTap: () async {
                               if (formKey.currentState!.validate()) {
@@ -148,12 +149,11 @@ class _CourseAddLessonState extends State<CourseAddLesson> {
                                         video: videoController.text,
                                         file: selectedFile,
                                         watchCount: int.parse(
-                                            watchCountController.text,
-
-                                            ),
+                                          watchCountController.text,
+                                        ),
                                       )
                                     : await cubit.updateLesson(
-                                      model: widget.courses,
+                                        model: widget.courses,
                                         lesson: model!,
                                         name: titleController.text,
                                         video: videoController.text,
