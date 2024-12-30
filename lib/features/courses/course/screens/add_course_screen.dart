@@ -146,7 +146,7 @@ class _AddCourseScreenState extends State<AddCourseScreen> {
                                 // Process form data here
                                 return;
                               }
-                              
+
                               model == null
                                   ? await cubit.addCourse(
                                       title: titleController.text,
@@ -159,6 +159,12 @@ class _AddCourseScreenState extends State<AddCourseScreen> {
                                       price: int.parse(priceController.text),
                                       photo: photo ?? model!.photo,
                                     );
+                              cubit.state.mapOrNull(
+                                add: (value) => AppSnackBar.showSnackBar(
+                                    context, "${value.model.title} Added"),
+                                update: (value) => AppSnackBar.showSnackBar(
+                                    context, "${value.model.title} Updated"),
+                              );
                               if (context.mounted && context.canPop()) {
                                 context.pop();
                               }

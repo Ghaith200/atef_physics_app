@@ -72,46 +72,24 @@ abstract class AppRouter {
         path: HomeScreen.id,
         name: HomeScreen.id,
         builder: (context, state) {
-          final extra = state.extra as Map<String, dynamic>? ?? {};
-          final CourseCubit? course = extra['cubit'] as CourseCubit?;
-          return MultiBlocProvider(providers: [
-            BlocProvider.value(
-              value: course ?? CourseCubit(),
-            ),
-            BlocProvider(
-              create: (context) => HeaderCubit(),
-            )
-          ], child: const HomeScreen());
+          return const HomeScreen();
         },
       ),
       GoRoute(
         path: MyCoursesScreen.id,
         name: MyCoursesScreen.id,
         builder: (context, state) {
-          final extra = state.extra as Map<String, dynamic>? ?? {};
-          final CourseCubit? course = extra['cubit'] as CourseCubit?;
-          return MultiBlocProvider(providers: [
-            BlocProvider.value(
-              value: course ?? CourseCubit(),
-            ),
-            // BlocProvider(
-            //   create: (context) => HeaderCubit(),
-            // )
-          ], child: const MyCoursesScreen());
+          return const MyCoursesScreen();
         },
       ),
       GoRoute(
         path: UsersScreen.id,
         name: UsersScreen.id,
         builder: (context, state) {
-          final extra = state.extra as Map<String, dynamic>? ?? {};
-          final CourseCubit? course = extra['cubit'] as CourseCubit?;
-          return MultiBlocProvider(providers: [
-            BlocProvider(
-              create: (context) => UserCubit(),
-            ),
-            BlocProvider.value(value: course ?? CourseCubit())
-          ], child: const UsersScreen());
+          return BlocProvider(
+            create: (context) => UserCubit(),
+            child: const UsersScreen(),
+          );
         },
       ),
       GoRoute(
@@ -129,13 +107,8 @@ abstract class AppRouter {
           builder: (context, state) {
             final extra = state.extra as Map<String, dynamic>? ?? {};
             final CourseModel? course = extra['course'] as CourseModel?;
-            final CourseCubit? cubit = extra['cubit'];
-            return BlocProvider.value(
-              // create: (context) => CourseCubit(),
-              value: cubit ?? CourseCubit(),
-              child: AddCourseScreen(
-                model: course,
-              ),
+            return AddCourseScreen(
+              model: course,
             );
           }),
       GoRoute(
@@ -144,7 +117,6 @@ abstract class AppRouter {
         builder: (context, state) {
           final extra = state.extra as Map<String, dynamic>? ?? {};
           final courses = extra['courses'] as CourseModel;
-          final CourseCubit? cubit = extra['cubit'];
 
           return MultiBlocProvider(
             providers: [
@@ -154,10 +126,6 @@ abstract class AppRouter {
               BlocProvider(
                 create: (context) => CourseUsersCubit(),
               ),
-              BlocProvider.value(
-                value: cubit ?? CourseCubit(),
-                // create: (context) => CourseUsersCubit(),
-              ),
             ],
             child: CourseDetails(
               courses: courses,
@@ -165,6 +133,7 @@ abstract class AppRouter {
           );
         },
       ),
+      
       GoRoute(
         path: CourseAddLesson.id,
         name: CourseAddLesson.id,

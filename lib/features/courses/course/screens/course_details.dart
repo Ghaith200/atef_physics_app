@@ -1,5 +1,4 @@
 import 'package:atef_physics/core/models/course_model.dart';
-import 'package:atef_physics/core/models/lesson_model.dart';
 import 'package:atef_physics/core/utils/app_colors.dart';
 import 'package:atef_physics/core/utils/app_snack_bar.dart';
 import 'package:atef_physics/core/utils/storage.dart';
@@ -32,8 +31,8 @@ class CourseDetails extends StatefulWidget {
 
 class _CourseDetailsState extends State<CourseDetails>
     with TickerProviderStateMixin {
-  List<LessonModel> lessons = [];
   late TabController controller;
+  late CourseModel course = widget.courses;
   @override
   void initState() {
     super.initState();
@@ -49,107 +48,117 @@ class _CourseDetailsState extends State<CourseDetails>
 
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: () =>
-          BlocProvider.of<CourseCubit>(context).getCourse(widget.courses),
-      child: Scaffold(
-        floatingActionButton: Storage.instance.isAdmin
-            ? FloatingActionButton(
-                onPressed: () => controller.index == 0
-                    ? context.pushNamed(CourseAddLesson.id, extra: {
-                        "course": widget.courses,
-                        "cubit": BlocProvider.of<CourseLessonsCubit>(context)
-                      })
-                    : context.pushNamed(CourseAddUser.id, extra: {
-                        "model": widget.courses,
-                        "cubit": BlocProvider.of<CourseUsersCubit>(context)
-                      }),
-                child: const Icon(Icons.add),
-              )
-            : null,
-        appBar: CustomAppBars(
-          text: widget.courses.title,
-          backbutton: true,
-          actions: Storage.instance.isAdmin
-              ? [
-                  IconButton(
-                    onPressed: () => remove(),
-                    icon: const Icon(Icons.delete),
-                    color: AppColors.red,
-                  ),
-                ]
-              : null,
-        ),
-        body: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Upper container with image and overlay
-              CourseDetailsItemInfo(course: widget.courses),
-              const SizedBox(height: 20),
-              Expanded(
-                child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: DefaultTabController(
-                      length: Storage.instance.isAdmin ? 2 : 1,
-                      child: Column(
-                        children: [
-                          TabBar(
-                            controller: controller,
-                            tabs: [
-                              Text(
-                                widget.courses.lessons.length == 1
-                                    ? '${widget.courses.lessons.length} Lesson'
-                                    : '${widget.courses.lessons.length} Lessons',
-                                style: const TextStyle(color: AppColors.blue),
+    return BlocConsumer<CourseCubit, CourseState>(
+      listener: (context, state) {
+        state.whenOrNull(
+          update: (model) => model.id == course.id ? course = model : null,
+        );
+      },
+      builder: (context, state) {
+        return RefreshIndicator(
+          onRefresh: () =>
+              BlocProvider.of<CourseCubit>(context).getCourse(course),
+          child: Scaffold(
+            floatingActionButton: Storage.instance.isAdmin
+                ? FloatingActionButton(
+                    onPressed: () => controller.index == 0
+                        ? context.pushNamed(CourseAddLesson.id, extra: {
+                            "course": course,
+                            "cubit":
+                                BlocProvider.of<CourseLessonsCubit>(context)
+                          })
+                        : context.pushNamed(CourseAddUser.id, extra: {
+                            "model": course,
+                            "cubit": BlocProvider.of<CourseUsersCubit>(context)
+                          }),
+                    child: const Icon(Icons.add),
+                  )
+                : null,
+            appBar: CustomAppBars(
+              text: course.title,
+              backbutton: true,
+              actions: Storage.instance.isAdmin
+                  ? [
+                      IconButton(
+                        onPressed: () => remove(),
+                        icon: const Icon(Icons.delete),
+                        color: AppColors.red,
+                      ),
+                    ]
+                  : null,
+            ),
+            body: SafeArea(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Upper container with image and overlay
+                  CourseDetailsItemInfo(course: course),
+                  const SizedBox(height: 20),
+                  Expanded(
+                    child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: DefaultTabController(
+                          length: Storage.instance.isAdmin ? 2 : 1,
+                          child: Column(
+                            children: [
+                              TabBar(
+                                controller: controller,
+                                tabs: [
+                                  Text(
+                                    course.lessons.length == 1
+                                        ? '${course.lessons.length} Lesson'
+                                        : '${course.lessons.length} Lessons',
+                                    style:
+                                        const TextStyle(color: AppColors.blue),
+                                  ),
+                                  if (Storage.instance.isAdmin)
+                                    Text(
+                                      '${course.users.length} Enrolled Users',
+                                      style: const TextStyle(
+                                          color: AppColors.blue),
+                                    ),
+                                ],
                               ),
-                              if (Storage.instance.isAdmin)
-                                Text(
-                                  '${widget.courses.users.length} Enrolled Users',
-                                  style: const TextStyle(color: AppColors.blue),
+                              Expanded(
+                                child: TabBarView(
+                                  controller: controller,
+                                  children: [
+                                    (Storage.instance.user.userType ==
+                                                UserTypeEnum.admin ||
+                                            course.users.contains(
+                                                Storage.instance.user.uid))
+                                        ? CourseLessonsList(
+                                            course: course,
+                                          )
+                                        : const Center(
+                                            child: Text(
+                                              "you Aren Not Enrolled in this Course",
+                                              style: TextStyle(
+                                                  color: AppColors.blue),
+                                            ),
+                                          ),
+                                    if (Storage.instance.isAdmin)
+                                      EnrolledUsersPageView(model: course),
+                                  ],
                                 ),
+                              ),
                             ],
                           ),
-                          Expanded(
-                            child: TabBarView(
-                              controller: controller,
-                              children: [
-                                (Storage.instance.user.userType ==
-                                            UserTypeEnum.admin ||
-                                        widget.courses.users.contains(
-                                            Storage.instance.user.uid))
-                                    ? CourseLessonsList(
-                                        course: widget.courses,
-                                      )
-                                    : const Center(
-                                        child: Text(
-                                          "you Aren Not Enrolled in this Course",
-                                          style:
-                                              TextStyle(color: AppColors.blue),
-                                        ),
-                                      ),
-                                if (Storage.instance.isAdmin)
-                                  EnrolledUsersPageView(model: widget.courses),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    )),
+                        )),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
   void deleteCourse() async {
-    await BlocProvider.of<CourseCubit>(context)
-        .removeCourses(model: widget.courses);
+    await BlocProvider.of<CourseCubit>(context).removeCourses(model: course);
     if (context.mounted && context.canPop()) {
-      AppSnackBar.showSnackBar(
-          context, "course ${widget.courses.title} \n Removed");
+      AppSnackBar.showSnackBar(context, "course ${course.title} \n Removed");
       context.pop();
     }
   }
@@ -182,16 +191,3 @@ class _CourseDetailsState extends State<CourseDetails>
     );
   }
 }
-// PageView(
-//                   controller: controller,
-//                   children: [
-//                     // First page with lessons
-//                     LessonsPageView(courses: widget.courses),
-//                     // Second page with users
-
-//                     BlocProvider(
-//                       create: (context) => CourseUsersCubit(),
-//                       child: EnrolledUsersPageView(model: widget.courses),
-//                     ),
-//                   ],
-//                 ),
