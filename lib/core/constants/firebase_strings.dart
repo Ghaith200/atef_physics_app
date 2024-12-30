@@ -14,6 +14,7 @@ class FirebaseStrings {
 
   static const String lessons = "lessons";
   static const String watchCount = "watchCount";
+    static const String userWatchCount = "userWatchCount";
   static const String users = "users";
 
 

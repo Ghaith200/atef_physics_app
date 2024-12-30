@@ -50,10 +50,12 @@ class CourseLessonsApiServices {
     try {
       String? lessonFileURL;
       if (file != null) {
+        final fille = File(file);
         final lessonFile = FirebaseStorage.instance.ref(
-            '${FirebaseStrings.lessonFile}/${model.title}-${model.id}/${DateTime.now().millisecondsSinceEpoch}_$name');
 
-        await lessonFile.putFile(File(file));
+            '${FirebaseStrings.lessonFile}/${model.title}-${model.id}/${DateTime.now().millisecondsSinceEpoch}_$name.pdf');
+
+        await lessonFile.putFile(fille);
         lessonFileURL = await lessonFile.getDownloadURL();
       }
 
@@ -118,8 +120,17 @@ class CourseLessonsApiServices {
       required String? name,
       required String? video,
       required int? watchCount,
-      required int? userWatchCount}) async {
+      required String? file}) async {
     try {
+      if (file != null) {
+        if (lesson.file != null) {
+          await FirebaseStorage.instance.refFromURL(lesson.file!).delete();
+        }
+        final lessonFile = FirebaseStorage.instance.ref(
+            '${FirebaseStrings.lessonFile}/${model.title}-${model.id}/${DateTime.now().millisecondsSinceEpoch}_$name');
+        await lessonFile.putFile(File(file));
+        lesson = lesson.copyWith(file: await lessonFile.getDownloadURL());
+      }
       final doc = FirebaseFirestore.instance
           .collection(FirebaseStrings.coures)
           .doc(model.id)
@@ -129,20 +140,41 @@ class CourseLessonsApiServices {
         FirebaseStrings.name: name ?? lesson.name,
         FirebaseStrings.video: video ?? lesson.video,
         FirebaseStrings.watchCount: watchCount ?? lesson.watchCount,
+        FirebaseStrings.file: file ?? lesson.file,
       });
-      if (lesson.userWatchCount == 0) {
+
+      lesson =
+          lesson.copyWith(name: name, video: video, watchCount: watchCount);
+      return ApiResult.success(lesson);
+    } catch (e) {
+      return ApiResult.failure(ApiErrorHandler(
+          statusCode: 00, statusMessage: e.toString(), success: false));
+    }
+  }
+
+  Future<ApiResult<LessonModel>> updateLessonUserWatchCount(
+      {required LessonModel lesson,
+      required CourseModel model,
+      required int? userWatchCount}) async {
+    try {
+      final doc = FirebaseFirestore.instance
+          .collection(FirebaseStrings.coures)
+          .doc(model.id)
+          .collection(FirebaseStrings.lessons)
+          .doc(lesson.id);
+
+      if (userWatchCount == 1) {
         await doc
             .collection(FirebaseStrings.users)
             .doc(Storage.instance.user.uid)
-            .set({FirebaseStrings.watchCount: userWatchCount});
+            .set({FirebaseStrings.userWatchCount: userWatchCount});
       } else {
         await doc
             .collection(FirebaseStrings.users)
             .doc(Storage.instance.user.uid)
-            .update({FirebaseStrings.watchCount: userWatchCount});
+            .update({FirebaseStrings.userWatchCount: userWatchCount});
       }
-      lesson =
-          lesson.copyWith(name: name, video: video, watchCount: watchCount);
+      lesson = lesson.copyWith(userWatchCount: userWatchCount);
       return ApiResult.success(lesson);
     } catch (e) {
       return ApiResult.failure(ApiErrorHandler(

@@ -38,6 +38,7 @@ class LessonModel {
 
  
 
+
   LessonModel copyWith({
     String? id,
     String? name,
