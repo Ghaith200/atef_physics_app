@@ -50,7 +50,9 @@ class CourseLessonsApiServices {
       String? lessonFileURL;
       if (file != null) {
         final lessonFile = FirebaseStorage.instance.ref(
-            '${FirebaseStrings.lessonFile}/${model.id}/${DateTime.now().millisecondsSinceEpoch}_$name.pdf');
+
+            '${FirebaseStrings.lessonFile}/${model.title}-${model.id}/${DateTime.now().millisecondsSinceEpoch}_$name');
+
         await lessonFile.putFile(File(file));
         lessonFileURL = await lessonFile.getDownloadURL();
       }
