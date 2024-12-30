@@ -34,22 +34,26 @@ class _CourseListWidgetState extends State<CourseListWidget> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<CourseCubit, CourseState>(
-      listener: (context, state) => state.whenOrNull<void>(
-        error: (error) => error.showError(context),
-        successAll: (models) => courses = List.from(widget.userCourses
-            ? models
-                .where((test) => test.users.contains(Storage.instance.user.uid))
-            : models),
-        add: (model) => courses.add(model),
-        update: (model) {
-          AppSnackBar.showSnackBar(context, "${model.title} Updated");
-          final e = courses.indexWhere((e) => e.id == model.id);
-          courses[e] = model;
-        },
-        remove: (model) => courses.removeWhere((test) => test.id == model.id),
-      ),
+      listener: (context, state) {
+        log("before ${courses.length}");
+        state.whenOrNull<void>(
+          error: (error) => error.showError(context),
+          successAll: (models) => courses = List.from(widget.userCourses
+              ? models.where(
+                  (test) => test.users.contains(Storage.instance.user.uid))
+              : models),
+          add: (model) => courses.add(model),
+          update: (model) {
+            final e = courses.indexWhere((e) => e.id == model.id);
+            courses[e] = model;
+          },
+          remove: (model) => courses.removeWhere((test) => test.id == model.id),
+        );
+        log("after ${courses.length}");
+      },
       builder: (context, state) {
         log("Home Screen ${state.runtimeType} ");
+        log("Courses len ${courses.length}");
 
         return state.maybeWhen<Widget>(
           load: () => const Center(child: CircularProgressIndicator()),

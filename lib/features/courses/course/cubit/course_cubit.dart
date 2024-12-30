@@ -9,6 +9,7 @@ part 'course_cubit.freezed.dart';
 class CourseCubit extends Cubit<CourseState> {
   CourseCubit() : super(const CourseState.initial());
   final loading = const CourseState.load();
+  List<CourseModel> courses = [];
   final CourseApiServices apiServices = CourseApiServices();
 
   Future<void> getCourses() async {
@@ -54,6 +55,8 @@ class CourseCubit extends Cubit<CourseState> {
     );
   }
 
+  void setCourse(CourseModel model) => emit(CourseState.update(model));
+  
   Future<void> removeCourses({
     required CourseModel model,
   }) async {

@@ -1,4 +1,6 @@
 import 'package:atef_physics/core/utils/simple_observer.dart';
+import 'package:atef_physics/features/courses/course/cubit/course_cubit.dart';
+import 'package:atef_physics/features/header/presentation/cubit/header_cubit.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -49,37 +51,47 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AppScreenUtils.initUtils(context);
-    return MaterialApp.router(
-      routeInformationParser: AppRouter.goRouter.routeInformationParser,
-      routerDelegate: AppRouter.goRouter.routerDelegate,
-      routeInformationProvider: AppRouter.goRouter.routeInformationProvider,
-      localizationsDelegates: context.localizationDelegates,
-      supportedLocales: context.supportedLocales,
-      locale: context.locale,
-      debugShowCheckedModeBanner: false,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => CourseCubit(),
+        ),
+        BlocProvider(
+          create: (context) => HeaderCubit(),
+        )
+      ],
+      child: MaterialApp.router(
+        routeInformationParser: AppRouter.goRouter.routeInformationParser,
+        routerDelegate: AppRouter.goRouter.routerDelegate,
+        routeInformationProvider: AppRouter.goRouter.routeInformationProvider,
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
+        locale: context.locale,
+        debugShowCheckedModeBanner: false,
 
-      theme: ThemeData(
-        appBarTheme: AppBarTheme(
-          iconTheme: IconThemeData(
-            color: AppColors.whiteBlack, //change your color here
+        theme: ThemeData(
+          appBarTheme: AppBarTheme(
+            iconTheme: IconThemeData(
+              color: AppColors.whiteBlack, //change your color here
+            ),
+            color: AppColors.blackWhite,
           ),
-          color: AppColors.blackWhite,
+          colorScheme: AppColors.scheme,
+          primaryColor: AppColors.blue,
+          textSelectionTheme: TextSelectionThemeData(
+            selectionColor: AppColors.blue.withOpacity(0.5),
+            selectionHandleColor: AppColors.blue,
+          ),
+          fontFamily: FontFamily.hevoLight,
+          useMaterial3: true,
+          scaffoldBackgroundColor: AppColors.blackWhite,
         ),
-        colorScheme: AppColors.scheme,
-        primaryColor: AppColors.blue,
-        textSelectionTheme: TextSelectionThemeData(
-          selectionColor: AppColors.blue.withOpacity(0.5),
-          selectionHandleColor: AppColors.blue,
-        ),
-        fontFamily: FontFamily.hevoLight,
-        useMaterial3: true,
-        scaffoldBackgroundColor: AppColors.blackWhite,
-      ),
 
-      // theme: AppColors.lightTheme,
-      // darkTheme: AppColors.dartTheme,
-      // themeMode:
-      //     Storage.instance.isDarkMood ? ThemeMode.dark : ThemeMode.light,
+        // theme: AppColors.lightTheme,
+        // darkTheme: AppColors.dartTheme,
+        // themeMode:
+        //     Storage.instance.isDarkMood ? ThemeMode.dark : ThemeMode.light,
+      ),
     );
   }
 }
