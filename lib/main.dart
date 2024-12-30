@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-// import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:atef_physics/core/routes/app_router.dart';
 import 'package:atef_physics/core/utils/app_utils.dart';
 import 'package:atef_physics/features/notification/firebase_api.dart';
@@ -60,6 +59,7 @@ class MyApp extends StatelessWidget {
         )
       ],
       child: MaterialApp.router(
+        title: "atef physics",
         routeInformationParser: AppRouter.goRouter.routeInformationParser,
         routerDelegate: AppRouter.goRouter.routerDelegate,
         routeInformationProvider: AppRouter.goRouter.routeInformationProvider,

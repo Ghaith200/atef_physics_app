@@ -36,7 +36,8 @@ class AuthApiFirebaseImp implements AuthApiServices {
         .doc(user.uid)
         .get();
     if (!data.exists) {
-      throw "User Not Found";
+      // await user.delete();
+      throw "User has been banned";
     }
     return ApiResult.success(UserModel(
       uid: user.uid,
@@ -125,3 +126,90 @@ class AuthApiFirebaseImp implements AuthApiServices {
     }
   }
 }
+
+//  @override
+//   Future<ApiResult<UserModel>> regester({
+//     required String mail,
+//     required String pass,
+//     required String name,
+//     required String phoneNumber,
+//     required String fcmToken,
+//   }) async {
+//     try {
+//       // Attempt to create a new user
+//       UserCredential user =
+//           await FirebaseAuth.instance.createUserWithEmailAndPassword(
+//         email: mail.trim(),
+//         password: pass.trim(),
+//       );
+
+//       // Save user data to Firestore
+//       await _saveOrUpdateUserData(
+//         uid: user.user!.uid,
+//         name: name,
+//         phoneNumber: phoneNumber,
+//         fcmToken: fcmToken,
+//       );
+
+//       // Return success result
+//       return ApiResult.success(UserModel(
+//         uid: user.user!.uid,
+//         name: name,
+//         phoneNumber: phoneNumber,
+//         email: mail,
+//         fcmToken: fcmToken,
+//         userType: UserTypeEnum.user,
+//       ));
+//     } on FirebaseAuthException catch (e) {
+//       if (e.code == 'email-already-in-use') {
+//         // Handle case where email is already in use
+//         try {
+//           // Attempt to log in the user
+//           UserCredential user =
+//               await FirebaseAuth.instance.signInWithEmailAndPassword(
+//             email: mail.trim(),
+//             password: pass.trim(),
+//           );
+
+//           // Update existing user's Firestore data
+//           await _saveOrUpdateUserData(
+//             uid: user.user!.uid,
+//             name: name,
+//             phoneNumber: phoneNumber,
+//             fcmToken: fcmToken,
+//           );
+
+//           // Return success result for existing user
+//           return ApiResult.success(UserModel(
+//             uid: user.user!.uid,
+//             name: name,
+//             phoneNumber: phoneNumber,
+//             email: mail,
+//             fcmToken: fcmToken,
+//             userType: UserTypeEnum.user,
+//           ));
+//         } catch (signInError) {
+//           // Return failure if sign-in fails
+//           return ApiResult.failure(ApiErrorHandler(
+//             statusCode: 401,
+//             statusMessage: "Email already in use, but login failed.",
+//             success: false,
+//           ));
+//         }
+//       }
+
+//       // Return failure for other FirebaseAuthException cases
+//       return ApiResult.failure(ApiErrorHandler(
+//         statusCode: 400,
+//         statusMessage: e.message ?? "An unknown error occurred.",
+//         success: false,
+//       ));
+//     } catch (error) {
+//       // Handle unexpected errors
+//       return ApiResult.failure(ApiErrorHandler(
+//         statusCode: 500,
+//         statusMessage: "Unexpected error: ${error.toString()}",
+//         success: false,
+//       ));
+//     }
+//   }

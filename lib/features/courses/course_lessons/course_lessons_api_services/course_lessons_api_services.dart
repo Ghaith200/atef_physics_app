@@ -18,20 +18,21 @@ class CourseLessonsApiServices {
           .collection(FirebaseStrings.lessons)
           .get();
 
-      // final userdata =data.
-      List<LessonModel> data = lessonDoc.docs
-          .map((e) async {
-            final data = await e.reference
-                .collection(FirebaseStrings.users)
-                .doc(Storage.instance.user.uid)
-                .get();
-                
-            return LessonModel.fromJson(
-                {"id": e.id, ...e.data(), ...data.data()!});
-          })
-          .cast<LessonModel>()
-          .toList();
-      // model = model.copyWith(lessons: data.map((e) => e.id).toList());
+      List<LessonModel> data = List.empty(growable: true);
+
+      for (var e in lessonDoc.docs) {
+        final lessonUserData = await FirebaseFirestore.instance
+            .collection(FirebaseStrings.coures)
+            .doc(model.id)
+            .collection(FirebaseStrings.lessons)
+            .doc(e.id)
+            .collection(FirebaseStrings.users)
+            .doc(Storage.instance.user.uid)
+            .get();
+
+        data.add(LessonModel.fromJson(
+            {"id": e.id, ...e.data(), ...lessonUserData.data() ?? {}}));
+      }
       return ApiResult.success(data);
     } catch (e) {
       return ApiResult.failure(ApiErrorHandler(
@@ -50,7 +51,6 @@ class CourseLessonsApiServices {
       String? lessonFileURL;
       if (file != null) {
         final lessonFile = FirebaseStorage.instance.ref(
-
             '${FirebaseStrings.lessonFile}/${model.title}-${model.id}/${DateTime.now().millisecondsSinceEpoch}_$name');
 
         await lessonFile.putFile(File(file));
