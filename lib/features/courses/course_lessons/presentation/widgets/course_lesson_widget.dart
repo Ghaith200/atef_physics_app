@@ -1,3 +1,6 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:atef_physics/core/models/course_model.dart';
 import 'package:atef_physics/core/models/lesson_model.dart';
 import 'package:atef_physics/core/utils/app_colors.dart';
@@ -6,9 +9,11 @@ import 'package:atef_physics/core/utils/storage.dart';
 import 'package:atef_physics/features/courses/course_lessons/cubit/course_lessons_cubit.dart';
 import 'package:atef_physics/features/courses/course_lessons/presentation/screens/course_add_lesson.dart';
 import 'package:atef_physics/features/vedio/screens/vedio_screen.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:path_provider/path_provider.dart';
 
 class CourseLessonWidget extends StatefulWidget {
   const CourseLessonWidget({
@@ -26,13 +31,58 @@ class CourseLessonWidget extends StatefulWidget {
 
 class _CourseLessonWidgetState extends State<CourseLessonWidget> {
   late LessonModel lesson = LessonModel.fromJson(widget.lesson.toJson());
+
+  Future<void> downloadFile() async {
+    if (lesson.file != null) {
+      try {
+        AppSnackBar.showSnackBar(context, "Downloading file...");
+        log('File URL: ${lesson.file}');
+
+        // Firebase Storage reference
+        final storageRef = FirebaseStorage.instance.refFromURL(lesson.file!);
+
+        // Get the Downloads directory
+        final downloadsDir = Directory('/storage/emulated/0/Download');
+        if (!await downloadsDir.exists()) {
+          AppSnackBar.showSnackBar(
+              context, "Unable to access Downloads directory.");
+          return;
+        }
+
+        // Sanitize the file name
+
+        final localFilePath = "${downloadsDir.path}/${lesson.name}.pdf";
+        final file = File(localFilePath);
+
+        // Check if the file already exists
+        if (await file.exists()) {
+          AppSnackBar.showSnackBar(
+              context, "File already exists at the Downloads folder");
+          return;
+        }
+
+        // Download the file
+        await storageRef.writeToFile(file);
+
+        AppSnackBar.showSnackBar(
+            context, "File downloaded in the Downloads folder");
+        log('File downloaded to $localFilePath');
+      } catch (e) {
+        AppSnackBar.showSnackBar(context, "Download failed: $e");
+        log('Exception: $e');
+      }
+    } else {
+      AppSnackBar.showSnackBar(context, "No file available for download.");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () async {
         if (lesson.userWatchCount >= lesson.watchCount &&
             !Storage.instance.isAdmin) {
-          AppSnackBar.showSnackBar(context, "lesson Watch count ended ");
+          AppSnackBar.showSnackBar(context, "Lesson watch count ended ");
           return;
         }
         final i = lesson.watchCount + 1;
@@ -45,8 +95,7 @@ class _CourseLessonWidgetState extends State<CourseLessonWidget> {
               if (lesson.id == value.model.id) {
                 lesson = value.model;
                 if (value.model.userWatchCount <= value.model.watchCount) {
-                  // context
-                  //     .pushNamed(VedioScreen.id, extra: {'lesson': lesson.id});
+                  // Navigate to video screen if needed
                 }
               }
             },
@@ -63,29 +112,36 @@ class _CourseLessonWidgetState extends State<CourseLessonWidget> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 IconButton(
-                    onPressed: () =>
-                        context.pushNamed(CourseAddLesson.id, extra: {
-                          "course": widget.model,
-                          "lesson": lesson,
-                          "cubit": BlocProvider.of<CourseLessonsCubit>(context)
-                        }),
-                    icon: const Icon(Icons.edit)),
+                  onPressed: () =>
+                      context.pushNamed(CourseAddLesson.id, extra: {
+                    "course": widget.model,
+                    "lesson": lesson,
+                    "cubit": BlocProvider.of<CourseLessonsCubit>(context)
+                  }),
+                  icon: const Icon(Icons.edit),
+                ),
                 IconButton(
-                    onPressed: () =>
-                        BlocProvider.of<CourseLessonsCubit>(context)
-                            .removeLesson(
-                          course: widget.model,
-                          lesson: lesson,
-                        ),
-                    color: AppColors.red,
-                    icon: const Icon(Icons.close)),
+                  onPressed: () =>
+                      BlocProvider.of<CourseLessonsCubit>(context).removeLesson(
+                    course: widget.model,
+                    lesson: lesson,
+                  ),
+                  color: AppColors.red,
+                  icon: const Icon(Icons.close),
+                ),
               ],
             ),
+          // lesson.file == null
+          //     ? IconButton(
+          //         onPressed: () {
+          //           context
+          //               .pushNamed(VedioScreen.id, extra: {"lesson": lesson});
+          //         },
+          //         icon: Icon(Icons.play_circle_outline_rounded),
+          //       ):
           IconButton(
             icon: const Icon(Icons.download),
-            onPressed: () {
-              print(lesson.file);
-            },
+            onPressed: () => downloadFile(),
           ),
         ],
       ),

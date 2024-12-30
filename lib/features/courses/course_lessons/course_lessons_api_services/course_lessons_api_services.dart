@@ -40,7 +40,7 @@ class CourseLessonsApiServices {
       String? lessonFileURL;
       if (file != null) {
         final lessonFile = FirebaseStorage.instance.ref(
-            '${FirebaseStrings.lessonFile}/${model.title}-${model.id}/${DateTime.now().millisecondsSinceEpoch}_$name.pdf');
+            '${FirebaseStrings.lessonFile}/${model.title}-${model.id}/${DateTime.now().millisecondsSinceEpoch}_$name');
         await lessonFile.putFile(File(file));
         lessonFileURL = await lessonFile.getDownloadURL();
       }
@@ -137,7 +137,8 @@ class CourseLessonsApiServices {
           statusCode: 00, statusMessage: e.toString(), success: false));
     }
   }
-  Future<ApiResult<LessonModel> > getLessons(LessonModel model) async {
+
+  Future<ApiResult<LessonModel>> getLessons(LessonModel model) async {
     try {
       final data = await FirebaseFirestore.instance
           .collection(FirebaseStrings.coures)
