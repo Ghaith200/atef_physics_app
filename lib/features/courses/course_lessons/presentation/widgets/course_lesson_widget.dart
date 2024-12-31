@@ -1,6 +1,8 @@
 import 'package:atef_physics/core/utils/app_colors.dart';
 import 'package:atef_physics/core/utils/app_snack_bar.dart';
 import 'package:atef_physics/core/utils/storage.dart';
+import 'package:atef_physics/core/widgets/custom_button.dart';
+import 'package:atef_physics/core/widgets/custom_textfield.dart';
 import 'package:atef_physics/features/courses/course_lessons/cubit/course_lessons_cubit.dart';
 import 'package:atef_physics/features/courses/course_lessons/presentation/screens/course_add_lesson.dart';
 import 'package:atef_physics/features/vedio/screens/vedio_screen.dart';
@@ -38,6 +40,7 @@ class _CourseLessonWidgetState extends State<CourseLessonWidget>
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController userNumberController = TextEditingController();
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 8),
       child: Material(
@@ -115,6 +118,7 @@ class _CourseLessonWidgetState extends State<CourseLessonWidget>
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          // Video section
                           ListTile(
                             onTap: () async {
                               if (lesson.userWatchCount >= lesson.watchCount &&
@@ -160,11 +164,14 @@ class _CourseLessonWidgetState extends State<CourseLessonWidget>
                               ),
                             ),
                             trailing: IconButton(
-                                onPressed: () {},
-                                icon: const Icon(
-                                  Icons.play_circle_outline_rounded,
-                                )),
+                              onPressed: () {},
+                              icon: const Icon(
+                                Icons.play_circle_outline_rounded,
+                              ),
+                            ),
                           ),
+
+                          // Attachment section (if file exists)
                           if (lesson.file != null)
                             ListTile(
                               title: Text(
@@ -183,6 +190,28 @@ class _CourseLessonWidgetState extends State<CourseLessonWidget>
                                 fileName: "${lesson.name}.pdf",
                               ),
                             ),
+
+                          // Admin-specific input field
+                          if (Storage.instance.isAdmin)
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 5, vertical: 8),
+                              child: CustomTextFormField(
+                                textEditingController: userNumberController,
+                                hintText: 'user number to reset watch count',
+                                prefixIcon: const Icon(Icons.person),
+                                label: 'User Number',
+                              ),
+                            ),
+                          Center(
+                            child: CustomButton(
+                              width: 150,
+                              height: 40,
+                              boarderRadius: 20,
+                              onTap: () {},
+                              child: Text("reset watch count"),
+                            ),
+                          )
                         ],
                       ),
                     )

@@ -13,4 +13,9 @@ flutter_native_splash:
     icon_background_color: "#ffffff" # Icon background color
     color: "#ffffff" # Background color (force white)
     android_gravity: fill # Stretch the image to fill the screen
+<<<<<<< HEAD
     color_dark_android: "#ffffff" # Dark mode background color
+=======
+    color_dark_android: "#ffffff" # Dark mode background color
+    
+>>>>>>> b7edf4cd80486630720c4f90c194d788f93138bd

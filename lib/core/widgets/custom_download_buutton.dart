@@ -6,8 +6,6 @@ import 'package:open_filex/open_filex.dart';
 import 'dart:io';
 import 'dart:developer';
 
-
-
 enum DownloadStatus { initial, downloading, downloaded, notDownloaded }
 
 class CustomDownloadBuutton extends StatefulWidget {
@@ -39,6 +37,7 @@ class _CustomDownloadBuuttonState extends State<CustomDownloadBuutton> {
   }
 
  void _checkFileExistence() async {
+
     String p = "", path = "";
     if (Platform.isAndroid) {
       path =
@@ -77,7 +76,7 @@ class _CustomDownloadBuuttonState extends State<CustomDownloadBuutton> {
           _progress = 0.0;
           _filePath = path;
         });
-        widget.finshedDownload(path!);
+        widget.finshedDownload(path);
       },
       onDownloadError: (errorMessage) {
         setState(() {

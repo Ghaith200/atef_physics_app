@@ -66,7 +66,7 @@ class CourseDetailsItemInfo extends StatelessWidget {
                   children: [
                     const Text(
                       textAlign: TextAlign.end,
-                      'ريال',
+                      'درهم',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 16,

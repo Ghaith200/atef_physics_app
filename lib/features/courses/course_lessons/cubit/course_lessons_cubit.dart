@@ -59,6 +59,7 @@ class CourseLessonsCubit extends Cubit<CourseLessonsState> {
       int? userWatchCount,
       required CourseModel model,
       File? file}) async {
+    emit(loading);
     final data = await apiServices.updateLesson(
         file: file?.path,
         lesson: lesson,

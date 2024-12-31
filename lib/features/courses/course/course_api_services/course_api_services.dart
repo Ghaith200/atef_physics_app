@@ -5,7 +5,6 @@ import 'package:atef_physics/core/models/course_model.dart';
 import 'package:atef_physics/core/network/api_error_handler.dart';
 import 'package:atef_physics/core/network/api_result.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class CourseApiServices {
@@ -77,7 +76,7 @@ class CourseApiServices {
           .toList();
       coursesList.sort((a, b) => int.parse(b.id.split("-")[0])
           .compareTo(int.parse(a.id.split("-")[0])));
-          
+
       return ApiResult.success(coursesList);
     } catch (e) {
       return ApiResult.failure(ApiErrorHandler(
@@ -88,6 +87,18 @@ class CourseApiServices {
     }
   }
 
+<<<<<<< HEAD
+=======
+  DateTime? extractTimestamp(String id) {
+    final parts = id.split('-');
+    if (parts.isNotEmpty) {
+        final timestamp = int.parse(parts[0]);
+        return DateTime.fromMillisecondsSinceEpoch(timestamp);
+    }
+    return null;
+  }
+
+>>>>>>> b7edf4cd80486630720c4f90c194d788f93138bd
   Future<ApiResult<CourseModel>> updateCourse(
       {required CourseModel model,
       String? title,
