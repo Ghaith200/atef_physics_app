@@ -2,20 +2,25 @@ import 'package:atef_physics/core/utils/app_colors.dart';
 import 'package:atef_physics/core/utils/app_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_file_downloader/flutter_file_downloader.dart';
+import 'package:open_filex/open_filex.dart';
 import 'dart:io';
 import 'dart:developer';
+
+import 'package:path_provider/path_provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 enum DownloadStatus { initial, downloading, downloaded, notDownloaded }
 
 class CustomDownloadBuutton extends StatefulWidget {
   final String downloadUrl;
   final Function(String) finshedDownload;
-  final String fileName;
+  final String fileName, subdir;
 
   const CustomDownloadBuutton({
     super.key,
     required this.downloadUrl,
     required this.finshedDownload,
+    required this.subdir,
     required this.fileName,
   });
 
@@ -35,12 +40,12 @@ class _CustomDownloadBuuttonState extends State<CustomDownloadBuutton> {
   }
 
   void _checkFileExistence() async {
-    final path =
-        "/storage/emulated/0/Download/atef-physics/${widget.fileName}.pdf";
-    if (await File(path).exists()) {
+    final path = await getDownloadsDirectory();
+    final p = "${path?.path}/atef-physics/${widget.fileName}";
+    if (await File(p).exists()) {
       setState(() {
         _status = DownloadStatus.downloaded;
-        _filePath = path;
+        _filePath = p;
       });
     }
   }
@@ -52,9 +57,9 @@ class _CustomDownloadBuuttonState extends State<CustomDownloadBuutton> {
 
     FileDownloader.downloadFile(
       url: widget.downloadUrl,
-      name: "${widget.fileName}.pdf",
+      name: widget.fileName,
       downloadDestination: DownloadDestinations.publicDownloads,
-      subPath: "atef-physics",
+      subPath: "atef-physics/${widget.subdir}",
       onProgress: (fileName, progress) {
         log(progress.toString());
         setState(() {
@@ -79,10 +84,9 @@ class _CustomDownloadBuuttonState extends State<CustomDownloadBuutton> {
     );
   }
 
-  void _openFile() {
+  void _openFile() async {
     if (_filePath != null) {
-    } else {
-      AppSnackBar.showSnackBar(context, 'File not found');
+      OpenFilex.open(_filePath!);
     }
   }
 

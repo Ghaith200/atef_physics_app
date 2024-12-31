@@ -41,6 +41,7 @@ dependencies:
   file_picker: ^8.1.7
   path_provider: ^2.1.5
   flutter_file_downloader: ^2.0.1-dev.2 
+  open_filex: ^4.6.0
 dev_dependencies:
   flutter_native_splash: ^2.4.1
   build_runner: ^2.4.13

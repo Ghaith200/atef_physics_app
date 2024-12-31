@@ -6,6 +6,7 @@ import 'package:atef_physics/core/utils/storage.dart';
 import 'package:atef_physics/core/widgets/custom_download_buutton.dart';
 import 'package:atef_physics/features/courses/course_lessons/cubit/course_lessons_cubit.dart';
 import 'package:atef_physics/features/courses/course_lessons/presentation/screens/course_add_lesson.dart';
+import 'package:atef_physics/features/vedio/screens/vedio_screen.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -45,9 +46,12 @@ class _CourseLessonWidgetState extends State<CourseLessonWidget> {
             update: (value) {
               if (lesson.id == value.model.id) {
                 lesson = value.model;
-                if (value.model.userWatchCount <= value.model.watchCount) {
+                if (value.model.userWatchCount <= value.model.watchCount ||
+                    Storage.instance.isAdmin) {
                   // Navigate to video screen if needed
-                }
+                  context.pushNamed(VedioScreen.id,
+                      extra: {"lesson": lesson.video});
+                } else {}
               }
             },
           );
@@ -72,10 +76,14 @@ class _CourseLessonWidgetState extends State<CourseLessonWidget> {
                   icon: const Icon(Icons.edit),
                 ),
                 IconButton(
-                  onPressed: () =>
-                      BlocProvider.of<CourseLessonsCubit>(context).removeLesson(
-                    course: widget.model,
-                    lesson: lesson,
+                  onPressed: () => AppSnackBar.showConfirmDialog(
+                    context: context,
+                    label: "delete lesson \n ${lesson.name}",
+                    fun: () => BlocProvider.of<CourseLessonsCubit>(context)
+                        .removeLesson(
+                      course: widget.model,
+                      lesson: lesson,
+                    ),
                   ),
                   color: AppColors.red,
                   icon: const Icon(Icons.close),
@@ -86,7 +94,8 @@ class _CourseLessonWidgetState extends State<CourseLessonWidget> {
             CustomDownloadBuutton(
                 downloadUrl: lesson.file!,
                 finshedDownload: (e) {},
-                fileName: lesson.name)
+                subdir: widget.model.title,
+                fileName: "${lesson.name}.pdf"),
         ],
       ),
       contentPadding: const EdgeInsets.symmetric(horizontal: 5),
