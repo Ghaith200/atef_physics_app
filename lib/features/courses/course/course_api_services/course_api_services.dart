@@ -87,18 +87,7 @@ class CourseApiServices {
     }
   }
 
-<<<<<<< HEAD
-=======
-  DateTime? extractTimestamp(String id) {
-    final parts = id.split('-');
-    if (parts.isNotEmpty) {
-        final timestamp = int.parse(parts[0]);
-        return DateTime.fromMillisecondsSinceEpoch(timestamp);
-    }
-    return null;
-  }
 
->>>>>>> b7edf4cd80486630720c4f90c194d788f93138bd
   Future<ApiResult<CourseModel>> updateCourse(
       {required CourseModel model,
       String? title,

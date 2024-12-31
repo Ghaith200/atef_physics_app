@@ -1,3 +1,4 @@
+import 'package:atef_physics/core/utils/app_snack_bar.dart';
 import 'package:atef_physics/core/utils/app_utils.dart';
 import 'package:atef_physics/core/utils/storage.dart';
 import 'package:atef_physics/features/header/model/header_model.dart';
@@ -43,7 +44,11 @@ class HeaderWidget extends StatelessWidget {
                   alignment: Alignment.topRight,
                   clipBehavior: Clip.hardEdge,
                   child: GestureDetector(
-                    onTap: () => cubit.removeHeader(model: model),
+                    onTap: () => AppSnackBar.showConfirmDialog(
+                      context: context,
+                      label: "Delete Header",
+                      fun: () => cubit.removeHeader(model: model),
+                    ),
                     child: CircleAvatar(
                       backgroundColor: Colors.white.withOpacity(.6),
                       child: const Icon(Icons.delete),

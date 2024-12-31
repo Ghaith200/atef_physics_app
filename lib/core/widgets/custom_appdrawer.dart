@@ -153,18 +153,21 @@ class _CustomAppdrawerState extends State<CustomAppdrawer> {
     try {
       // WhatsApp URL scheme for direct chat
       final Uri whatsappUri = Uri.parse("https://wa.me/$phoneNumber");
+      await launchUrl(whatsappUri,
+          mode: LaunchMode.externalNonBrowserApplication);
 
       // Check if the WhatsApp URI can be launched
-      if (await canLaunchUrl(whatsappUri)) {
-        // Launch WhatsApp
-        await launchUrl(whatsappUri, mode: LaunchMode.externalApplication);
-        context.pop();
-      } else {
-        // If WhatsApp is not installed or cannot handle the URL, show a message
-        context.pop();
-        AppSnackBar.showSnackBar(
-            context, 'WhatsApp is not installed on your device.');
-      }
+      // if (await canLaunchUrl(whatsappUri)) {
+      //   // Launch WhatsApp
+      //   await launchUrl(whatsappUri,
+      //       mode: LaunchMode.externalNonBrowserApplication);
+      //   context.pop();
+      // } else {
+      //   // If WhatsApp is not installed or cannot handle the URL, show a message
+      //   context.pop();
+      //   AppSnackBar.showSnackBar(
+      //       context, 'WhatsApp is not installed on your device.');
+      // }
     } catch (e) {
       context.pop();
       AppSnackBar.showSnackBar(context, 'Error launching WhatsApp');

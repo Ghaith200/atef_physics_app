@@ -183,6 +183,37 @@ class CourseLessonsApiServices {
     }
   }
 
+  Future<ApiResult<LessonModel>> resetLessonUserWatchCount(
+      {required LessonModel lesson,
+      required CourseModel model,
+      required String userPhone,
+      required int? userWatchCount}) async {
+    try {
+      final user = await FirebaseFirestore.instance
+          .collection(FirebaseStrings.users)
+          .where(FirebaseStrings.phoneNumber, isEqualTo: userPhone)
+          .get();
+
+      if (user.docs.length > 1 || user.docs.length == 0) {
+        return ApiResult.failure(ApiErrorHandler(
+            statusCode: 00, statusMessage: "no one found", success: false));
+      }
+      final doc = FirebaseFirestore.instance
+          .collection(FirebaseStrings.coures)
+          .doc(model.id)
+          .collection(FirebaseStrings.lessons)
+          .doc(lesson.id)
+          .collection(FirebaseStrings.users)
+          .doc(user.docs.first.id)
+          .set({FirebaseStrings.userWatchCount: userWatchCount});
+      lesson = lesson.copyWith(userWatchCount: userWatchCount);
+      return ApiResult.success(lesson);
+    } catch (e) {
+      return ApiResult.failure(ApiErrorHandler(
+          statusCode: 00, statusMessage: e.toString(), success: false));
+    }
+  }
+
   Future<ApiResult<LessonModel>> getLessons(LessonModel model) async {
     try {
       final data = await FirebaseFirestore.instance

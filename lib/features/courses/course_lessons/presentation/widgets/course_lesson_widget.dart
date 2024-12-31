@@ -198,6 +198,7 @@ class _CourseLessonWidgetState extends State<CourseLessonWidget>
                                   horizontal: 5, vertical: 8),
                               child: CustomTextFormField(
                                 textEditingController: userNumberController,
+                                keyboardType: TextInputType.phone,
                                 hintText: 'user number to reset watch count',
                                 prefixIcon: const Icon(Icons.person),
                                 label: 'User Number',
@@ -208,7 +209,20 @@ class _CourseLessonWidgetState extends State<CourseLessonWidget>
                               width: 150,
                               height: 40,
                               boarderRadius: 20,
-                              onTap: () {},
+                              onTap: () async {
+                                final cubit =
+                                    BlocProvider.of<CourseLessonsCubit>(
+                                        context);
+                                final userString = userNumberController.text;
+                                final d = await cubit.resetLessonUserWatchCount(
+                                    lesson: lesson,
+                                    model: widget.model,
+                                    userPhone: userString,
+                                    userWatchCount: 0);
+                                if (d) {
+                                  AppSnackBar.showSnackBar(context, "Updated");
+                                }
+                              },
                               child: Text("reset watch count"),
                             ),
                           )
