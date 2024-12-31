@@ -34,7 +34,7 @@ class AppSnackBar {
   static void showConfirmDialog({
     required BuildContext context,
     required String label,
-    required String title,
+    String title = "Delete",
     required Function() fun,
   }) {
     showDialog(
@@ -43,7 +43,10 @@ class AppSnackBar {
       builder: (context) {
         return AlertDialog(
           title: Text(title),
-          content: Text(label),
+          content: Text(
+            label,
+            textAlign: TextAlign.center,
+          ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),

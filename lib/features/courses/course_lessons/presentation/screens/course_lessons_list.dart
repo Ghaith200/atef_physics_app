@@ -58,7 +58,7 @@ class _CourseLessonsListState extends State<CourseLessonsList> {
             lesson = List.from([
               ...lesson.map<LessonModel>((e) => e.id == model.id ? model : e)
             ], growable: true);
-            AppSnackBar.showSnackBar(context, "${model.name}\n Updated");
+            // AppSnackBar.showSnackBar(context, "${model.name}\n Updated");32
             // BlocProvider.of<CourseCubit>(context).setCourse(widget.course
             //     .copyWith(
             //         lessons: lesson
