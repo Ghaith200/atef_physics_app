@@ -1,7 +1,9 @@
+import 'package:atef_physics/core/utils/app_colors.dart';
 import 'package:atef_physics/core/utils/app_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_file_downloader/flutter_file_downloader.dart';
 import 'dart:io';
+import 'dart:developer';
 
 enum DownloadStatus { initial, downloading, downloaded, notDownloaded }
 
@@ -54,8 +56,9 @@ class _CustomDownloadBuuttonState extends State<CustomDownloadBuutton> {
       downloadDestination: DownloadDestinations.publicDownloads,
       subPath: "atef-physics",
       onProgress: (fileName, progress) {
+        log(progress.toString());
         setState(() {
-          _progress = progress;
+          _progress = (progress / 100).clamp(0, 1);
         });
       },
       onDownloadCompleted: (path) {
@@ -93,6 +96,7 @@ class _CustomDownloadBuuttonState extends State<CustomDownloadBuutton> {
       case DownloadStatus.downloading:
         buttonChild = CircularProgressIndicator(
           value: _progress,
+          valueColor: const AlwaysStoppedAnimation<Color>(AppColors.blue),
         );
         break;
       case DownloadStatus.downloaded:
@@ -103,15 +107,15 @@ class _CustomDownloadBuuttonState extends State<CustomDownloadBuutton> {
         break;
     }
 
-    return ElevatedButton(
-      onPressed: () {
+    return GestureDetector(
+      onTap: () {
         if (_status == DownloadStatus.downloaded) {
           _openFile();
         } else if (_status != DownloadStatus.downloading) {
           _startDownload();
         }
       },
-      child: buttonChild,
+      child: CircleAvatar(child: buttonChild),
     );
   }
 }

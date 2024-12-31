@@ -52,7 +52,6 @@ class CourseLessonsApiServices {
       if (file != null) {
         final fille = File(file);
         final lessonFile = FirebaseStorage.instance.ref(
-
             '${FirebaseStrings.lessonFile}/${model.title}-${model.id}/${DateTime.now().millisecondsSinceEpoch}_$name.pdf');
 
         await lessonFile.putFile(fille);
@@ -140,7 +139,7 @@ class CourseLessonsApiServices {
         FirebaseStrings.name: name ?? lesson.name,
         FirebaseStrings.video: video ?? lesson.video,
         FirebaseStrings.watchCount: watchCount ?? lesson.watchCount,
-        FirebaseStrings.file: file ?? lesson.file,
+        FirebaseStrings.file: lesson.file,
       });
 
       lesson =
