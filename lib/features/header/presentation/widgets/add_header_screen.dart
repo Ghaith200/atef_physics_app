@@ -98,12 +98,22 @@ class _AddHeaderScreenState extends State<AddHeaderScreen>
                     BlocConsumer<HeaderCubit, HeaderState>(
                       builder: (context, state) => state.maybeWhen(
                         orElse: () => CustomButton(
-                          onTap: () => addHeader(),
+                          height: 60,
+                          onTap: () async {
+                            addHeader();
+                            context.pop();
+                          },
                           boarderRadius: 20,
                           title: "Add Announcment",
                         ),
-                        load: () => const Center(
-                          child: CircularProgressIndicator(),
+                        load: () => Center(
+                          child: CustomButton(
+                              boarderRadius: 20,
+                              height: 60,
+                              onTap: () {},
+                              child: const CircularProgressIndicator(
+                                color: Colors.white,
+                              )),
                         ),
                       ),
                       listener: (context, state) => state.mapOrNull<void>(

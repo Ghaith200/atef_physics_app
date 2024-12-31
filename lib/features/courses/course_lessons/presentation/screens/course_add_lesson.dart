@@ -132,43 +132,55 @@ class _CourseAddLessonState extends State<CourseAddLesson> {
               BlocConsumer<CourseLessonsCubit, CourseLessonsState>(
                 builder: (context, state) {
                   return state.maybeWhen<Widget>(
-                      load: () =>
-                          const Center(child: CircularProgressIndicator()),
-                      orElse: () => CustomButton(
-                            onTap: () async {
-                              if (formKey.currentState!.validate()) {
-                                String data = videoController.text;
-                                if (data.endsWith("/")) {
-                                  data = data.substring(0, data.length - 1);
-                                }
-                                model == null
-                                    ? await cubit.addLesson(
-                                        course: widget.courses,
-                                        name: titleController.text,
-                                        video: videoController.text,
-                                        file: selectedFile,
-                                        watchCount: int.parse(
-                                          watchCountController.text,
-                                        ),
-                                      )
-                                    : await cubit.updateLesson(
-                                        model: widget.courses,
-                                        lesson: model!,
-                                        name: titleController.text,
-                                        video: videoController.text,
-                                        file: selectedFile,
-                                        watchCount: int.parse(
-                                            watchCountController.text),
-                                      );
-                                if (context.mounted && context.canPop()) {
-                                  context.pop();
-                                }
-                              }
-                            },
-                            boarderRadius: 30,
-                            title:
-                                model == null ? "Add Lesson" : "Update Lesson",
-                          ));
+                    load: () => Container(
+                      width: double
+                          .infinity, // Make the container take the full width
+                      height: 60, // Adjust height to match the button's height
+                      decoration: BoxDecoration(
+                        color: Theme.of(context)
+                            .primaryColor, // Use button's background color
+                        borderRadius: BorderRadius.circular(
+                            30), // Match the button's border radius
+                      ),
+                      child: const Center(
+                          child: CircularProgressIndicator(
+                        color: Colors.white,
+                      )), // CircularProgressIndicator inside the container
+                    ),
+                    orElse: () => CustomButton(
+                      onTap: () async {
+                        if (formKey.currentState!.validate()) {
+                          String data = videoController.text;
+                          if (data.endsWith("/")) {
+                            data = data.substring(0, data.length - 1);
+                          }
+                          model == null
+                              ? await cubit.addLesson(
+                                  course: widget.courses,
+                                  name: titleController.text,
+                                  video: videoController.text,
+                                  file: selectedFile,
+                                  watchCount:
+                                      int.parse(watchCountController.text),
+                                )
+                              : await cubit.updateLesson(
+                                  model: widget.courses,
+                                  lesson: model!,
+                                  name: titleController.text,
+                                  video: videoController.text,
+                                  file: selectedFile,
+                                  watchCount:
+                                      int.parse(watchCountController.text),
+                                );
+                          if (context.mounted && context.canPop()) {
+                            context.pop();
+                          }
+                        }
+                      },
+                      boarderRadius: 30,
+                      title: model == null ? "Add Lesson" : "Update Lesson",
+                    ),
+                  );
                 },
                 listener: (context, state) => state.mapOrNull(
                   error: (value) => value.error.showError(context),
