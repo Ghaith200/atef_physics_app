@@ -107,6 +107,22 @@ class _CourseLessonWidgetState extends State<CourseLessonWidget>
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          ListTile(
+                            contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 5, vertical: 5),
+                            title: Text(
+                              'Video',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                color: Colors.blue[800],
+                              ),
+                            ),
+                            trailing: IconButton(
+                                onPressed: () {},
+                                icon: const Icon(
+                                  Icons.play_circle_outline_rounded,
+                                )),
+                          ),
                           if (lesson.file != null)
                             ListTile(
                               title: Text(
@@ -125,22 +141,6 @@ class _CourseLessonWidgetState extends State<CourseLessonWidget>
                                 fileName: "${lesson.name}.pdf",
                               ),
                             ),
-                          ListTile(
-                            contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 5, vertical: 5),
-                            title: Text(
-                              'Video',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                color: Colors.blue[800],
-                              ),
-                            ),
-                            trailing: IconButton(
-                                onPressed: () {},
-                                icon: const Icon(
-                                  Icons.play_circle_outline_rounded,
-                                )),
-                          )
                         ],
                       ),
                     )

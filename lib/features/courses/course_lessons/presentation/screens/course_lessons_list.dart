@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:atef_physics/core/constants/app_text_styles.dart';
 import 'package:atef_physics/core/models/course_model.dart';
 import 'package:atef_physics/core/models/lesson_model.dart';
 import 'package:atef_physics/core/utils/app_snack_bar.dart';
@@ -73,16 +74,19 @@ class _CourseLessonsListState extends State<CourseLessonsList> {
       builder: (context, state) {
         return state.maybeWhen<Widget>(
           orElse: () => lesson.isEmpty
-              ? const Center(
+              ? Center(
                   child: Text(
                     "No lessons",
-                    style: TextStyle(fontSize: 20),
+                    style: AppTextStyles.hevoLight20GreyW900,
                   ),
                 )
               : Expanded(
                   child: ListView.builder(
-                    itemCount: lesson.length,
+                    itemCount: lesson.length + 1,
                     itemBuilder: (BuildContext context, int index) {
+                      if (index == lesson.length) {
+                        return const SizedBox(height: 50);
+                      }
                       return CourseLessonWidget(
                         lesson: lesson[index],
                         model: widget.course,
