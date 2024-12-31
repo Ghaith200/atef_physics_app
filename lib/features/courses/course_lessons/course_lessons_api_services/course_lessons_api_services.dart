@@ -33,6 +33,8 @@ class CourseLessonsApiServices {
         data.add(LessonModel.fromJson(
             {"id": e.id, ...e.data(), ...lessonUserData.data() ?? {}}));
       }
+      data.sort((a, b) => int.parse(b.id.split("-")[0])
+          .compareTo(int.parse(a.id.split("-")[0])));
       return ApiResult.success(data);
     } catch (e) {
       return ApiResult.failure(ApiErrorHandler(
@@ -62,7 +64,7 @@ class CourseLessonsApiServices {
           .collection(FirebaseStrings.coures)
           .doc(model.id)
           .collection(FirebaseStrings.lessons)
-          .doc();
+          .doc("${Timestamp.now().seconds}-$name");
 
       data.set({
         FirebaseStrings.name: name,

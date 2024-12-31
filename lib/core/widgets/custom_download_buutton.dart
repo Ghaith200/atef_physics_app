@@ -39,10 +39,16 @@ class _CustomDownloadBuuttonState extends State<CustomDownloadBuutton> {
     _checkFileExistence();
   }
 
-  void _checkFileExistence() async {
-    final path = await getDownloadsDirectory();
-    final p = "${path?.path}/atef-physics/${widget.subdir}/${widget.fileName}";
-    if (await File(p).exists()) {
+.  void _checkFileExistence() async {
+    String p = "", path = "";
+    if (Platform.isAndroid) {
+      path =
+          "/storage/emulated/0/Download/atef-physics/${widget.subdir}/${widget.fileName}";
+      if (File(path).existsSync()) {
+        p = path;
+      }
+    } else if (Platform.isIOS) {}
+    if (p.isNotEmpty) {
       setState(() {
         _status = DownloadStatus.downloaded;
         _filePath = p;
