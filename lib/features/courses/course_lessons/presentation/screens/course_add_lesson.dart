@@ -62,7 +62,6 @@ class _CourseAddLessonState extends State<CourseAddLesson> {
     setState(() {
       selectedFile = file;
     });
-    print('Selected file: $fileName, Size: $fileSize bytes');
   }
 
   @override

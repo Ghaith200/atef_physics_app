@@ -5,7 +5,6 @@ import 'package:atef_physics/core/models/course_model.dart';
 import 'package:atef_physics/core/network/api_error_handler.dart';
 import 'package:atef_physics/core/network/api_result.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class CourseApiServices {
@@ -75,6 +74,8 @@ class CourseApiServices {
                     doc.data()[FirebaseStrings.users].map((e) => e.toString())),
               ))
           .toList();
+      coursesList.sort((a, b) => int.parse(b.id.split("-")[0])
+          .compareTo(int.parse(a.id.split("-")[0])));
       return ApiResult.success(coursesList);
     } catch (e) {
       return ApiResult.failure(ApiErrorHandler(
@@ -88,12 +89,8 @@ class CourseApiServices {
   DateTime? extractTimestamp(String id) {
     final parts = id.split('-');
     if (parts.isNotEmpty) {
-      try {
         final timestamp = int.parse(parts[0]);
         return DateTime.fromMillisecondsSinceEpoch(timestamp);
-      } catch (e) {
-        print('Error parsing timestamp: $e');
-      }
     }
     return null;
   }

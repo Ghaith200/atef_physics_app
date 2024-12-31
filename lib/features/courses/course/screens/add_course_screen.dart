@@ -97,7 +97,7 @@ class _AddCourseScreenState extends State<AddCourseScreen> {
                       controller: priceController,
                       decoration: const InputDecoration(
                         labelText: 'Course Price',
-                        suffixText: 'ريال',
+                        suffixText: 'درهم',
                       ),
                       keyboardType: TextInputType.number,
                       inputFormatters: [

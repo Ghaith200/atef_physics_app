@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:atef_physics/core/constants/app_text_styles.dart';
 import 'package:atef_physics/core/models/course_model.dart';
-import 'package:atef_physics/core/utils/app_snack_bar.dart';
 import 'package:atef_physics/core/utils/app_utils.dart';
 import 'package:atef_physics/core/utils/storage.dart';
 import 'package:atef_physics/features/courses/course/cubit/course_cubit.dart';
