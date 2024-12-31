@@ -29,7 +29,7 @@ class HeaderApiServices {
 
       await FirebaseFirestore.instance
           .collection(FirebaseStrings.header)
-          .doc()
+          .doc(Timestamp.now().seconds.toString())
           .set(header.toJson());
 
       return const ApiResult.success(null);
@@ -57,7 +57,8 @@ class HeaderApiServices {
             videoPath: doc.data()[FirebaseStrings.path],
             isVideo: doc.data()[FirebaseStrings.isVideo]);
       }).toList();
-
+      headers.sort((a, b) => int.parse(b.id.split("-")[0])
+          .compareTo(int.parse(a.id.split("-")[0])));
       return ApiResult.success(headers);
     } catch (e) {
       return ApiResult.failure(
