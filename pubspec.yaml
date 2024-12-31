@@ -31,8 +31,6 @@ dependencies:
   firebase_auth: ^5.3.4
   firebase_storage: ^12.3.7
   cloud_firestore: ^5.6.0
-  #Video
-  # video_player: ^2.9.2
   webview_flutter: ^4.10.0
   flutter_offline: ^4.0.0
   url_launcher: ^6.3.1

@@ -7,6 +7,7 @@ import 'package:atef_physics/features/courses/course_users/cubit/course_users_cu
 import 'package:atef_physics/features/courses/course_users/screens/course_users_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'dart:developer';
 
 class EnrolledUsersPageView extends StatefulWidget {
   final CourseModel model;
@@ -42,9 +43,16 @@ class _EnrolledUsersPageViewState extends State<EnrolledUsersPageView> {
               widget.model.copyWith(users: users.map((e) => e.uid).toList()));
         },
         add: (addedUsers, notfound, enrolled) {
-          users.addAll(addedUsers);
-          BlocProvider.of<CourseCubit>(context).setCourse(
-              widget.model.copyWith(users: users.map((e) => e.uid).toList()));
+          log("brfore ${users.length}");
+          for (UserModel element in addedUsers) {
+            final d = users.indexWhere((test) => test.uid == element.uid);
+            if (d == -1) {
+              users.add(element);
+              BlocProvider.of<CourseCubit>(context).setCourse(widget.model
+                  .copyWith(users: users.map((e) => e.uid).toList()));
+            }
+          }
+          log("after ${users.length}");
         },
       ),
       builder: (context, state) => state.maybeWhen<Widget>(

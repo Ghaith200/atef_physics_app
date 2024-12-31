@@ -6,8 +6,7 @@ import 'package:open_filex/open_filex.dart';
 import 'dart:io';
 import 'dart:developer';
 
-import 'package:path_provider/path_provider.dart';
-import 'package:url_launcher/url_launcher.dart';
+
 
 enum DownloadStatus { initial, downloading, downloaded, notDownloaded }
 
@@ -39,7 +38,7 @@ class _CustomDownloadBuuttonState extends State<CustomDownloadBuutton> {
     _checkFileExistence();
   }
 
-.  void _checkFileExistence() async {
+ void _checkFileExistence() async {
     String p = "", path = "";
     if (Platform.isAndroid) {
       path =
@@ -129,8 +128,8 @@ class _CustomDownloadBuuttonState extends State<CustomDownloadBuutton> {
         }
       },
       child: CircleAvatar(
-        child: buttonChild,
         backgroundColor: Colors.white,
+        child: buttonChild,
       ),
     );
   }

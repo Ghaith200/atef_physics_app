@@ -2,7 +2,6 @@ import 'package:atef_physics/core/models/course_model.dart';
 import 'package:atef_physics/core/models/lesson_model.dart';
 import 'package:atef_physics/features/courses/course/screens/add_course_screen.dart';
 import 'package:atef_physics/features/courses/course/screens/course_details.dart';
-import 'package:atef_physics/features/courses/course/cubit/course_cubit.dart';
 import 'package:atef_physics/features/courses/course/screens/my_courses_screen.dart';
 import 'package:atef_physics/features/courses/course_lessons/cubit/course_lessons_cubit.dart';
 import 'package:atef_physics/features/courses/course_lessons/presentation/screens/course_add_lesson.dart';
@@ -10,6 +9,7 @@ import 'package:atef_physics/features/courses/course_users/cubit/course_users_cu
 import 'package:atef_physics/features/courses/course_users/screens/course_add_user.dart';
 import 'package:atef_physics/features/header/presentation/cubit/header_cubit.dart';
 import 'package:atef_physics/features/header/presentation/widgets/add_header_screen.dart';
+import 'package:atef_physics/features/offline_handler/offline_hadler.dart';
 import 'package:atef_physics/features/offline_handler/offline_handler.dart';
 
 import 'package:atef_physics/features/onboarding/widgets/terms_and_conditions.dart';
@@ -29,11 +29,7 @@ import 'package:atef_physics/features/home/presentation/home_screen.dart';
 import 'package:atef_physics/features/Auth/presentation/cubit/auth_cubit.dart';
 
 abstract class AppRouter {
-  static String get intialRoute {
-    // if (!BackDoorServices.status) {
-    //   return OfflineScreen.id;
-    // }
-
+  static String get initialRoute {
     if (Storage.instance.isFirstTime) {
       return OnboardingScreen.id;
     }
@@ -45,95 +41,117 @@ abstract class AppRouter {
   }
 
   static GoRouter goRouter = GoRouter(
-    initialLocation: intialRoute,
+    initialLocation: initialRoute,
     routes: [
       GoRoute(
         path: OnboardingScreen.id,
         name: OnboardingScreen.id,
-        builder: (context, state) => const OnboardingScreen(),
+        builder: (context, state) {
+          return const OfflineBuilderWidget(
+            child: OnboardingScreen(),
+          );
+        },
       ),
       GoRoute(
         path: SignUpScreen.id,
         name: SignUpScreen.id,
-        builder: (context, state) => BlocProvider(
-          create: (context) => AuthCubit(),
-          child: const SignUpScreen(),
-        ),
+        builder: (context, state) {
+          return OfflineBuilderWidget(
+            child: BlocProvider(
+              create: (context) => AuthCubit(),
+              child: const SignUpScreen(),
+            ),
+          );
+        },
       ),
       GoRoute(
         path: LoginScreen.id,
         name: LoginScreen.id,
-        builder: (context, state) => BlocProvider(
-          create: (context) => AuthCubit(),
-          child: const LoginScreen(),
-        ),
+        builder: (context, state) {
+          return OfflineBuilderWidget(
+            child: BlocProvider(
+              create: (context) => AuthCubit(),
+              child: const LoginScreen(),
+            ),
+          );
+        },
       ),
       GoRoute(
         path: HomeScreen.id,
         name: HomeScreen.id,
         builder: (context, state) {
-          return const HomeScreen();
+          return const OfflineBuilderWidget(
+            child: HomeScreen(),
+          );
         },
       ),
       GoRoute(
         path: MyCoursesScreen.id,
         name: MyCoursesScreen.id,
         builder: (context, state) {
-          return const MyCoursesScreen();
+          return const OfflineBuilderWidget(
+            child: MyCoursesScreen(),
+          );
         },
       ),
       GoRoute(
         path: UsersScreen.id,
         name: UsersScreen.id,
         builder: (context, state) {
-          return BlocProvider(
-            create: (context) => UserCubit(),
-            child: const UsersScreen(),
+          return OfflineBuilderWidget(
+            child: BlocProvider(
+              create: (context) => UserCubit(),
+              child: const UsersScreen(),
+            ),
           );
         },
       ),
       GoRoute(
         path: ProfileScreen.id,
         name: ProfileScreen.id,
-        builder: (context, state) => const ProfileScreen(),
+        builder: (context, state) {
+          return const OfflineBuilderWidget(
+            child:  ProfileScreen(),
+          );
+        },
       ),
       GoRoute(
-          path: TermsAndConditionsPage.id,
-          name: TermsAndConditionsPage.id,
-          builder: (context, state) => const TermsAndConditionsPage()),
+        path: TermsAndConditionsPage.id,
+        name: TermsAndConditionsPage.id,
+        builder: (context, state) {
+          return const OfflineBuilderWidget(
+            child: TermsAndConditionsPage(),
+          );
+        },
+      ),
       GoRoute(
-          path: AddCourseScreen.id,
-          name: AddCourseScreen.id,
-          builder: (context, state) {
-            final extra = state.extra as Map<String, dynamic>? ?? {};
-            final CourseModel? course = extra['course'] as CourseModel?;
-            return AddCourseScreen(
-              model: course,
-            );
-          }),
+        path: AddCourseScreen.id,
+        name: AddCourseScreen.id,
+        builder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>? ?? {};
+          final CourseModel? course = extra['course'] as CourseModel?;
+          return OfflineBuilderWidget(
+            child: AddCourseScreen(model: course),
+          );
+        },
+      ),
       GoRoute(
         path: CourseDetails.id,
         name: CourseDetails.id,
         builder: (context, state) {
           final extra = state.extra as Map<String, dynamic>? ?? {};
           final courses = extra['courses'] as CourseModel;
-
-          return MultiBlocProvider(
-            providers: [
-              BlocProvider(
-                create: (context) => CourseLessonsCubit(),
-              ),
-              BlocProvider(
-                create: (context) => CourseUsersCubit(),
-              ),
-            ],
-            child: CourseDetails(
-              courses: courses,
+          return OfflineBuilderWidget(
+            child: MultiBlocProvider(
+              providers: [
+                BlocProvider(create: (context) => CourseLessonsCubit()),
+                BlocProvider(create: (context) => CourseUsersCubit()),
+              ],
+              child: CourseDetails(courses: courses),
             ),
           );
         },
       ),
-      
       GoRoute(
         path: CourseAddLesson.id,
         name: CourseAddLesson.id,
@@ -142,11 +160,10 @@ abstract class AppRouter {
           final CourseLessonsCubit? cubit = extra["cubit"];
           final course = extra['course'] as CourseModel;
           final LessonModel? lessson = extra['lesson'];
-          return BlocProvider.value(
-            value: cubit ?? CourseLessonsCubit(),
-            child: CourseAddLesson(
-              courses: course,
-              lesson: lessson,
+          return OfflineBuilderWidget(
+            child: BlocProvider.value(
+              value: cubit ?? CourseLessonsCubit(),
+              child: CourseAddLesson(courses: course, lesson: lessson),
             ),
           );
         },
@@ -157,7 +174,9 @@ abstract class AppRouter {
         builder: (context, state) {
           final extra = state.extra as Map<String, dynamic>? ?? {};
           final lesson = extra['lesson'] as String;
-          return VedioScreen(lesson: lesson);
+          return OfflineBuilderWidget(
+            child: VedioScreen(lesson: lesson),
+          );
         },
       ),
       GoRoute(
@@ -167,11 +186,11 @@ abstract class AppRouter {
           final extra = state.extra as Map<String, dynamic>? ?? {};
           final CourseModel model = extra['model'];
           final CourseUsersCubit? cubit = extra['cubit'];
-
-          return BlocProvider.value(
-            value: cubit ?? CourseUsersCubit(),
-            // create: (context) => SubjectBloc(),
-            child: CourseAddUser(course: model),
+          return OfflineBuilderWidget(
+            child: BlocProvider.value(
+              value: cubit ?? CourseUsersCubit(),
+              child: CourseAddUser(course: model),
+            ),
           );
         },
       ),
@@ -181,18 +200,19 @@ abstract class AppRouter {
         builder: (context, state) {
           final extra = state.extra as Map<String, dynamic>? ?? {};
           final HeaderCubit? cubit = extra['cubit'];
-
-          return BlocProvider.value(
-            value: cubit ?? HeaderCubit(),
-            // create: (context) => SubjectBloc(),
-            child: const AddHeaderScreen(),
+          return OfflineBuilderWidget(
+            child: BlocProvider.value(
+              value: cubit ?? HeaderCubit(),
+              child: const AddHeaderScreen(),
+            ),
           );
         },
       ),
       GoRoute(
-          path: OfflineScreen.id,
-          name: OfflineScreen.id,
-          builder: (context, state) => const OfflineScreen()),
+        path: OfflineScreen.id,
+        name: OfflineScreen.id,
+        builder: (context, state) => const OfflineScreen(),
+      ),
     ],
   );
 }

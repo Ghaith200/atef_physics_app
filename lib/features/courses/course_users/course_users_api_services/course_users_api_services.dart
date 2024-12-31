@@ -53,7 +53,8 @@ class CourseUsersApiServices {
       List<UserModel> addedUsers = [];
       List<UserModel> enrolledUsers = [];
       List<String> notFoundUsers = [];
-      Set<String> courseUsers = model.users.toSet(); // Optimize lookups
+      Set<String> courseUsers =
+          model.users.toSet(); // Local cache of existing users
 
       final coursedoc = FirebaseFirestore.instance
           .collection(FirebaseStrings.coures)
@@ -69,11 +70,13 @@ class CourseUsersApiServices {
         // Process found users
         for (var element in userInfo.docs) {
           final data = element.data();
+          final userId = element.id;
           final number = data[FirebaseStrings.phoneNumber];
 
-          if (courseUsers.contains(element.id)) {
+          if (courseUsers.contains(userId)|| model.users.contains(userId) ) {
+            // Already enrolled
             enrolledUsers.add(UserModel(
-              uid: element.id,
+              uid: userId,
               name: data[FirebaseStrings.name],
               phoneNumber: number,
               email: "", // Add email if available
@@ -82,12 +85,13 @@ class CourseUsersApiServices {
                   UserTypeEnum.values.byName(data[FirebaseStrings.userType]),
             ));
           } else {
+            // Add to Firestore and local cache
             await coursedoc.update({
-              FirebaseStrings.users: FieldValue.arrayUnion([element.id])
+              FirebaseStrings.users: FieldValue.arrayUnion([userId])
             });
 
             addedUsers.add(UserModel(
-              uid: element.id,
+              uid: userId,
               name: data[FirebaseStrings.name],
               phoneNumber: number,
               email: "", // Add email if available
@@ -102,6 +106,7 @@ class CourseUsersApiServices {
         final foundNumbers = userInfo.docs
             .map((e) => e.data()[FirebaseStrings.phoneNumber])
             .toSet();
+
         notFoundUsers
             .addAll(chunk.where((number) => !foundNumbers.contains(number)));
       }

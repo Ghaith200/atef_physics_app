@@ -1,16 +1,16 @@
 flutter_native_splash:
   android: true
   ios: true
-  web: true 
-  color: "#ffffff"  # Default background color
-  color_dark: "#ffffff"  # Background color for dark mode
-  icon_background_color: "#ffffff"  # Icon background color
-  image: assets/images/splashcopy.jpg  # Your splash image path
-  android_gravity: center  # Stretch the image to fill the screen
-  # Configuration for The Splash screen for Android 12+ 
+  web: true
+  color_dark: "#ffffff"
+  color: "#ffffff" # Default background color (white)
+  image: assets/images/splashcopy.jpg # Your splash image path
+  android_gravity: center # Center the image on the screen
+
+  # Configuration for the splash screen on Android 12+
   android_12:
-    image: assets/images/splash.png  # Background image for Android 12
-    icon_background_color: "#ffffff"  # Icon background color
-    color: "#ffffff"  # Background color
-    color_dark: "#ffffff"  # Background color for dark mode
-    android_gravity: fill  # Stretch the image to fill the screen
+    image: assets/images/splash.png # Background image for Android 12
+    icon_background_color: "#ffffff" # Icon background color
+    color: "#ffffff" # Background color (force white)
+    android_gravity: fill # Stretch the image to fill the screen
+    color_dark_android: "#ffffff" # Dark mode background color

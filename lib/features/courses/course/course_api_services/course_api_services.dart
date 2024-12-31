@@ -75,6 +75,9 @@ class CourseApiServices {
                     doc.data()[FirebaseStrings.users].map((e) => e.toString())),
               ))
           .toList();
+      coursesList.sort((a, b) => int.parse(b.id.split("-")[0])
+          .compareTo(int.parse(a.id.split("-")[0])));
+          
       return ApiResult.success(coursesList);
     } catch (e) {
       return ApiResult.failure(ApiErrorHandler(
@@ -83,19 +86,6 @@ class CourseApiServices {
         success: false,
       ));
     }
-  }
-
-  DateTime? extractTimestamp(String id) {
-    final parts = id.split('-');
-    if (parts.isNotEmpty) {
-      try {
-        final timestamp = int.parse(parts[0]);
-        return DateTime.fromMillisecondsSinceEpoch(timestamp);
-      } catch (e) {
-        print('Error parsing timestamp: $e');
-      }
-    }
-    return null;
   }
 
   Future<ApiResult<CourseModel>> updateCourse(
