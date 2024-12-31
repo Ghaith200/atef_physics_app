@@ -39,7 +39,7 @@ class _CustomDownloadBuuttonState extends State<CustomDownloadBuutton> {
     _checkFileExistence();
   }
 
-  void _checkFileExistence() async {
+.  void _checkFileExistence() async {
     String p = "", path = "";
     if (Platform.isAndroid) {
       path =
@@ -101,7 +101,10 @@ class _CustomDownloadBuuttonState extends State<CustomDownloadBuutton> {
     Widget buttonChild;
     switch (_status) {
       case DownloadStatus.initial:
-        buttonChild = const Icon(Icons.download);
+        buttonChild = const Icon(
+          Icons.download,
+          size: 20,
+        );
         break;
       case DownloadStatus.downloading:
         buttonChild = CircularProgressIndicator(
@@ -125,7 +128,10 @@ class _CustomDownloadBuuttonState extends State<CustomDownloadBuutton> {
           _startDownload();
         }
       },
-      child: CircleAvatar(child: buttonChild),
+      child: CircleAvatar(
+        child: buttonChild,
+        backgroundColor: Colors.white,
+      ),
     );
   }
 }

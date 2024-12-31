@@ -96,7 +96,7 @@ class _CourseDetailsState extends State<CourseDetails>
                   const SizedBox(height: 20),
                   Expanded(
                     child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: DefaultTabController(
                           length: Storage.instance.isAdmin ? 2 : 1,
                           child: Column(

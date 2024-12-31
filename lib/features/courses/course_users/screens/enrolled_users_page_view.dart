@@ -53,7 +53,7 @@ class _EnrolledUsersPageViewState extends State<EnrolledUsersPageView> {
             ? Center(
                 child: Text(
                   "No Users",
-                  style: AppTextStyles.hevoLight25GreyW900,
+                  style: AppTextStyles.hevoLight20GreyW900,
                 ),
               )
             : SizedBox(
