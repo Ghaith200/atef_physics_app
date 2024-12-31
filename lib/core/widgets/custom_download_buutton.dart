@@ -41,7 +41,7 @@ class _CustomDownloadBuuttonState extends State<CustomDownloadBuutton> {
 
   void _checkFileExistence() async {
     final path = await getDownloadsDirectory();
-    final p = "${path?.path}/atef-physics/${widget.fileName}";
+    final p = "${path?.path}/atef-physics/${widget.subdir}/${widget.fileName}";
     if (await File(p).exists()) {
       setState(() {
         _status = DownloadStatus.downloaded;
@@ -95,7 +95,10 @@ class _CustomDownloadBuuttonState extends State<CustomDownloadBuutton> {
     Widget buttonChild;
     switch (_status) {
       case DownloadStatus.initial:
-        buttonChild = const Icon(Icons.download);
+        buttonChild = const Icon(
+          Icons.download,
+          size: 20,
+        );
         break;
       case DownloadStatus.downloading:
         buttonChild = CircularProgressIndicator(
@@ -119,7 +122,10 @@ class _CustomDownloadBuuttonState extends State<CustomDownloadBuutton> {
           _startDownload();
         }
       },
-      child: CircleAvatar(child: buttonChild),
+      child: CircleAvatar(
+        child: buttonChild,
+        backgroundColor: Colors.white,
+      ),
     );
   }
 }

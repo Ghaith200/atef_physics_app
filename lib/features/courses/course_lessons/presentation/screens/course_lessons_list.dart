@@ -40,59 +40,60 @@ class _CourseLessonsListState extends State<CourseLessonsList> {
           error: (error) => error.showError(context),
           successAll: (models) {
             lesson.addAll(models);
-            BlocProvider.of<CourseCubit>(context).setCourse(widget.course
-                .copyWith(lessons: models.map((e) => e.id).toList()));
+            BlocProvider.of<CourseCubit>(context).setCourse(
+              widget.course.copyWith(
+                lessons: models.map((e) => e.id).toList(),
+              ),
+            );
           },
           add: (models) {
             lesson.add(models);
-            BlocProvider.of<CourseCubit>(context).setCourse(widget.course
-                .copyWith(lessons: lesson.map((e) => e.id).toList()));
+            BlocProvider.of<CourseCubit>(context).setCourse(
+              widget.course.copyWith(
+                lessons: lesson.map((e) => e.id).toList(),
+              ),
+            );
           },
           remove: (model) {
             AppSnackBar.showSnackBar(context, "${model.name}\n removed");
             lesson.removeWhere((e) => e.id == model.id);
-            BlocProvider.of<CourseCubit>(context).setCourse(widget.course
-                .copyWith(lessons: lesson.map((e) => e.id).toList()));
+            BlocProvider.of<CourseCubit>(context).setCourse(
+              widget.course.copyWith(
+                lessons: lesson.map((e) => e.id).toList(),
+              ),
+            );
           },
           update: (model) {
             lesson = List.from([
               ...lesson.map<LessonModel>((e) => e.id == model.id ? model : e)
             ], growable: true);
-            // AppSnackBar.showSnackBar(context, "${model.name}\n Updated");32
-            // BlocProvider.of<CourseCubit>(context).setCourse(widget.course
-            //     .copyWith(
-            //         lessons: lesson
-            //             .map((e) => e.id == model.id ? model.id : e.id)
-            //             .toList()));
           },
         );
       },
       builder: (context, state) {
-        log("builder  state ${state.runtimeType}");
-
         return state.maybeWhen<Widget>(
-            orElse: () => lesson.isEmpty
-                ? const Center(
-                    child: Text(
-                      "No lessons",
-                      style: TextStyle(fontSize: 20),
-                    ),
-                  )
-                : ListView.builder(
-                    shrinkWrap:
-                        true, // Ensures the ListView takes only the required space
-                    physics:
-                        const NeverScrollableScrollPhysics(), // Disable ListView's scroll
-
+          orElse: () => lesson.isEmpty
+              ? const Center(
+                  child: Text(
+                    "No lessons",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                )
+              : Expanded(
+                  child: ListView.builder(
                     itemCount: lesson.length,
                     itemBuilder: (BuildContext context, int index) {
                       return CourseLessonWidget(
-                          lesson: lesson[index], model: widget.course);
+                        lesson: lesson[index],
+                        model: widget.course,
+                      );
                     },
                   ),
-            load: () => const Center(
-                  child: CircularProgressIndicator(),
-                ));
+                ),
+          load: () => const Center(
+            child: CircularProgressIndicator(),
+          ),
+        );
       },
     );
   }
