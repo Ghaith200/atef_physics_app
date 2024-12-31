@@ -39,6 +39,12 @@ class AppTextStyles {
     fontFamily: FontFamily.hevoLight,
     fontWeight: FontWeight.w900,
   );
+  static TextStyle hevoLight20GreyW900 = TextStyle(
+    fontSize: 20,
+    color: AppColors.grey,
+    fontFamily: FontFamily.hevoLight,
+    fontWeight: FontWeight.w900,
+  );
   static TextStyle hevoLight25Greyo10W900 = TextStyle(
     fontSize: 25,
     color: AppColors.grey.withOpacity(.1),
