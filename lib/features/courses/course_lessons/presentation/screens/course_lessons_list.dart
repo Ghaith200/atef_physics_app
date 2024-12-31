@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:atef_physics/core/constants/app_text_styles.dart';
 import 'package:atef_physics/core/models/course_model.dart';

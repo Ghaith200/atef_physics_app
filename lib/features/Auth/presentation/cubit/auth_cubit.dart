@@ -27,7 +27,7 @@ class AuthCubit extends Cubit<AuthState> {
   final loading = const AuthState.loading();
 
   Future<void> login({required String email, required String pass}) async {
-    emit(AuthState.loading());
+    emit(const AuthState.loading());
 
     final ApiResult<UserModel> result =
         await api.login(mail: email, pass: pass);

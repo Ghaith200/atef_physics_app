@@ -2,7 +2,6 @@ import 'package:atef_physics/core/models/course_model.dart';
 import 'package:atef_physics/core/models/lesson_model.dart';
 import 'package:atef_physics/features/courses/course/screens/add_course_screen.dart';
 import 'package:atef_physics/features/courses/course/screens/course_details.dart';
-import 'package:atef_physics/features/courses/course/cubit/course_cubit.dart';
 import 'package:atef_physics/features/courses/course/screens/my_courses_screen.dart';
 import 'package:atef_physics/features/courses/course_lessons/cubit/course_lessons_cubit.dart';
 import 'package:atef_physics/features/courses/course_lessons/presentation/screens/course_add_lesson.dart';
