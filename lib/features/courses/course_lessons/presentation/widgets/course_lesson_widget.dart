@@ -1,9 +1,11 @@
 import 'package:atef_physics/core/utils/app_colors.dart';
+import 'package:atef_physics/core/utils/app_snack_bar.dart';
 import 'package:atef_physics/core/utils/storage.dart';
 import 'package:atef_physics/core/widgets/custom_button.dart';
 import 'package:atef_physics/core/widgets/custom_textfield.dart';
 import 'package:atef_physics/features/courses/course_lessons/cubit/course_lessons_cubit.dart';
 import 'package:atef_physics/features/courses/course_lessons/presentation/screens/course_add_lesson.dart';
+import 'package:atef_physics/features/vedio/screens/vedio_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:atef_physics/core/models/course_model.dart';
 import 'package:atef_physics/core/models/lesson_model.dart';
@@ -87,11 +89,15 @@ class _CourseLessonWidgetState extends State<CourseLessonWidget>
                         icon: const Icon(Icons.edit),
                       ),
                       IconButton(
-                        onPressed: () =>
-                            BlocProvider.of<CourseLessonsCubit>(context)
-                                .removeLesson(
-                          course: widget.model,
-                          lesson: lesson,
+                        onPressed: () => AppSnackBar.showConfirmDialog(
+                          context: context,
+                          label: "Deleter lesson \n${lesson.name}",
+                          fun: () =>
+                              BlocProvider.of<CourseLessonsCubit>(context)
+                                  .removeLesson(
+                            course: widget.model,
+                            lesson: lesson,
+                          ),
                         ),
                         color: AppColors.red,
                         icon: const Icon(Icons.close),
@@ -109,10 +115,45 @@ class _CourseLessonWidgetState extends State<CourseLessonWidget>
                       padding: const EdgeInsets.symmetric(vertical: 5),
                       color: Colors.white,
                       child: Column(
+                        mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           // Video section
                           ListTile(
+                            onTap: () async {
+                              if (lesson.userWatchCount >= lesson.watchCount &&
+                                  !Storage.instance.isAdmin) {
+                                AppSnackBar.showSnackBar(
+                                    context, "Lesson watch count ended ");
+                                return;
+                              }
+                              final i = lesson.userWatchCount + 1;
+                              final cubit =
+                                  BlocProvider.of<CourseLessonsCubit>(context);
+                              await cubit.updateLessonUserWatchCount(
+                                  lesson: lesson,
+                                  userWatchCount: i,
+                                  model: widget.model);
+                              if (context.mounted) {
+                                cubit.state.mapOrNull(
+                                  update: (value) {
+                                    if (lesson.id == value.model.id) {
+                                      lesson = value.model;
+                                      if (value.model.userWatchCount <=
+                                              value.model.watchCount ||
+                                          Storage.instance.isAdmin) {
+                                        // Navigate to video screen if needed
+                                        context.pushNamed(VedioScreen.id,
+                                            extra: {"lesson": lesson.video});
+                                      } else {
+                                        AppSnackBar.showSnackBar(context,
+                                            "Sorry Watch time finished");
+                                      }
+                                    }
+                                  },
+                                );
+                              }
+                            },
                             contentPadding: const EdgeInsets.symmetric(
                                 horizontal: 5, vertical: 5),
                             title: Text(
@@ -157,6 +198,7 @@ class _CourseLessonWidgetState extends State<CourseLessonWidget>
                                   horizontal: 5, vertical: 8),
                               child: CustomTextFormField(
                                 textEditingController: userNumberController,
+                                keyboardType: TextInputType.phone,
                                 hintText: 'user number to reset watch count',
                                 prefixIcon: const Icon(Icons.person),
                                 label: 'User Number',
@@ -167,7 +209,17 @@ class _CourseLessonWidgetState extends State<CourseLessonWidget>
                               width: 150,
                               height: 40,
                               boarderRadius: 20,
-                              onTap: () {},
+                              onTap: () {
+                                final userString = userNumberController.text;
+                                if (widget.model.users.contains(userString)) {
+                                  BlocProvider.of<CourseLessonsCubit>(context)
+                                      .updateLessonUserWatchCount(
+                                          lesson: lesson,
+                                          model: widget.model,
+                                          // userId: userString,
+                                          userWatchCount: 0);
+                                }
+                              },
                               child: Text("reset watch count"),
                             ),
                           )
