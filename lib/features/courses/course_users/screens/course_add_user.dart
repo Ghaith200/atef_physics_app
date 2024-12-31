@@ -119,9 +119,6 @@ class _CourseUserFormState extends State<CourseUserForm> {
                             model: widget.course,
                             phoneNumbers: phoneNumbers,
                           );
-                          // if (context.mounted && context.canPop()) {
-                          //   context.pop();
-                          // }
                         }
                       },
                       boarderRadius: 30,

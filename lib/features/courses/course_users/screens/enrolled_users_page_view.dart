@@ -2,6 +2,7 @@ import 'package:atef_physics/core/constants/app_text_styles.dart';
 import 'package:atef_physics/core/models/course_model.dart';
 import 'package:atef_physics/core/models/user_model.dart';
 import 'package:atef_physics/core/utils/app_snack_bar.dart';
+import 'package:atef_physics/features/courses/course/cubit/course_cubit.dart';
 import 'package:atef_physics/features/courses/course_users/cubit/course_users_cubit.dart';
 import 'package:atef_physics/features/courses/course_users/screens/course_users_item.dart';
 import 'package:flutter/material.dart';
@@ -37,8 +38,14 @@ class _EnrolledUsersPageViewState extends State<EnrolledUsersPageView> {
         remove: (model) {
           AppSnackBar.showSnackBar(context, "${model.name} \n Removed");
           users.removeWhere((test) => test.uid == model.uid);
+          BlocProvider.of<CourseCubit>(context).setCourse(
+              widget.model.copyWith(users: users.map((e) => e.uid).toList()));
         },
-        add: (addedUsers, notfound, enrolled) => users.addAll(addedUsers),
+        add: (addedUsers, notfound, enrolled) {
+          users.addAll(addedUsers);
+          BlocProvider.of<CourseCubit>(context).setCourse(
+              widget.model.copyWith(users: users.map((e) => e.uid).toList()));
+        },
       ),
       builder: (context, state) => state.maybeWhen<Widget>(
         load: () => const Center(child: CircularProgressIndicator()),

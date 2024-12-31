@@ -139,7 +139,7 @@ class CourseLessonsApiServices {
         FirebaseStrings.name: name ?? lesson.name,
         FirebaseStrings.video: video ?? lesson.video,
         FirebaseStrings.watchCount: watchCount ?? lesson.watchCount,
-        FirebaseStrings.file: file ?? lesson.file,
+        FirebaseStrings.file: lesson.file,
       });
 
       lesson =
