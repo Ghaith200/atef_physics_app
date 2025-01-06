@@ -209,7 +209,7 @@ class _CourseLessonWidgetState extends State<CourseLessonWidget>
                               width: 150,
                               height: 40,
                               boarderRadius: 20,
-                              onTap: () async {
+                              onTap:() async {
                                 final cubit =
                                     BlocProvider.of<CourseLessonsCubit>(
                                         context);
