@@ -76,6 +76,7 @@ class CourseApiServices {
           .toList();
       coursesList.sort((a, b) => int.parse(b.id.split("-")[0])
           .compareTo(int.parse(a.id.split("-")[0])));
+
       return ApiResult.success(coursesList);
     } catch (e) {
       return ApiResult.failure(ApiErrorHandler(
@@ -86,14 +87,6 @@ class CourseApiServices {
     }
   }
 
-  DateTime? extractTimestamp(String id) {
-    final parts = id.split('-');
-    if (parts.isNotEmpty) {
-        final timestamp = int.parse(parts[0]);
-        return DateTime.fromMillisecondsSinceEpoch(timestamp);
-    }
-    return null;
-  }
 
   Future<ApiResult<CourseModel>> updateCourse(
       {required CourseModel model,

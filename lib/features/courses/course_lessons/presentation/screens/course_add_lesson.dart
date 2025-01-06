@@ -5,7 +5,7 @@ import 'package:atef_physics/core/utils/validator_utils.dart';
 import 'package:atef_physics/core/widgets/custom_appbar.dart';
 import 'package:atef_physics/core/widgets/custom_button.dart';
 import 'package:atef_physics/features/courses/course_lessons/cubit/course_lessons_cubit.dart';
-import 'package:atef_physics/features/courses/course_lessons/presentation/widgets/custom_file_picker.dart';
+import 'package:atef_physics/core/widgets/custom_file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

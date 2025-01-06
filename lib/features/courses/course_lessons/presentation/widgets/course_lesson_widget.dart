@@ -209,15 +209,18 @@ class _CourseLessonWidgetState extends State<CourseLessonWidget>
                               width: 150,
                               height: 40,
                               boarderRadius: 20,
-                              onTap: () {
+                              onTap:() async {
+                                final cubit =
+                                    BlocProvider.of<CourseLessonsCubit>(
+                                        context);
                                 final userString = userNumberController.text;
-                                if (widget.model.users.contains(userString)) {
-                                  BlocProvider.of<CourseLessonsCubit>(context)
-                                      .updateLessonUserWatchCount(
-                                          lesson: lesson,
-                                          model: widget.model,
-                                          // userId: userString,
-                                          userWatchCount: 0);
+                                final d = await cubit.resetLessonUserWatchCount(
+                                    lesson: lesson,
+                                    model: widget.model,
+                                    userPhone: userString,
+                                    userWatchCount: 0);
+                                if (d) {
+                                  AppSnackBar.showSnackBar(context, "Updated");
                                 }
                               },
                               child: Text("reset watch count"),

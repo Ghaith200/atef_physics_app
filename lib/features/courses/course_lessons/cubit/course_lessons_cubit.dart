@@ -78,10 +78,29 @@ class CourseLessonsCubit extends Cubit<CourseLessonsState> {
       required CourseModel model,
       required int? userWatchCount}) async {
     final data = await apiServices.updateLessonUserWatchCount(
-        lesson: lesson, model: model, userWatchCount: userWatchCount);
+      lesson: lesson,
+      model: model,
+      userWatchCount: userWatchCount,
+    );
     data.when(
       success: (d) => emit(CourseLessonsState.update(d)),
       failure: (e) => emit(CourseLessonsState.error(e)),
+    );
+  }
+
+  Future<bool> resetLessonUserWatchCount(
+      {required LessonModel lesson,
+      required CourseModel model,
+      required String userPhone,
+      required int? userWatchCount}) async {
+    final data = await apiServices.resetLessonUserWatchCount(
+        lesson: lesson,
+        model: model,
+        userWatchCount: userWatchCount,
+        userPhone: userPhone);
+    return data.when<bool>(
+      success: (d) => true,
+      failure: (e) => false,
     );
   }
   // Future<void> downloadFile(String url) async {

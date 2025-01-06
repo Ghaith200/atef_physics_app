@@ -79,19 +79,18 @@ class _CourseLessonsListState extends State<CourseLessonsList> {
                     style: AppTextStyles.hevoLight20GreyW900,
                   ),
                 )
-              : Expanded(
-                  child: ListView.builder(
-                    itemCount: lesson.length + 1,
-                    itemBuilder: (BuildContext context, int index) {
-                      if (index == lesson.length) {
-                        return const SizedBox(height: 50);
-                      }
-                      return CourseLessonWidget(
-                        lesson: lesson[index],
-                        model: widget.course,
-                      );
-                    },
-                  ),
+              : ListView.builder(
+                  // physics: const NeverScrollableScrollPhysics(),
+                  itemCount: lesson.length + 1,
+                  itemBuilder: (BuildContext context, int index) {
+                    if (index == lesson.length) {
+                      return const SizedBox(height: 50);
+                    }
+                    return CourseLessonWidget(
+                      lesson: lesson[index],
+                      model: widget.course,
+                    );
+                  },
                 ),
           load: () => const Center(
             child: CircularProgressIndicator(),
